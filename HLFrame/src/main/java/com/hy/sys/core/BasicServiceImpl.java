@@ -11,13 +11,13 @@ import com.hy.sys.utils.StringTools;
 /** 
  * 
  * @author He.Xu.Dong 
- * @Date 2015年12月12日 上午12:56:17 
+ * @Date 2015骞�12鏈�12鏃� 涓婂崍12:56:17 
  * @version 1.0 
  */
 public abstract class BasicServiceImpl<T extends BaseSpuerEntity> implements BasicService<T> {
 
 	protected abstract BasicDao<T> getBasicDao();
-	
+ 
 	@Override
 	public void save(T entity) {
 		entity=pushEntity(entity);
