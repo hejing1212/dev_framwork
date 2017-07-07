@@ -1,7 +1,0 @@
-/config.properties
-/ehcache.xml
-/log4j.properties
-/spring-hibernate.xml
-/spring-jdbc.xml
-/spring-mvc.xml
-/spring.xml
