@@ -44,7 +44,11 @@ public abstract class BasicDaoImpl<T extends AbstractBasicEntity> extends Abstra
 
 	@Override
 	public void save(T entity) {
+		try {
 		this.getCurrentSession().saveOrUpdate(entity);
+		}catch (Exception e) {
+			System.out.println(e.toString());
+		}
 	}
 
 	@Override

@@ -18,20 +18,19 @@ import com.hy.sys.utils.logs.UpdateLog;
 
 /* ��֯��������
 * 
-* @author ������
-* @Date 2016��8��10�� ����14:46:39
+* @author
+* @Date 
 * @version 1.0
 */
 @SaveLog(operationName = "添加用户信息", operationType = SysLogOperationType.Add)
 @UpdateLog(operationName = "修改用户信息", operationType = SysLogOperationType.Update)
 @DeleteLog(operationName = "删除用户信息", operationType = SysLogOperationType.Delete)
 @Service("sysUserService")
-public class SysUserServiceImpl extends BasicServiceImpl<SysUserEntity> implements SysUserService{
-
-	@Autowired 
+public class SysUserServiceImpl extends BasicServiceImpl<SysUserEntity> implements SysUserService {
+	
+	@Autowired
 	private SysUserDao sysUserDao;
-	
-	
+
 	@Override
 	public PageInfo<SysUserEntity> getPageList(Map<String, Object> params, SysUserEntity entity, int pageNo,
 			int pageSize) {

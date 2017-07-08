@@ -1,20 +1,18 @@
 package com.hy.sys.core;
 
 import java.lang.reflect.ParameterizedType;
-import java.util.Date;
 import java.util.List;
 
 import com.hy.sys.utils.DataStateEnums;
-import com.hy.sys.utils.StringTools;
 
  
 /** 
  * 
  * @author He.Xu.Dong 
- * @Date 2015骞�12鏈�12鏃� 涓婂崍12:56:17 
+ * @Date  
  * @version 1.0 
  */
-public abstract class BasicServiceImpl<T extends BaseSpuerEntity> implements BasicService<T> {
+public abstract class BasicServiceImpl<T extends AbstractBasicEntity> implements BasicService<T> {
 
 	protected abstract BasicDao<T> getBasicDao();
  
@@ -32,7 +30,7 @@ public abstract class BasicServiceImpl<T extends BaseSpuerEntity> implements Bas
 			getBasicDao().delete(entity);
 		}else{
 			entity=pushEntity(entity);
-			entity.setDataState(DataStateEnums.DATA_DELETE.getValue());
+			entity.setDelFlag(DataStateEnums.DATA_DELETE.getValue());
 			getBasicDao().save(entity);			
 		}
 	}
@@ -68,7 +66,7 @@ public abstract class BasicServiceImpl<T extends BaseSpuerEntity> implements Bas
 	}
 
 	protected T pushEntity(T entity) {
-		 return null;
+		 return entity;
 	}
 
 }

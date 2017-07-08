@@ -13,7 +13,7 @@ import com.hy.sys.utils.PageInfo;
  * @Date 2015年12月12日 上午12:28:35 
  * @version 1.0 
  */
-public  interface BasicService <T extends BaseSpuerEntity> {	
+public  interface BasicService <T extends AbstractBasicEntity> {	
 	
 	/**
 	 * 保存一个对象

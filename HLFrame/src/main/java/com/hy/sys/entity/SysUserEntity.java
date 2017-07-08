@@ -5,8 +5,13 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
 
 import com.hy.sys.core.AbstractBasicEntity;
 import com.hy.sys.utils.Comment;
@@ -16,9 +21,13 @@ import com.hy.sys.utils.Comment;
  */
 @Entity
 @Table(name = "sys_user")
-@Comment(value="”√ªß±Ì")
+@Comment(value="Áî®Êà∑ÁÆ°ÁêÜË°®")
 public class SysUserEntity  extends AbstractBasicEntity{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String userId;
 	private String orgId;
 	private String officeId;
@@ -41,7 +50,7 @@ public class SysUserEntity  extends AbstractBasicEntity{
 	private Date updateDate;
 	private String remarks;
 	private Integer delFlag;
-	private Set sysRoles = new HashSet(0);
+	//private Set sysRoles = new HashSet(0);
 
 	public SysUserEntity() {
 	}
@@ -53,7 +62,7 @@ public class SysUserEntity  extends AbstractBasicEntity{
 	public SysUserEntity(String userId, String orgId, String officeId, String loginName, String password, String no,
 			String name, String email, String phone, String mobile, Integer userType, String photo, Integer status,
 			String loginIp, Date loginDate, Integer loginFlag, String createBy, Date createDate, String updateBy,
-			Date updateDate, String remarks, Integer delFlag, Set sysRoles) {
+			Date updateDate, String remarks, Integer delFlag) {
 		this.userId = userId;
 		this.orgId = orgId;
 		this.officeId = officeId;
@@ -76,9 +85,13 @@ public class SysUserEntity  extends AbstractBasicEntity{
 		this.updateDate = updateDate;
 		this.remarks = remarks;
 		this.delFlag = delFlag;
-		this.sysRoles = sysRoles;
+	//	this.sysRoles = sysRoles;
 	}
 
+	@Id
+	@GeneratedValue(generator = "tableIdGenerator")
+	@GenericGenerator(name = "tableIdGenerator", strategy =UUID_GENERATED)	
+	@Column(name = "user_id", unique = true, nullable = false, length = 32)
 	public String getUserId() {
 		return this.userId;
 	}
@@ -87,6 +100,7 @@ public class SysUserEntity  extends AbstractBasicEntity{
 		this.userId = userId;
 	}
 
+	@Column(name = "org_id", length = 64)
 	public String getOrgId() {
 		return this.orgId;
 	}
@@ -94,15 +108,16 @@ public class SysUserEntity  extends AbstractBasicEntity{
 	public void setOrgId(String orgId) {
 		this.orgId = orgId;
 	}
-
+	@Column(name = "office_id", length = 64)
 	public String getOfficeId() {
 		return this.officeId;
 	}
 
+	
 	public void setOfficeId(String officeId) {
 		this.officeId = officeId;
 	}
-
+	@Column(name = "login_name", length = 64)
 	public String getLoginName() {
 		return this.loginName;
 	}
@@ -110,7 +125,7 @@ public class SysUserEntity  extends AbstractBasicEntity{
 	public void setLoginName(String loginName) {
 		this.loginName = loginName;
 	}
-
+	@Column(name = "password", nullable = false)
 	public String getPassword() {
 		return this.password;
 	}
@@ -118,7 +133,7 @@ public class SysUserEntity  extends AbstractBasicEntity{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
+	@Column(name = "no", nullable = false,length = 64)
 	public String getNo() {
 		return this.no;
 	}
@@ -126,7 +141,7 @@ public class SysUserEntity  extends AbstractBasicEntity{
 	public void setNo(String no) {
 		this.no = no;
 	}
-
+	@Column(name = "name", length = 64)
 	public String getName() {
 		return this.name;
 	}
@@ -134,7 +149,7 @@ public class SysUserEntity  extends AbstractBasicEntity{
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	@Column(name = "email", length = 64)
 	public String getEmail() {
 		return this.email;
 	}
@@ -142,7 +157,7 @@ public class SysUserEntity  extends AbstractBasicEntity{
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
+	@Column(name = "phone", length = 64)
 	public String getPhone() {
 		return this.phone;
 	}
@@ -150,7 +165,7 @@ public class SysUserEntity  extends AbstractBasicEntity{
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-
+	@Column(name = "mobile", length = 64)
 	public String getMobile() {
 		return this.mobile;
 	}
@@ -158,7 +173,7 @@ public class SysUserEntity  extends AbstractBasicEntity{
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
-
+	@Column(name = "user_type", length = 64)
 	public Integer getUserType() {
 		return this.userType;
 	}
@@ -166,7 +181,7 @@ public class SysUserEntity  extends AbstractBasicEntity{
 	public void setUserType(Integer userType) {
 		this.userType = userType;
 	}
-
+	@Column(name = "photo", length = 64)
 	public String getPhoto() {
 		return this.photo;
 	}
@@ -174,7 +189,7 @@ public class SysUserEntity  extends AbstractBasicEntity{
 	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
-
+	@Column(name = "status", length = 64)
 	public Integer getStatus() {
 		return this.status;
 	}
@@ -182,7 +197,7 @@ public class SysUserEntity  extends AbstractBasicEntity{
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-
+	@Column(name = "login_ip",length = 64)
 	public String getLoginIp() {
 		return this.loginIp;
 	}
@@ -190,7 +205,7 @@ public class SysUserEntity  extends AbstractBasicEntity{
 	public void setLoginIp(String loginIp) {
 		this.loginIp = loginIp;
 	}
-
+	@Column(name = "login_date", length = 64)
 	public Date getLoginDate() {
 		return this.loginDate;
 	}
@@ -198,7 +213,7 @@ public class SysUserEntity  extends AbstractBasicEntity{
 	public void setLoginDate(Date loginDate) {
 		this.loginDate = loginDate;
 	}
-
+	@Column(name = "login_flag", length = 64)
 	public Integer getLoginFlag() {
 		return this.loginFlag;
 	}
@@ -206,7 +221,8 @@ public class SysUserEntity  extends AbstractBasicEntity{
 	public void setLoginFlag(Integer loginFlag) {
 		this.loginFlag = loginFlag;
 	}
-
+	
+	@Column(name = "create_by", length = 64)
 	public String getCreateBy() {
 		return this.createBy;
 	}
@@ -214,7 +230,8 @@ public class SysUserEntity  extends AbstractBasicEntity{
 	public void setCreateBy(String createBy) {
 		this.createBy = createBy;
 	}
-
+	
+	@Column(name = "create_date", length = 64)
 	public Date getCreateDate() {
 		return this.createDate;
 	}
@@ -222,7 +239,7 @@ public class SysUserEntity  extends AbstractBasicEntity{
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
-
+	@Column(name = "update_by", length = 64)
 	public String getUpdateBy() {
 		return this.updateBy;
 	}
@@ -230,7 +247,7 @@ public class SysUserEntity  extends AbstractBasicEntity{
 	public void setUpdateBy(String updateBy) {
 		this.updateBy = updateBy;
 	}
-
+	@Column(name = "update_date", length = 64)
 	public Date getUpdateDate() {
 		return this.updateDate;
 	}
@@ -238,7 +255,7 @@ public class SysUserEntity  extends AbstractBasicEntity{
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
 	}
-
+	@Column(name = "remarks", length = 64)
 	public String getRemarks() {
 		return this.remarks;
 	}
@@ -246,7 +263,7 @@ public class SysUserEntity  extends AbstractBasicEntity{
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
-
+	@Column(name = "del_flag", length = 64)
 	public Integer getDelFlag() {
 		return this.delFlag;
 	}
@@ -255,12 +272,12 @@ public class SysUserEntity  extends AbstractBasicEntity{
 		this.delFlag = delFlag;
 	}
 
-	public Set getSysRoles() {
+/*	public Set getSysRoles() {
 		return this.sysRoles;
 	}
 
 	public void setSysRoles(Set sysRoles) {
 		this.sysRoles = sysRoles;
 	}
-
+*/
 }
