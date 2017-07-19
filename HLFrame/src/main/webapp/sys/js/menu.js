@@ -11,8 +11,8 @@ var SystemMenu = [{
 			href: 'workbench.html',
 			isCurrent: true
 		},{
-			title: '二级页面',
-			href: 'index.html'
+			title: '用户管理',
+			href: 'user/adduser.html'
 		},{
 			title: '招标流程',
 			href: 'process.html'

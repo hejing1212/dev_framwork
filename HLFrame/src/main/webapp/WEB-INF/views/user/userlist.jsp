@@ -3,143 +3,243 @@
 <c:set var="basePath"
 	value='<%=request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 					+ request.getContextPath()%>' />
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>添加用户</title>
-<link href="${basePath}/botui/css/bootstrap.min.css?v=3.3.5"
-	rel="stylesheet">
-<link href="${basePath}/botui/css/font-awesome.min.css?v=4.4.0"
-	rel="stylesheet">
-<link href="${basePath}/botui/css/plugins/iCheck/custom.css"
-	rel="stylesheet">
-
-
-<link href="${basePath}/botui/css/animate.min.css" rel="stylesheet">
-<link href="${basePath}/botui/css/style.min.css?v=4.0.0"
-	rel="stylesheet">
-<base target="_blank">
-
-</head>
-
-<body class="gray-bg">
-	<div class="wrapper ">
-		<div class="row">
-			<div class="col-sm-12">
-				<div class="ibox float-e-margins">
-					<div class="ibox-title">
-						<h5>
-							添加用户 <small>后台用户或管理员</small>
-						</h5>
-
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <meta charset="utf-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <title>流程页</title> 
+    <link href="${basePath}/sys/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../custom/uimaker/easyui.css">
+    <link href="${basePath}/sys/css/process.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="${basePath}/sys/easyui/darkblue/icon.css">
+    <link href="${basePath}/sys/js/umeditor/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
+</head> 
+<body>
+	<ul class="process clearfix">
+		<li>
+			<div class="item passed">
+				<div class="step">
+					<i>1</i>
+					<label>发布</label>
+				</div>
+				<span></span>
+			</div>
+		</li>
+		<li>
+			<div class="item curr-pre">
+				<div class="step">
+					<i>2</i>
+					<label>应标确认</label>
+				</div>
+				<span></span>
+			</div>
+		</li>
+		<li>
+			<div class="item current">
+				<div class="step">
+					<i>3</i>
+					<label>开标</label>
+				</div>
+				<span></span>
+			</div>
+		</li>
+		<li>
+			<div class="item laters">
+				<div class="step">
+					<i>4</i>
+					<label>评标</label>
+				</div>
+				<span></span>
+			</div>
+		</li>
+		<li>
+			<div class="item last">
+				<div class="step">
+					<i>5</i>
+					<label>授标</label>
+				</div>
+				<span></span>
+			</div>
+		</li>
+	</ul>
+	<div class="opt-buttons">
+		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-list'" onclick="$('#dlg').dialog('open')">业务日志</a>
+		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-back'">返回</a>
+	</div>
+	<div class="easyui-tabs1">
+      <div title="基本信息" data-options="closable:true" class="basic-info">
+      	<table class="kv-table">
+			<tbody>
+				<tr>
+					<td class="kv-label">招标编号</td>
+					<td class="kv-content">2816040820001</td>
+					<td class="kv-label">项目名称</td>
+					<td class="kv-content">SMC流量计采购</td>
+					<td class="kv-label">采购组织</td>
+					<td class="kv-content">光纤采购组织</td>
+				</tr>
+				<tr>
+					<td class="kv-label">采购组</td>
+					<td class="kv-content">光纤-五金备品</td>
+					<td class="kv-label">最小开标数量</td>
+					<td class="kv-content">3</td>
+					<td class="kv-label">开标方式</td>
+					<td class="kv-content">不公开</td>
+				</tr>
+				<tr>
+					<td class="kv-label">品类</td>
+					<td class="kv-content">电工元器件</td>
+					<td class="kv-label">招标负责人</td>
+					<td class="kv-content">孔云华</td>
+					<td class="kv-label">创建时间</td>
+					<td class="kv-content">2016-04-08 09:43</td>
+				</tr>
+				<tr>
+					<td class="kv-label">发布状态</td>
+					<td class="kv-content">已发布</td>
+					<td class="kv-label">发布人</td>
+					<td class="kv-content">艾荣兵</td>
+					<td class="kv-label">发布时间</td>
+					<td class="kv-content">2016-04-08 09:43</td>
+				</tr>
+				<tr>
+					<td class="kv-label">审核发布状态</td>
+					<td class="kv-content">审核通过</td>
+					<td class="kv-label">审核发布人</td>
+					<td class="kv-content">uimaker</td>
+					<td class="kv-label">审核发布时间</td>
+					<td class="kv-content">2016-04-08 09:43</td>
+				</tr>
+				<tr>
+					<td class="kv-label">招标说明</td>
+					<td class="kv-content" colspan="5">
+						<div id="editor-state" class="editor-state">
+							
+						</div>	
+					</td>
+				</tr>
+			</tbody>
+		</table>
+      </div>
+      <div title="招标时间" data-options="closable:true">
+      </div>
+      <div title="项目列表" data-options="closable:true">
+      </div>
+      <div title="供应商" data-options="closable:true">
+      </div>
+    </div>
+    <div id="dlg" class="easyui-dialog" title="业务日志查看" data-options="closed:true" style="width:720px;height:490px;padding:10px;">
+		<div class="time-line">
+			<div class="time-item date">
+				<div class="content-left first">
+					<span>2016-04-25</span>
+					<label><span class="dot"></span><i class="line"></i></label>
+				</div>
+			</div>
+			<div class="time-item time">
+				<div class="content-left">
+					<span>15:58:34</span>
+					<label><i class="line"></i><span class="dot"></span></label>
+				</div>
+				<div class="content-right">
+					<span class="left-arrow"></span>
+					<div class="detail-outer">
+						<div class="detail">
+							<div>
+								<span class="name">占立中</span>
+								<label>[买方]</label>
+								<span class="status">发布</span>
+							</div>
+							<div>
+								<span class="name">占立中</span>
+								<label>[买方]</label>
+								<span class="status">发布</span>
+							</div>
+						</div>
 					</div>
-					<div class="ibox-content">
-						<form action="usersave.html" method="post"  class="form-horizontal">
-							<div class="form-group">
-								<label class="col-sm-2 control-label">登录名称</label>
-
-								<div class="col-sm-10">
-									<input type="text" placeholder="登录系统的账号" name="login_name" class="form-control">
-								</div>
+				</div>
+			</div>
+			<div class="time-item time important">
+				<div class="content-left">
+					<span>17:00:21</span>
+					<label><i class="line"></i><span class="dot"></span></label>
+				</div>
+				<div class="content-right">
+					<span class="left-arrow"></span>
+					<div class="detail-outer">
+						<div class="detail">
+							<div>
+								<span class="name">纪相东</span>
+								<label>[供方]</label>
+								<span class="status">石家庄华能电力有限公司。报价已发布，报价单号：<span class="order">121568215782</span></span>
 							</div>
-
-							<div class="form-group">
-								<label class="col-sm-2 control-label">登录密码</label>
-
-								<div class="col-sm-10">
-									<input type="password" name="password" placeholder="登录系统的密码"
-										class="form-control">
-								</div>
+							<div>
+								<span class="name">纪相东</span>
+								<label>[供方]</label>
+								<span class="status">石家庄华能电力有限公司。报价已发布，报价单号：<span class="order">121568215782</span></span>
 							</div>
-
-							<div class="form-group">
-								<label class="col-sm-2 control-label">确认密码</label>
-
-								<div class="col-sm-10">
-									<input type="password" name="confirm_password"  placeholder="必要与上面密码一致"
-										class="form-control">
-								</div>
+							<div>
+								<span class="name">纪相东</span>
+								<label>[供方]</label>
+								<span class="status">石家庄华能电力有限公司。报价已发布，报价单号：<span class="order">121568215782</span></span>
 							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">真实姓名</label>
-
-								<div class="col-sm-10">
-									<input type="password" placeholder="请输入真实姓名" name="name" class="form-control">
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">邮箱</label>
-
-								<div class="col-sm-10">
-									<input type="password" name="email" placeholder="请输入邮箱" class="form-control">
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2  control-label">联系电话</label>
-
-								<div class="col-sm-10">
-									<input type="password" name="phone" placeholder="请输入联系电话" class="form-control">
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">手机号</label>
-
-								<div class="col-sm-10">
-									<input type="password" name="mobile" placeholder="请输入手机号" class="form-control">
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">工号</label>
-
-								<div class="col-sm-10">
-									<input type="password" placeholder="请输入工作证号" name="no" class="form-control">
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-2 control-label">内联复选框</label>
-
-								<div class="col-sm-10">
-									<div class="radio i-checks">
-										<label> <input type="radio" value="0" name="status"
-											checked=""> <i></i> 启用
-										</label> <label> <input type="radio" value="1" name="status">
-											<i></i> 信用
-										</label>
-									</div>
-								</div>
-							</div>
-							<!-- -------------------------- -->
-
-
-							<div class="hr-line-dashed"></div>
-							<div class="form-group">
-								<div class="col-sm-4 col-sm-offset-2">
-									<button class="btn btn-primary" type="submit">保存内容</button>
-									<button class="btn btn-white" type="submit">取消</button>
-								</div>
-							</div>
-						</form>
+						</div>
 					</div>
+				</div>
+			</div>
+			<div class="time-item date">
+				<div class="content-left">
+					<span>2016-04-26</span>
+					<label><span class="dot"></span><i class="line"></i></label>
+				</div>
+			</div>
+			<div class="time-item time">
+				<div class="content-left">
+					<span>09:21:14</span>
+					<label><i class="line"></i><span class="dot"></span></label>
+				</div>
+				<div class="content-right">
+					<span class="left-arrow"></span>
+					<div class="detail-outer">
+						<div class="detail">
+							<div>
+								<span class="name">占立中</span>
+								<label>[买方]</label>
+								<span class="status">发布</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="time-item last">
+				<div class="content-left">
+					<label><i class="line"></i><span class="dot"></span></label>
 				</div>
 			</div>
 		</div>
 	</div>
-
-
-	<script src="${basePath}/botui/js/jquery.min.js?v=2.1.4"></script>
-	<script src="${basePath}/botui/js/bootstrap.min.js?v=3.3.5"></script>
-	<script src="${basePath}/botui/js/content.min.js?v=1.0.0"></script>
-	<script src="${basePath}/botui/js/plugins/iCheck/icheck.min.js"></script>
-	<script>
-		$(document).ready(function() {
-			$(".i-checks").iCheck({
-				checkboxClass : "icheckbox_square-green",
-				radioClass : "iradio_square-green",
-			})
-		});
-	</script>
-
-</body>
+</body> 
 </html>
+    <script type="text/javascript" src="{basePath}/sys/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="{basePath}/sys/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="{basePath}/sys/js/umeditor/umeditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="{basePath}/sys/js/umeditor/umeditor.min.js"></script>
+    <script type="text/javascript" src="{basePath}/sys/js/umeditor/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript">
+	$('.easyui-tabs1').tabs({
+      tabHeight: 36
+    });
+
+     var state = UM.getEditor('editor-state');
+     state.setWidth("98%");
+     $(".edui-body-container").css("width", "98%");
+
+    $(window).resize(function(){
+    	setTimeout(function(){
+    		$('.easyui-tabs1').tabs("resize");
+	    	state.setWidth("98%");
+	     	$(".edui-body-container").css("width", "98%");	
+	     },1);
+    }).resize();
+</script>

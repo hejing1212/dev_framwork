@@ -13,9 +13,42 @@
 	<!-- 自动扫描@Controller注入为bean -->
 	<context:component-scan base-package="com.hy.sys.controller,com.hy.sys.core" />
 
-    <!-- 兼容到静态文件和Controller的配统一 -->
-	<mvc:annotation-driven />
-	
+	<!-- 兼容到静态文件和Controller的配统一 -->
+	<mvc:annotation-driven>
+		<!-- 返回json数据，@response使用 -->
+		<mvc:message-converters register-defaults="true">
+			<!-- StringHttpMessageConverter解决乱码问题 -->
+			<bean id="stringHttpMessageConverter"
+				class="org.springframework.http.converter.StringHttpMessageConverter">
+				<constructor-arg value="UTF-8" index="0"></constructor-arg>
+				<property name="supportedMediaTypes">
+					<list>
+						<value>text/plain;charset=UTF-8</value>
+					</list>
+				</property>
+			</bean>
+
+			<bean
+				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>text/html;charset=UTF-8</value>
+						<value>application/json;charset=UTF-8</value>
+					</list>
+				</property>
+				<property name="objectMapper">
+					<bean class="com.fasterxml.jackson.databind.ObjectMapper">
+						<property name="dateFormat">
+							<bean class="java.text.SimpleDateFormat">
+								<constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss" />
+							</bean>
+						</property>
+					</bean>
+				</property>
+			</bean>
+
+		</mvc:message-converters>
+	</mvc:annotation-driven>
 	<!-- 允许访问静态 -->
 	<mvc:default-servlet-handler />
 
