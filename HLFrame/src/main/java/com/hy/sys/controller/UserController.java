@@ -10,20 +10,32 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.hy.sys.core.AbstractBasicController;
 import com.hy.sys.entity.SysUserEntity;
 import com.hy.sys.service.SysUserService;
+import com.hy.sys.utils.ConvertJson;
+import com.hy.sys.utils.IntegerTools;
+import com.hy.sys.utils.PageInfo;
 
 @Controller
 @RequestMapping("/user")
-public class UserController {
+public class UserController extends AbstractBasicController{
 	@Autowired
 	private SysUserService sysUserService;
 
+	
+	@Override
+	protected void init(ModelMap mode, HttpServletRequest req) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	@RequestMapping("/adduser")
 	public ModelAndView addUser() {
 		ModelAndView view = new ModelAndView();
@@ -31,20 +43,6 @@ public class UserController {
 
 		Date now = new Date();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-
-		/*entity.setName("hejing");
-		entity.setLoginName("admin");
-		entity.setPassword("123456");
-		entity.setLoginDate(now);
-		entity.setEmail("3041241452@qq.com");
-		entity.setCreateDate(now);
-		entity.setMobile("13595028895");
-		entity.setCreateBy("李四");
-		entity.setNo("100012121");
-		entity.setRemarks("通过上面的配置，现在启动服务来试试看，试着修改jsp或java文件，来验证一下效果");
-
-		*/
-
 		return view;
 	}
 	
@@ -64,4 +62,31 @@ public class UserController {
 		//return "user/userlist";
 		return map;
 	}
+	
+	
+	@ResponseBody
+	@RequestMapping("/userlist")
+	public  ModelAndView showList() { 
+		ModelAndView view = new ModelAndView();
+		return view;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/getlist")
+	public  PageInfo<SysUserEntity>  getList(@ModelAttribute SysUserEntity entity,HttpServletResponse response,HttpServletRequest request) {
+		int pageNo = (request.getParameter("page") == null) ? PAGE_NO : IntegerTools.parseInt(request.getParameter("page"));
+		int pageSize = (request.getParameter("rows") == null) ? PAGE_SIZE : IntegerTools.parseInt(request.getParameter("rows"));
+		
+		Map<String, Object> params = new HashMap<String, Object>();
+		
+		PageInfo<SysUserEntity> pages = sysUserService.getList(params, entity, pageNo, pageSize);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("total", pages.getTotalrecond());
+		map.put("rows", pages.getResultlist());
+		String jsonStr = ConvertJson.map2json(map);
+		writeResult(jsonStr, response);
+		return pages;
+	}
+
+	
 }

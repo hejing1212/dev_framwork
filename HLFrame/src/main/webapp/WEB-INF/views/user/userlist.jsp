@@ -3,243 +3,198 @@
 <c:set var="basePath"
 	value='<%=request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 					+ request.getContextPath()%>' />
-<!DOCTYPE html> 
-<html lang="en"> 
-<head> 
-    <meta charset="utf-8"> 
-    <meta name="viewport" content="width=device-width, initial-scale=1"> 
-    <title>流程页</title> 
-    <link href="${basePath}/sys/css/base.css" rel="stylesheet">
-    <link rel="stylesheet" href="../custom/uimaker/easyui.css">
-    <link href="${basePath}/sys/css/process.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="${basePath}/sys/easyui/darkblue/icon.css">
-    <link href="${basePath}/sys/js/umeditor/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
-</head> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>流程页</title>
+<link href="${basePath}/sys/css/base.css" rel="stylesheet">
+<link rel="stylesheet" href="${basePath}/sys/easyui/darkblue/easyui.css">
+<link rel="stylesheet" type="text/css" href="${basePath}/sys/easyui/darkblue/icon.css">
+<link rel="stylesheet" href="${basePath}/sys/css/providers.css">
+
+</head>
 <body>
-	<ul class="process clearfix">
-		<li>
-			<div class="item passed">
-				<div class="step">
-					<i>1</i>
-					<label>发布</label>
-				</div>
-				<span></span>
-			</div>
-		</li>
-		<li>
-			<div class="item curr-pre">
-				<div class="step">
-					<i>2</i>
-					<label>应标确认</label>
-				</div>
-				<span></span>
-			</div>
-		</li>
-		<li>
-			<div class="item current">
-				<div class="step">
-					<i>3</i>
-					<label>开标</label>
-				</div>
-				<span></span>
-			</div>
-		</li>
-		<li>
-			<div class="item laters">
-				<div class="step">
-					<i>4</i>
-					<label>评标</label>
-				</div>
-				<span></span>
-			</div>
-		</li>
-		<li>
-			<div class="item last">
-				<div class="step">
-					<i>5</i>
-					<label>授标</label>
-				</div>
-				<span></span>
-			</div>
-		</li>
-	</ul>
-	<div class="opt-buttons">
-		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-list'" onclick="$('#dlg').dialog('open')">业务日志</a>
-		<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-back'">返回</a>
-	</div>
-	<div class="easyui-tabs1">
-      <div title="基本信息" data-options="closable:true" class="basic-info">
-      	<table class="kv-table">
-			<tbody>
+	<div class="container">
+		<table id="dg" style="width: 100%; height: 554px" title="全体供应商列表" data-options="  rownumbers:true,
+                singleSelect:false, autoRowHeight:false,  pagination:true, fitColumns:true,  striped:true,  checkOnSelect:false,
+                selectOnCheck:false, collapsible:true,  toolbar:'#tb',  pageSize:10">
+			<thead>
 				<tr>
-					<td class="kv-label">招标编号</td>
-					<td class="kv-content">2816040820001</td>
-					<td class="kv-label">项目名称</td>
-					<td class="kv-content">SMC流量计采购</td>
-					<td class="kv-label">采购组织</td>
-					<td class="kv-content">光纤采购组织</td>
+					<th field="user_id" width="110">用户编号</th>
+					<th field="org_id" width="226">所属机构</th>
+					<th field="no" width="112">工号</th>
+					<th field="name" width="170">真实姓名</th>
+					<th field="email" width="130">邮箱</th>
+					<th field="phone" width="136">联系电话</th>
+					<th field="status" width="120">状态</th>
+					<th field="remarks" width="105">备注</th>
 				</tr>
-				<tr>
-					<td class="kv-label">采购组</td>
-					<td class="kv-content">光纤-五金备品</td>
-					<td class="kv-label">最小开标数量</td>
-					<td class="kv-content">3</td>
-					<td class="kv-label">开标方式</td>
-					<td class="kv-content">不公开</td>
-				</tr>
-				<tr>
-					<td class="kv-label">品类</td>
-					<td class="kv-content">电工元器件</td>
-					<td class="kv-label">招标负责人</td>
-					<td class="kv-content">孔云华</td>
-					<td class="kv-label">创建时间</td>
-					<td class="kv-content">2016-04-08 09:43</td>
-				</tr>
-				<tr>
-					<td class="kv-label">发布状态</td>
-					<td class="kv-content">已发布</td>
-					<td class="kv-label">发布人</td>
-					<td class="kv-content">艾荣兵</td>
-					<td class="kv-label">发布时间</td>
-					<td class="kv-content">2016-04-08 09:43</td>
-				</tr>
-				<tr>
-					<td class="kv-label">审核发布状态</td>
-					<td class="kv-content">审核通过</td>
-					<td class="kv-label">审核发布人</td>
-					<td class="kv-content">uimaker</td>
-					<td class="kv-label">审核发布时间</td>
-					<td class="kv-content">2016-04-08 09:43</td>
-				</tr>
-				<tr>
-					<td class="kv-label">招标说明</td>
-					<td class="kv-content" colspan="5">
-						<div id="editor-state" class="editor-state">
-							
-						</div>	
-					</td>
-				</tr>
-			</tbody>
+			</thead>
 		</table>
-      </div>
-      <div title="招标时间" data-options="closable:true">
-      </div>
-      <div title="项目列表" data-options="closable:true">
-      </div>
-      <div title="供应商" data-options="closable:true">
-      </div>
-    </div>
-    <div id="dlg" class="easyui-dialog" title="业务日志查看" data-options="closed:true" style="width:720px;height:490px;padding:10px;">
-		<div class="time-line">
-			<div class="time-item date">
-				<div class="content-left first">
-					<span>2016-04-25</span>
-					<label><span class="dot"></span><i class="line"></i></label>
-				</div>
-			</div>
-			<div class="time-item time">
-				<div class="content-left">
-					<span>15:58:34</span>
-					<label><i class="line"></i><span class="dot"></span></label>
-				</div>
-				<div class="content-right">
-					<span class="left-arrow"></span>
-					<div class="detail-outer">
-						<div class="detail">
-							<div>
-								<span class="name">占立中</span>
-								<label>[买方]</label>
-								<span class="status">发布</span>
-							</div>
-							<div>
-								<span class="name">占立中</span>
-								<label>[买方]</label>
-								<span class="status">发布</span>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="time-item time important">
-				<div class="content-left">
-					<span>17:00:21</span>
-					<label><i class="line"></i><span class="dot"></span></label>
-				</div>
-				<div class="content-right">
-					<span class="left-arrow"></span>
-					<div class="detail-outer">
-						<div class="detail">
-							<div>
-								<span class="name">纪相东</span>
-								<label>[供方]</label>
-								<span class="status">石家庄华能电力有限公司。报价已发布，报价单号：<span class="order">121568215782</span></span>
-							</div>
-							<div>
-								<span class="name">纪相东</span>
-								<label>[供方]</label>
-								<span class="status">石家庄华能电力有限公司。报价已发布，报价单号：<span class="order">121568215782</span></span>
-							</div>
-							<div>
-								<span class="name">纪相东</span>
-								<label>[供方]</label>
-								<span class="status">石家庄华能电力有限公司。报价已发布，报价单号：<span class="order">121568215782</span></span>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="time-item date">
-				<div class="content-left">
-					<span>2016-04-26</span>
-					<label><span class="dot"></span><i class="line"></i></label>
-				</div>
-			</div>
-			<div class="time-item time">
-				<div class="content-left">
-					<span>09:21:14</span>
-					<label><i class="line"></i><span class="dot"></span></label>
-				</div>
-				<div class="content-right">
-					<span class="left-arrow"></span>
-					<div class="detail-outer">
-						<div class="detail">
-							<div>
-								<span class="name">占立中</span>
-								<label>[买方]</label>
-								<span class="status">发布</span>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="time-item last">
-				<div class="content-left">
-					<label><i class="line"></i><span class="dot"></span></label>
-				</div>
-			</div>
+		<div id="tb" style="padding: 0 30px;">
+			供应商编码: <input class="easyui-textbox" type="text" name="code"
+				style="width: 166px; height: 35px; line-height: 35px;"></input>
+			供应商名称: <input class="easyui-textbox" type="text" name="name"
+				style="width: 166px; height: 35px; line-height: 35px;"></input> <a
+				href="#" class="easyui-linkbutton" iconCls="icon-search"
+				data-options="selected:true">查询</a> <a href="#"
+				class="easyui-linkbutton" iconCls="icon-reload">重置</a>
 		</div>
 	</div>
-</body> 
+
+	<script type="text/javascript" src="${basePath}/sys/easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="${basePath}/sys/easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="${basePath}/sys/easyui/easyui-lang-zh_CN.js"></script>
+
+	<script type="text/javascript">
+		(function($) {
+			function pagerFilter(data) {
+				if ($.isArray(data)) { // is array
+					data = {
+						total : data.length,
+						rows : data
+					}
+				}
+				var target = this;
+				var dg = $(target);
+				var state = dg.data('datagrid');
+				var opts = dg.datagrid('options');
+				if (!state.allRows) {
+					state.allRows = (data.rows);
+				}
+				if (!opts.remoteSort && opts.sortName) {
+					var names = opts.sortName.split(',');
+					var orders = opts.sortOrder.split(',');
+					state.allRows
+							.sort(function(r1, r2) {
+								var r = 0;
+								for (var i = 0; i < names.length; i++) {
+									var sn = names[i];
+									var so = orders[i];
+									var col = $(target).datagrid(
+											'getColumnOption', sn);
+									var sortFunc = col.sorter
+											|| function(a, b) {
+												return a == b ? 0 : (a > b ? 1
+														: -1);
+											};
+									r = sortFunc(r1[sn], r2[sn])
+											* (so == 'asc' ? 1 : -1);
+									if (r != 0) {
+										return r;
+									}
+								}
+								return r;
+							});
+				}
+				var start = (opts.pageNumber - 1) * parseInt(opts.pageSize);
+				var end = start + parseInt(opts.pageSize);
+				data.rows = state.allRows.slice(start, end);
+				return data;
+			}
+
+			var loadDataMethod = $.fn.datagrid.methods.loadData;
+			var deleteRowMethod = $.fn.datagrid.methods.deleteRow;
+			$.extend(
+							$.fn.datagrid.methods,
+							{
+								clientPaging : function(jq) {
+									return jq.each(function() {
+										var dg = $(this);
+										var state = dg.data('datagrid');
+										var opts = state.options;
+										opts.loadFilter = pagerFilter;
+										var onBeforeLoad = opts.onBeforeLoad;
+										opts.onBeforeLoad = function(param) {
+											state.allRows = null;
+											return onBeforeLoad.call(this,
+													param);
+										}
+										var pager = dg.datagrid('getPager');
+										pager.pagination({
+											onSelectPage : function(pageNum,
+													pageSize) {
+												opts.pageNumber = pageNum;
+												opts.pageSize = pageSize;
+												pager.pagination('refresh', {
+													pageNumber : pageNum,
+													pageSize : pageSize
+												});
+												dg.datagrid('loadData',state.allRows);
+											}
+										});
+										$(this).datagrid('loadData',state.data);
+										if (opts.url) {
+											$(this).datagrid('reload');
+										}
+									});
+								},
+								loadData : function(jq, data) {
+									jq
+											.each(function() {
+												$(this).data('datagrid').allRows = null;
+											});
+									return loadDataMethod.call(
+											$.fn.datagrid.methods, jq, data);
+								},
+								deleteRow : function(jq, index) {
+									return jq
+											.each(function() {
+												var row = $(this).datagrid(
+														'getRows')[index];
+												deleteRowMethod.call(
+														$.fn.datagrid.methods,
+														$(this), index);
+												var state = $(this).data(
+														'datagrid');
+												if (state.options.loadFilter == pagerFilter) {
+													for (var i = 0; i < state.allRows.length; i++) {
+														if (state.allRows[i] == row) {
+															state.allRows
+																	.splice(i,
+																			1);
+															break;
+														}
+													}
+													$(this).datagrid(
+															'loadData',
+															state.allRows);
+												}
+											});
+								},
+								getAllRows : function(jq) {
+									return jq.data('datagrid').allRows;
+								}
+							})
+		})(jQuery);
+
+		function getData() {
+			var rows = [];
+			for (var i = 1; i <= 800; i++) {
+				rows.push({
+					code : '10695',
+					name : '南京天泽星网股份有限公司',
+					level : '正式',
+					provide : '光纤通信设备配件',
+					full : '√',
+					issubmit : '√',
+					status : '已审核',
+					note : '-'
+				});
+			}
+			alert(rows);
+			return rows;
+			
+		}
+
+		$(function() {
+			$('#dg').datagrid({
+				data : getData()
+			}).datagrid('clientPaging');
+		});
+	</script>
+
+</body>
 </html>
-    <script type="text/javascript" src="{basePath}/sys/easyui/jquery.min.js"></script>
-    <script type="text/javascript" src="{basePath}/sys/easyui/jquery.easyui.min.js"></script>
-    <script type="text/javascript" charset="utf-8" src="{basePath}/sys/js/umeditor/umeditor.config.js"></script>
-    <script type="text/javascript" charset="utf-8" src="{basePath}/sys/js/umeditor/umeditor.min.js"></script>
-    <script type="text/javascript" src="{basePath}/sys/js/umeditor/lang/zh-cn/zh-cn.js"></script>
-<script type="text/javascript">
-	$('.easyui-tabs1').tabs({
-      tabHeight: 36
-    });
-
-     var state = UM.getEditor('editor-state');
-     state.setWidth("98%");
-     $(".edui-body-container").css("width", "98%");
-
-    $(window).resize(function(){
-    	setTimeout(function(){
-    		$('.easyui-tabs1').tabs("resize");
-	    	state.setWidth("98%");
-	     	$(".edui-body-container").css("width", "98%");	
-	     },1);
-    }).resize();
-</script>

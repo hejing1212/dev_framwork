@@ -1,5 +1,7 @@
 package com.hy.sys.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,7 @@ import com.hy.sys.utils.logs.SaveLog;
 import com.hy.sys.utils.logs.SysLogOperationType;
 import com.hy.sys.utils.logs.UpdateLog;
 
-/* ��֯��������
+/* 
 * 
 * @author
 * @Date 
@@ -43,5 +45,34 @@ public class SysUserServiceImpl extends BasicServiceImpl<SysUserEntity> implemen
 		// TODO Auto-generated method stub
 		return sysUserDao;
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public PageInfo<SysUserEntity> getList(Map<String, Object> params, SysUserEntity entity, int pageNo, int pageSize) {
+		StringBuffer sql = new StringBuffer();
+		List<Object> values = new ArrayList<Object>();
+		sql.append(" SELECT  * ");
+		sql.append(" FROM sys_user   ");
+		sql.append(" WHERE 1=1 ");
+
+		if (params.containsKey("queryKey")
+				&& params.get("queryKey") != null
+				&& !"".equals(params.get("queryKey"))) {
+			sql.append(" AND ( login_name like ? OR mobile like ? OR name like ? )");
+			String key = params.get("queryKey").toString().trim();
+			values.add("%" + key + "%");
+			values.add("%" + key + "%");
+			values.add("%" + key + "%");
+		}
+		
+		sql.append(" ORDER BY create_date DESC");
+		return (PageInfo<SysUserEntity>) getBasicDao()
+				.findPageInfoByQueryJdbc(pageNo, pageSize,
+						sql.toString(), values.toArray(),
+						SysUserEntity.class);
+	}
+	
+	
+	 
 
 }
