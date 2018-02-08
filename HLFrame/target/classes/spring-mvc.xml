@@ -61,6 +61,5 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 
-
-
+    <import resource="spring-mvc-shiro.xml" />
 </beans>

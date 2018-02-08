@@ -1,4 +1,4 @@
-package com.hy.sys.core;
+package com.hy.sys.core.dao.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,6 +16,9 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.util.Assert;
 
+import com.hy.sys.core.dao.AbstractBasicDao;
+import com.hy.sys.core.dao.BasicDao;
+import com.hy.sys.core.entity.AbstractBasicEntity;
 import com.hy.sys.utils.DataStateEnums;
 import com.hy.sys.utils.PageInfo;
 
@@ -24,12 +27,12 @@ import com.hy.sys.utils.PageInfo;
 /**
  * DAO公用方法
  * 
- * @author He.Xu.Dong
+ * @author  
  * @Date 2015年11月21日 下午2:28:02
  * @version 1.0
  */
 @SuppressWarnings("unchecked")
-public abstract class BasicDaoImpl<T extends AbstractBasicEntity> extends AbstractBasicDao implements BasicDao<T> {
+public abstract class BasicDaoImpl<T extends AbstractBasicEntity> extends AbstractBasicDao implements BasicDao<T>  {
 
 	private Session getCurrentSession() {
 		return super.getSessionFactory().getCurrentSession();

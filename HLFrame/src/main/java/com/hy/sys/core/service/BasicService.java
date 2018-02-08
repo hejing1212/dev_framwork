@@ -1,8 +1,9 @@
-package com.hy.sys.core;
+package com.hy.sys.core.service;
 
 import java.util.List;
 import java.util.Map;
 
+import com.hy.sys.core.entity.AbstractBasicEntity;
 import com.hy.sys.utils.PageInfo;
 
 

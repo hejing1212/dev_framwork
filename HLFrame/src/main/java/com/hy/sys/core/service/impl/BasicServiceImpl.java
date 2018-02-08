@@ -1,8 +1,11 @@
-package com.hy.sys.core;
+package com.hy.sys.core.service.impl;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
+import com.hy.sys.core.dao.BasicDao;
+import com.hy.sys.core.entity.AbstractBasicEntity;
+import com.hy.sys.core.service.BasicService;
 import com.hy.sys.utils.DataStateEnums;
 
  

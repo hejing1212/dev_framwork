@@ -1,4 +1,4 @@
-package com.hy.sys.core;
+package com.hy.sys.core.dao;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;

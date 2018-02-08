@@ -1,4 +1,4 @@
-package com.hy.sys.core;
+package com.hy.sys.core.dao;
 
 import java.util.Collection;
 import java.util.List;
@@ -7,6 +7,7 @@ import java.util.Map;
 import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import com.hy.sys.core.entity.AbstractBasicEntity;
 import com.hy.sys.utils.PageInfo;
 
 

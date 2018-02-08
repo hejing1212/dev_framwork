@@ -11,6 +11,14 @@
 		<spring.version>4.1.4.RELEASE</spring.version>
 		<hibernate.version>4.3.8.Final</hibernate.version>
 		<jackson.version>2.5.0</jackson.version>
+		<shiro.version>1.2.3</shiro.version>
+		<!-- 验证码 -->
+		<jcaptcha.version>2.0-alpha-1</jcaptcha.version>
+		<jhlabs.verison>2.0.235</jhlabs.verison>
+		
+		<guava.version>17.0</guava.version>		
+		<commons-lang3.version>3.3.2</commons-lang3.version>
+		
 	</properties>
 
 	<dependencies>
@@ -162,34 +170,71 @@
 			<version>1.2</version>
 		</dependency>
 		
-		
-		<!-- Shiro -->  
+		   <!-- Shiro -->  
         <dependency>  
             <groupId>org.apache.shiro</groupId>  
             <artifactId>shiro-core</artifactId>  
-            <version>1.2.3</version>  
+            <version>${shiro.version}</version>  
         </dependency>  
         <dependency>  
             <groupId>org.apache.shiro</groupId>  
             <artifactId>shiro-web</artifactId>  
-            <version>1.2.3</version>  
+            <version>${shiro.version}</version>  
         </dependency>  
         <dependency>  
             <groupId>org.apache.shiro</groupId>  
             <artifactId>shiro-spring</artifactId>  
-            <version>1.2.3</version>  
+            <version>${shiro.version}</version>  
         </dependency>  
         <dependency>  
             <groupId>org.apache.shiro</groupId>  
             <artifactId>shiro-ehcache</artifactId>  
-            <version>1.2.3</version>  
-        </dependency>  
-        <!-- shiro compt -->
+            <version>${shiro.version}</version>  
+        </dependency> 
+        
+        <!-- shiro end -->
+        
+        <!-- 工具包 -->
+        <!-- google java lib -->
+		 <dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>${guava.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${commons-lang3.version}</version>
+		</dependency>
+		 
+		<!-- jcaptcha 验证码 -->
+		<dependency>
+			<groupId>com.octo.captcha</groupId>
+			<artifactId>jcaptcha-api</artifactId>
+			<version>${jcaptcha.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.octo.captcha</groupId>
+			<artifactId>jcaptcha</artifactId>
+			<version>${jcaptcha.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.jhlabs</groupId>
+			<artifactId>filters</artifactId>
+			<version>${jhlabs.verison}</version>
+		</dependency>	
+		
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>1.4</version>
+		</dependency>
+		
 	</dependencies>
 
 
 	<build>
-		<finalName>hlframe</finalName>
+		<finalName>HLFrame</finalName>
 		
 		<plugins>
 			<!-- Run the JUnit unit tests in an isolated classloader -->

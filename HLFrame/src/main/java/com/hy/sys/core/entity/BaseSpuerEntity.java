@@ -1,4 +1,4 @@
-package com.hy.sys.core;
+package com.hy.sys.core.entity;
 
 
 import java.util.Date;
