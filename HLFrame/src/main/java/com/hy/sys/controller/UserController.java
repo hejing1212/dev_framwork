@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.hy.sys.core.AbstractBasicController;
-import com.hy.sys.entity.SysUserEntity;
+import com.hy.sys.core.controller.AbstractBasicController;
+import com.hy.sys.entity.SysUser;
 import com.hy.sys.service.SysUserService;
 import com.hy.sys.utils.ConvertJson;
 import com.hy.sys.utils.IntegerTools;
@@ -39,7 +39,7 @@ public class UserController extends AbstractBasicController{
 	@RequestMapping("/adduser")
 	public ModelAndView addUser() {
 		ModelAndView view = new ModelAndView();
-		SysUserEntity entity = new SysUserEntity();
+		SysUser entity = new SysUser();
 
 		Date now = new Date();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -51,11 +51,11 @@ public class UserController extends AbstractBasicController{
 	 */
 	@ResponseBody
 	@RequestMapping("/saveuser")
-	public Map<String, Object>  saveUser(@ModelAttribute SysUserEntity entity,HttpServletResponse response,HttpServletRequest request) {
+	public Map<String, Object>  saveUser(@ModelAttribute SysUser entity,HttpServletResponse response,HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Date now = new Date();
-		entity.setLoginDate(now);
-		entity.setCreateDate(now);
+		
+		entity.setCreate_date(now);
 		sysUserService.save(entity);
 		map.put("code", "0");
 		map.put("msg", "添加成功！");
@@ -73,13 +73,13 @@ public class UserController extends AbstractBasicController{
 	
 	@ResponseBody
 	@RequestMapping("/getlist")
-	public  PageInfo<SysUserEntity>  getList(@ModelAttribute SysUserEntity entity,HttpServletResponse response,HttpServletRequest request) {
+	public  PageInfo<SysUser>  getList(@ModelAttribute SysUser entity,HttpServletResponse response,HttpServletRequest request) {
 		int pageNo = (request.getParameter("page") == null) ? PAGE_NO : IntegerTools.parseInt(request.getParameter("page"));
 		int pageSize = (request.getParameter("rows") == null) ? PAGE_SIZE : IntegerTools.parseInt(request.getParameter("rows"));
 		
 		Map<String, Object> params = new HashMap<String, Object>();
 		
-		PageInfo<SysUserEntity> pages = sysUserService.getList(params, entity, pageNo, pageSize);
+		PageInfo<SysUser> pages = sysUserService.getList(params, entity, pageNo, pageSize);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("total", pages.getTotalrecond());
 		map.put("rows", pages.getResultlist());

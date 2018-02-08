@@ -15,7 +15,7 @@ var SystemMenu = [{
 			href: 'user/adduser.html'
 		},{
 			title: '招标流程',
-			href: 'process.html'
+			href: 'user/userlist.html'
 		},{
 			title: '供应商列表',
 			href: 'providers.html'

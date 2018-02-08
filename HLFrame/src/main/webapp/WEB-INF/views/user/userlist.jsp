@@ -9,10 +9,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>流程页</title>
-<link href="${basePath}/sys/css/base.css" rel="stylesheet">
-<link rel="stylesheet" href="${basePath}/sys/easyui/darkblue/easyui.css">
+<link href="${basePath}/static/css/base.css" rel="stylesheet">
+<link rel="stylesheet" href="${basePath}/static/easyui/darkblue/easyui.css">
 <link rel="stylesheet" type="text/css" href="${basePath}/sys/easyui/darkblue/icon.css">
-<link rel="stylesheet" href="${basePath}/sys/css/providers.css">
+<link rel="stylesheet" href="${basePath}/static/css/providers.css">
 
 </head>
 <body>
@@ -44,9 +44,9 @@
 		</div>
 	</div>
 
-	<script type="text/javascript" src="${basePath}/sys/easyui/jquery.min.js"></script>
-	<script type="text/javascript" src="${basePath}/sys/easyui/jquery.easyui.min.js"></script>
-	<script type="text/javascript" src="${basePath}/sys/easyui/easyui-lang-zh_CN.js"></script>
+	<script type="text/javascript" src="${basePath}/static/easyui/jquery.min.js"></script>
+	<script type="text/javascript" src="${basePath}/static/easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="${basePath}/static/easyui/easyui-lang-zh_CN.js"></script>
 
 	<script type="text/javascript">
 		(function($) {

@@ -8,9 +8,9 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>基本信息</title>
-<link href="${basePath}/sys/css/base.css" rel="stylesheet">
+<link href="${basePath}/static/css/base.css" rel="stylesheet">
 <link rel="stylesheet" href="${basePath}/sys/easyui/darkblue/easyui.css">
-<link href="${basePath}/sys/css/basic_info.css" rel="stylesheet">
+<link href="${basePath}/static/css/basic_info.css" rel="stylesheet">
 </head>
 <body>
 	<div class="container">
@@ -110,9 +110,9 @@
 </body>
 </html>
 <script type="text/javascript"
-	src="${basePath}/sys/easyui/jquery.min.js"></script>
+	src="${basePath}/static/easyui/jquery.min.js"></script>
 <script type="text/javascript"
-	src="${basePath}/sys/easyui/jquery.easyui.min.js"></script>
+	src="${basePath}/static/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript">
   function submitFormData(){
 		$('#save_user').form('submit', {

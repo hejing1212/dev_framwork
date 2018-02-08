@@ -1,4 +1,4 @@
-package com.hy.sys.core;
+package com.hy.sys.core.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -42,6 +42,7 @@ public abstract class AbstractBasicController {
 
 	protected static final String CHARACTER_ENCODING = "UTF-8";
 
+	public static  String basePath=""; 
 	@RequestMapping
 	public void initialize(ModelMap mode, HttpServletRequest req) {
 		String currentTheme = getCookie(req, "currentTheme");
@@ -50,6 +51,9 @@ public abstract class AbstractBasicController {
 		}
 		req.setAttribute("currentTheme", currentTheme);
 		this.init(mode, req);
+		
+		/*basePath=req.getScheme()+req.getServerName()+req.getServerPort()+req.getContextPath();
+		req.setAttribute("basePath", basePath);*/
 	}
 
 	/**
