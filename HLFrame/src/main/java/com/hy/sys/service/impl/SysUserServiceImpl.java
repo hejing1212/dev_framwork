@@ -72,31 +72,69 @@ public class SysUserServiceImpl extends BasicServiceImpl<SysUser> implements Sys
 						SysUser.class);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.hy.sys.service.SysUserService#findByUsername(java.lang.String)
+	/* 
+	 * @see 根据用户名查询
 	 */
 	@Override
 	public SysUser findByUsername(String username) {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuffer sql = new StringBuffer();
+		List<Object> values = new ArrayList<Object>();
+		//sql.append(" SELECT  * ");
+		sql.append(" FROM sys_user   ");
+		sql.append(" WHERE 1=1 ");
+
+		 if(username!="") {
+			sql.append(" AND ( username = ?)");			 
+			values.add(username); 
+		}
+		
+		sql.append(" ORDER BY create_date DESC");
+		List<SysUser> list=getBasicDao().findByHql(sql.toString(), values.toArray());
+		return (SysUser)list.get(0);
 	}
 
 	/* (non-Javadoc)
 	 * @see com.hy.sys.service.SysUserService#findByEmail(java.lang.String)
 	 */
 	@Override
-	public SysUser findByEmail(String username) {
-		// TODO Auto-generated method stub
-		return null;
+	public SysUser findByEmail(String email) {
+		StringBuffer sql = new StringBuffer();
+		List<Object> values = new ArrayList<Object>();
+		//sql.append(" SELECT  * ");
+		sql.append(" FROM sys_user   ");
+		sql.append(" WHERE 1=1 ");
+
+		 if(email!="") {
+			sql.append(" AND ( email = ?)");			 
+			values.add(email); 
+		}
+		
+		sql.append(" ORDER BY create_date DESC");
+		
+		List<SysUser> list=getBasicDao().findByHql(sql.toString(), values.toArray());
+		return (SysUser)list.get(0);
 	}
 
 	/* (non-Javadoc)
-	 * @see com.hy.sys.service.SysUserService#findByPhone(java.lang.String)
+	 * @see 
 	 */
 	@Override
-	public SysUser findByPhone(String username) {
-		// TODO Auto-generated method stub
-		return null;
+	public SysUser findByPhone(String phone) {
+		StringBuffer sql = new StringBuffer();
+		List<Object> values = new ArrayList<Object>();
+		//sql.append(" SELECT  * ");
+		sql.append(" FROM sys_user   ");
+		sql.append(" WHERE 1=1 ");
+
+		 if(phone!="") {
+			sql.append(" AND ( phone = ?)");			 
+			values.add(phone); 
+		}
+		
+		sql.append(" ORDER BY create_date DESC");
+		
+		List<SysUser> list=getBasicDao().findByHql(sql.toString(), values.toArray());
+		return (SysUser)list.get(0);
 	}
 	
 	

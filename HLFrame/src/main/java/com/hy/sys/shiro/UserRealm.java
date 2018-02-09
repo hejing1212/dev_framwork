@@ -24,14 +24,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * 
- * @author 王存见
+ * @author 
  *
  */
 public class UserRealm extends AuthorizingRealm {
 
 	@Autowired
-	private SysUserService userService;
-
+	private SysUserService sysUserService;
+	 
 	/**
 	 * 授权的回调方法
 	 */
@@ -50,11 +50,11 @@ public class UserRealm extends AuthorizingRealm {
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 		UsernamePasswordToken authcToken = (UsernamePasswordToken) token;
 		String username = authcToken.getUsername();
-		SysUser user = userService.findByUsername(username);
+		SysUser user = sysUserService.findByUsername(username);
 		if (user == null) {
-			user = userService.findByEmail(username);
+			user = sysUserService.findByEmail(username);
 			if (user == null) {
-				user = userService.findByPhone(username);
+				user = sysUserService.findByPhone(username);
 			}
 		}
 		if (user == null) {
