@@ -1,4 +1,6 @@
-package com.hy.sys.shiro;
+package com.hy.sys.shiro.authen;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -7,20 +9,17 @@ import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheManager;
 
-import com.hy.sys.utils.SpringContextHolder;
-import com.hy.sys.shiro.RepeatAuthenticationException;
-import com.hy.sys.shiro.UsernamePasswordToken;
 import com.hy.sys.shiro.JCaptchaValidateFilter;
-
-import java.util.concurrent.atomic.AtomicInteger;
+import com.hy.sys.shiro.UsernamePasswordToken;
+import com.hy.sys.utils.SpringContextHolder;
 /**
  * 
  * All rights Reserved, Designed By www.jeeweb.cn
  * @title:  RetryLimitHashedCredentialsMatcher.java   
  * @package cn.jeeweb.modules.sys.security.shiro.web.filter.authc.credential   
  * @description:   密码重试次数限制  
- * @author: hejing
- * @date:   2018年2月8日 下午5:55:43   
+ * @author:   
+ * @date:   2017年6月26日 下午5:55:43   
  * @version V1.0 
  * @copyright: 2017 www.jeeweb.cn Inc. All rights reserved. 
  *
