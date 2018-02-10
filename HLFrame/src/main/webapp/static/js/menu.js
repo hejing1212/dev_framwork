@@ -8,11 +8,11 @@ var SystemMenu = [{
 		isCurrent: true,
 		children: [{
 			title: '首页',
-			href: 'workbench.html',
+			href: '/home/index.html',
 			isCurrent: true
 		},{
 			title: '用户管理',
-			href: 'user/adduser.html'
+			href: '/user/adduser.html'
 		},{
 			title: '招标流程',
 			href: 'user/userlist.html'

@@ -33,7 +33,7 @@ public abstract class BasicServiceImpl<T extends AbstractBasicEntity> implements
 			getBasicDao().delete(entity);
 		}else{
 			entity=pushEntity(entity);
-			entity.setDelFlag(DataStateEnums.DATA_DELETE.getValue());
+			//entity.setDelFlag(DataStateEnums.DATA_DELETE.getValue());
 			getBasicDao().save(entity);			
 		}
 	}

@@ -8,7 +8,7 @@ import net.sf.ehcache.Element;
  * 
  * All rights Reserved, Designed By www.jeeweb.cn
  * @title:  CacheUtils.java   
- * @package cn.jeeweb.core.utils   
+ * @package utils   
  * @description: Cache工具类 
  * @author: 王存见   
  * @date:   2017年6月27日 下午10:41:03   

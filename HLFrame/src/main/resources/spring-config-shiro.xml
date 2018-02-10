@@ -8,7 +8,7 @@
 
 	<!-- 凭证匹配器 -->
 	<bean id="credentialsMatcher"
-		class="com.hy.sys.shiro.RetryLimitHashedCredentialsMatcher">
+		class="com.hy.sys.shiro.authen.RetryLimitHashedCredentialsMatcher">
 		<constructor-arg ref="shiroCacheManager" />
 		<property name="maxRetryCount" value="${shiro.user.password.maxRetryCount}" />
 		<property name="showCaptchaRetryCount" value="${shiro.user.password.showCaptchaRetryCount}" />
@@ -57,7 +57,7 @@
     <!-- 会话验证调度  -->
     <bean id="sessionValidationScheduler" class="com.hy.sys.shiro.session.SpringSessionValidationScheduler">
         <property name="sessionValidationInterval" value="${shiro.session.validation.interval}"/>
-        <property name="sessionManager" ref="sessionManager"/>
+        <!--<property name="sessionManager" ref="sessionManager"/>-->
         <!-- see spring-config-task.xml-->
         <!-- <property name="scheduler" ref="scheduler"/>-->
     </bean>

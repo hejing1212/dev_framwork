@@ -117,7 +117,7 @@ public class UserRealm extends AuthorizingRealm {
 		private boolean mobileLogin; // 是否手机登录
 
 		public Principal(SysUser user, boolean mobileLogin) {
-			this.id = user.getId();
+			this.id = user.getUserid();
 			this.username = user.getUsername();
 			this.realname = user.getRealname();
 			this.mobileLogin = mobileLogin;

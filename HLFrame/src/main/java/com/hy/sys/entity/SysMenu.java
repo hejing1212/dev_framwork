@@ -19,7 +19,7 @@ import com.hy.sys.utils.Comment;
 public class SysMenu extends AbstractBasicEntity {
 
 	private static final long serialVersionUID = 1L;
-	private String id;  
+	
 	private String menuid; // '菜单ID',
 	private String name; // '资源路径',
 	private Integer type; // 菜单类型{1:菜单,2:功能}',
@@ -62,18 +62,6 @@ public class SysMenu extends AbstractBasicEntity {
 	@Id
 	@GeneratedValue(generator = "paymentableGenerator")
 	@GenericGenerator(name = "paymentableGenerator", strategy = "uuid")
-	@Column(name = "id", length = 64)
-	public String getId() {
-		return id;
-	}
-
-
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	
 	@Column(name = "menuid", length = 64)
 	public String getMenuid() {
 		return menuid;
@@ -124,7 +112,7 @@ public class SysMenu extends AbstractBasicEntity {
 		return parent_ids;
 	}
 
-	public void setParent_ids(String parent_ids) {
+	public void setParentIds(String parent_ids) {
 		this.parent_ids = parent_ids;
 	}
 

@@ -62,7 +62,7 @@ public class UserUtils {
 			if (user == null) {
 				return null;
 			}
-			CacheUtils.put(USER_CACHE, USER_CACHE_ID_ + user.getId(), user);
+			CacheUtils.put(USER_CACHE, USER_CACHE_ID_ + user.getUserid(), user);
 			CacheUtils.put(USER_CACHE, USER_CACHE_USER_NAME_ + user.getUsername(), user);
 		}
 		return user;
@@ -81,7 +81,7 @@ public class UserUtils {
 			if (user == null) {
 				return null;
 			}
-			CacheUtils.put(USER_CACHE, USER_CACHE_ID_ + user.getId(), user);
+			CacheUtils.put(USER_CACHE, USER_CACHE_ID_ + user.getUserid(), user);
 			CacheUtils.put(USER_CACHE, USER_CACHE_USER_NAME_ + user.getUsername(), user);
 		}
 		return user;
@@ -102,7 +102,7 @@ public class UserUtils {
 	 * @param user
 	 */
 	public static void clearCache(SysUser user) {
-		CacheUtils.remove(USER_CACHE, USER_CACHE_ID_ + user.getId());
+		CacheUtils.remove(USER_CACHE, USER_CACHE_ID_ + user.getUserid());
 		CacheUtils.remove(USER_CACHE, USER_CACHE_USER_NAME_ + user.getUsername());
 	}
 
@@ -133,7 +133,7 @@ public class UserUtils {
 		List<SysRole> roleList = (List<SysRole>) getCache(CACHE_ROLE_LIST);
 		if (roleList == null) {
 			SysUser user = getUser();
-			roleList = roleService.findListByUserId(user.getId());
+			roleList = roleService.findListByUserId(user.getUserid());
 			putCache(CACHE_ROLE_LIST, roleList);
 		}
 		return roleList;
@@ -158,7 +158,7 @@ public class UserUtils {
 		List<SysMenu> menuList = (List<SysMenu>) getCache(CACHE_MENU_LIST);
 		if (menuList == null) {
 			SysUser user = getUser();
-			menuList = menuService.findMenuByUserId(user.getId());
+			menuList = menuService.findMenuByUserId(user.getUserid());
 			putCache(CACHE_MENU_LIST, menuList);
 		}
 		return menuList;
@@ -212,7 +212,7 @@ public class UserUtils {
 		}
 		List<SysMenu> menuList = getMenuList();
 		for (SysMenu menu : menuList) {
-			if (menuid.equals(menu.getId())) {
+			if (menuid.equals(menu.getMenuid())) {
 				return menu;
 			}
 		}

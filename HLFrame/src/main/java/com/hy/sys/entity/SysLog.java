@@ -9,10 +9,13 @@ import java.util.Map;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -33,7 +36,7 @@ public class SysLog extends AbstractBasicEntity {
 	// 日志类型（1：接入日志；2：错误日志）
 	public static final String TYPE_ACCESS = "1";
 	public static final String TYPE_EXCEPTION = "2";
-
+	private String id;
 	private String type; // '日志类型',
 	private String title; // '日志标题',
 	private String content; // 日志内容',
@@ -68,6 +71,19 @@ public class SysLog extends AbstractBasicEntity {
 		this.params = params;
 		this.exception = exception;
 
+	}
+
+	
+	@Id
+	@GeneratedValue(generator = "paymentableGenerator")
+	@GenericGenerator(name = "paymentableGenerator", strategy = "uuid")
+	@Column(name = "id", length = 64)
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	/** 日志类型 */
@@ -173,7 +189,7 @@ public class SysLog extends AbstractBasicEntity {
 	}
 
 	@Column(name = "params", nullable = true, length = 65535)
-	@Type(type = "cn.jeeweb.core.repository.hibernate.type.ObjectSerializeUserType")
+	@Type(type = "com.hy.sys.core.hibernate.type.ObjectSerializeUserType")
 	public Map<String, String[]> getParams() {
 		return params;
 	}

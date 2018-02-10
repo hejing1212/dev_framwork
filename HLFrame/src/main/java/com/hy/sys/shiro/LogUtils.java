@@ -51,7 +51,7 @@ public class LogUtils {
 	 */
 	public static void saveLog(HttpServletRequest request, Object handler, Exception ex, String title, String content) {
 		SysUser user = UserUtils.getUser();
-		if (user != null && user.getId() != null) {
+		if (user != null && user.getUserid() != null) {
 			SysLog log = new SysLog();
 			log.setTitle(title);
 			log.setType(ex == null ? SysLog.TYPE_ACCESS : SysLog.TYPE_EXCEPTION);
@@ -127,7 +127,7 @@ public class LogUtils {
 						 * }
 						 */
 						for (SysMenu m : menuList) {
-							if (m.getId().equals(id)) {
+							if (m.getMenuid().equals(id)) {
 								namePathList.add(m.getName());
 								break;
 							}

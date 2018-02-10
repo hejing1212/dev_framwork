@@ -1,19 +1,19 @@
 package com.hy.sys.shiro;
 
-import org.apache.shiro.web.filter.AccessControlFilter;
-import org.apache.shiro.web.util.WebUtils;
-
-import com.hy.sys.utils.ServletUtils;
-import com.hy.sys.utils.SpringContextHolder;
-import com.hy.sys.utils.StringUtils;
-import com.hy.sys.jcaptcha.JCaptcha;
-import com.hy.sys.shiro.FormAuthenticationFilter;
-import com.hy.sys.shiro.RetryLimitHashedCredentialsMatcher;
+import java.io.IOException;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
+
+import org.apache.shiro.web.filter.AccessControlFilter;
+import org.apache.shiro.web.util.WebUtils;
+
+import com.hy.sys.jcaptcha.JCaptcha;
+import com.hy.sys.shiro.authen.RetryLimitHashedCredentialsMatcher;
+import com.hy.sys.utils.ServletUtils;
+import com.hy.sys.utils.SpringContextHolder;
+import com.hy.sys.utils.StringUtils;
 
 /**
  * 验证码验证

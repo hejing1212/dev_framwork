@@ -26,6 +26,12 @@ import com.hy.sys.utils.logs.UpdateLog;
 @Service("sysMenuService")
 public class SysMenuServiceImpl extends BasicServiceImpl<SysMenu> implements SysMenuService{
 
+	@Override
+	public List<SysMenu> findMenuByUserId(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	@Autowired
 	private SysMenuDao sysMenuDao;
 	

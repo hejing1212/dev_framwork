@@ -21,7 +21,7 @@ import com.hy.sys.entity.SysUser;
  *
  */
 @Controller
-@RequestMapping("/home")
+@RequestMapping("/admin")
 public class IndexController extends AbstractBasicController{
 
 	/* (non-Javadoc)
@@ -33,6 +33,14 @@ public class IndexController extends AbstractBasicController{
 		basePath="abc";
 	}
 
+	@RequestMapping("/main")
+	public ModelAndView main(ModelMap mode, HttpServletRequest req) {
+		ModelAndView view = new ModelAndView();
+		 req.setAttribute("basePath",basePath);
+		return view;
+	}
+	
+	 
 	@RequestMapping("/index")
 	public ModelAndView index(ModelMap mode, HttpServletRequest req) {
 		ModelAndView view = new ModelAndView();

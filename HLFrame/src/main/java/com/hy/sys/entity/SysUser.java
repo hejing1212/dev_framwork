@@ -2,12 +2,16 @@ package com.hy.sys.entity;
 // Generated 2017-6-26 17:18:09 by Hibernate Tools 4.3.5.Final
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -216,12 +220,13 @@ public class SysUser  extends AbstractBasicEntity{
 		this.del_flag = del_flag;
 	}
 
-	 
+	@ManyToMany
+    @JoinTable(name = "sys_user_role", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "role_id")}) 
 	public Set<SysRole>  getRoleList() {
 		return roleList;
 	}
 
-	public void setRoleList(Set roleList) {
+	public void setRoleList(Set<SysRole> roleList) {
 		this.roleList = roleList;
 	}
 
@@ -229,6 +234,16 @@ public class SysUser  extends AbstractBasicEntity{
 	public String getCredentialsSalt() {
 		return username + salt;
 	}
+	
+	 @Transient
+	    public Set<String> getRolesName() {
+	        Set<SysRole> roles = getRoleList();
+	        Set<String> set = new HashSet<String>();
+	        for (SysRole role : roles) {
+			set.add(role.getName());
+	        }
+	        return set;
+	    }
 
 	
 	

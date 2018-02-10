@@ -7,15 +7,15 @@
     <meta charset="utf-8"> 
     <meta name="viewport" content="width=device-width, initial-scale=1"> 
     <title>海誉信息管理系统</title> 
-<link href="${basePath}/sys/css/base.css" rel="stylesheet">
-<link href="${basePath}/sys/css/platform.css" rel="stylesheet">
-<link rel="stylesheet" href="${basePath}/sys/easyui/darkblue/easyui.css">
+<link href="${basePath}/static/css/base.css" rel="stylesheet">
+<link href="${basePath}/static/css/platform.css" rel="stylesheet">
+<link rel="stylesheet" href="${basePath}/static/easyui/darkblue/easyui.css">
 </head> 
 <body>
     <div class="container">
         <div id="pf-hd">
             <div class="pf-logo">
-                <img src="${basePath}/sys/images/main/main_logo.png" alt="logo">
+                <img src="${basePath}/static/images/main/main_logo.png" alt="logo">
             </div>
             
             <div class="pf-nav-wrap">
@@ -37,7 +37,7 @@
 
             <div class="pf-user">
                 <div class="pf-user-photo">
-                    <img src="${basePath}/sys/images/main/user.png" alt="">
+                    <img src="${basePath}/static/images/main/user.png" alt="">
                 </div>
                 <h4 class="pf-user-name ellipsis">admin</h4>
                 <i class="iconfont xiala">&#xe607;</i>
@@ -97,10 +97,10 @@
          <div id="mm-tabcloseother">关闭其他</div> 
     </div>
 
-    <script type="text/javascript" src="${basePath}/sys/easyui/jquery.min.js"></script>
-    <script type="text/javascript" src="${basePath}/sys/easyui/jquery.easyui.min.js"></script>
-    <script type="text/javascript" src="${basePath}/sys/js/menu.js"></script>
-    <script type="text/javascript" src="${basePath}/sys/js/main.js"></script>
+    <script type="text/javascript" src="${basePath}/static/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="${basePath}/static/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="${basePath}/static/js/menu.js"></script>
+    <script type="text/javascript" src="${basePath}/static/js/main.js"></script>
     <!--[if IE 7]>
       <script type="text/javascript">
         $(window).resize(function(){

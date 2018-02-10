@@ -10,7 +10,7 @@ import com.hy.sys.utils.PageInfo;
 
 /** 
  * 业务逻辑层基类
- * @author He.Xu.Dong 
+ * @author 
  * @Date 2015年12月12日 上午12:28:35 
  * @version 1.0 
  */
