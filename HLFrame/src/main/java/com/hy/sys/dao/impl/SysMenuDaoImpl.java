@@ -6,7 +6,7 @@ import com.hy.sys.core.dao.impl.BasicDaoImpl;
 import com.hy.sys.dao.SysMenuDao;
 import com.hy.sys.entity.SysMenu;
 
-@Repository("SysMenuDao")
+@Repository("sysMenuDao")
 public class SysMenuDaoImpl extends BasicDaoImpl<SysMenu> implements SysMenuDao{
 
 	@Override

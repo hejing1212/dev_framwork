@@ -17,7 +17,7 @@
 		<property name="storedCredentialsHexEncoded" value="${shiro.credentials.storedCredentialsHexEncoded}" />
 	</bean>
     <!-- realm -->
-    <bean id="userRealm" class="com.hy.sys.shiro.realm.UserRealm">
+    <bean id="userRealm" class="com.hy.sys.shiro.UserRealm">
         <property name="credentialsMatcher" ref="credentialsMatcher" />
         <!-- 用切面缓存代理了 此处就不缓存了 -->
         <property name="authenticationCachingEnabled" value="false"/>
@@ -43,14 +43,7 @@
     </bean>
     
     <!--dao -->
-    <!-- 会话保持的DAO -->
-    <bean id="onlineSessionDAO" class="cn.jeeweb.modules.sys.security.shiro.session.mgt.eis.OnlineSessionDAO">
-        <property name="sessionIdGenerator" ref="sessionIdGenerator"/>
-        <property name="activeSessionsCacheName" value="${shiro.active.session.cacheName}"/>
-    </bean>
-
-    <bean id="onlineSessionFactory" class="cn.jeeweb.modules.sys.security.shiro.session.mgt.OnlineSessionFactory"/>
-
+   
     <!-- manager -->
     <!-- Remembered vs Authenticated http://www.ituring.com.cn/article/287 -->
     <bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
@@ -68,32 +61,19 @@
         <!-- see spring-config-task.xml-->
         <!-- <property name="scheduler" ref="scheduler"/>-->
     </bean>
-    <!-- 会话管理器 -->
-    <bean id="sessionManager" class="cn.jeeweb.modules.sys.security.shiro.web.session.mgt.OnlineWebSessionManager">
-        <property name="globalSessionTimeout" value="${shiro.session.globalSessionTimeout}"></property>
-        <property name="sessionFactory" ref="onlineSessionFactory"/>
-        <property name="sessionDAO" ref="onlineSessionDAO"/>
-        <property name="deleteInvalidSessions" value="false"/>
-        <property name="sessionValidationInterval" value="${shiro.session.validation.interval}"/>
-        <property name="sessionValidationSchedulerEnabled" value="true"/>
-        <!--  <property name="sessionValidationScheduler" ref="sessionValidationScheduler"/>-->
-
-        <property name="cacheManager" ref="shiroCacheManager"/>
-        <property name="sessionIdCookieEnabled" value="true"/>
-        <property name="sessionIdCookie" ref="sessionIdCookie"/>
-    </bean>
+ 
 
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <!-- Single realm app.  If you have multiple realms, use the 'realms' property instead. -->
-        <property name="realm" ref="userRealm"/>
-        <property name="sessionManager" ref="sessionManager"/>
+        <!-- <property name="realm" ref="userRealm"/>-->
+        <!--  <property name="sessionManager" ref="sessionManager"/>-->
         <property name="rememberMeManager" ref="rememberMeManager"/>
     </bean>
 
 
     <!-- filter -->
     <!--替换默认的form 验证过滤器-->
-    <bean id="formAuthenticationFilter" class="cn.jeeweb.modules.sys.security.shiro.web.filter.authc.FormAuthenticationFilter">
+    <bean id="formAuthenticationFilter" class="com.hy.sys.shiro.FormAuthenticationFilter">
         <!--<property name="defaultSuccessUrl" value="${shiro.default.success.url}"/>
         <property name="adminDefaultSuccessUrl" value="${shiro.admin.default.success.url}"/>-->
         <property name="successUrl" value="${shiro.default.success.url}"/>
@@ -108,27 +88,20 @@
         <property name="redirectUrl" value="${shiro.logout.success.url}"/>
     </bean>
     <!--提取系统用户（User） 验证用户是否合法的过滤器（如是否删除了 是否锁定了） -->
-    <bean id="sysUserFilter" class="cn.jeeweb.modules.sys.security.shiro.web.filter.user.SysUserFilter">
+    <bean id="sysUserFilter" class="com.hy.sys.shiro.SysUserFilter">
         <property name="userLockedUrl" value="${shiro.user.locked.url}"/>
         <property name="userNotfoundUrl" value="${shiro.user.notfound.url}"/>
         <property name="userUnknownErrorUrl" value="${shiro.user.unknown.error.url}"/>
     </bean>
-    <!-- 验证会话是否是强制退出等的filter -->
-    <bean id="onlineSessionFilter" class="cn.jeeweb.modules.sys.security.shiro.web.filter.online.OnlineSessionFilter">
-        <property name="forceLogoutUrl" value="${shiro.user.force.logout.url}"/>
-        <property name="onlineSessionDAO" ref="onlineSessionDAO"/>
-    </bean>
+   
 
-    <bean id="jCaptchaValidateFilter" class="cn.jeeweb.modules.sys.security.shiro.web.filter.jcaptcha.JCaptchaValidateFilter">
+    <bean id="jCaptchaValidateFilter" class="com.hy.sys.shiro.JCaptchaValidateFilter">
         <property name="jcaptchaEbabled" value="${shiro.jcaptcha.enable}"/>
         <property name="jcaptchaParam" value="jcaptchaCode"/>
         <property name="jcapatchaErrorUrl" value="${shiro.jcaptcha.error.url}"/>
     </bean>
 
-    <!-- 同步当前会话数据到数据库 -->
-    <bean id="syncOnlineSessionFilter" class="cn.jeeweb.modules.sys.security.shiro.web.filter.sync.SyncOnlineSessionFilter">
-        <property name="onlineSessionDAO" ref="onlineSessionDAO"/>
-    </bean>
+    
 
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
@@ -143,8 +116,8 @@
                 <entry key="authc" value-ref="formAuthenticationFilter"/>
                 <entry key="logout" value-ref="logoutFilter"/>
                 <entry key="sysUser" value-ref="sysUserFilter"/>
-                <entry key="onlineSession" value-ref="onlineSessionFilter"/>
-                <entry key="syncOnlineSession" value-ref="syncOnlineSessionFilter"/>
+                <!--<entry key="onlineSession" value-ref="onlineSessionFilter"/>-->
+                <!--<entry key="syncOnlineSession" value-ref="syncOnlineSessionFilter"/>-->
                 <entry key="jCaptchaValidate" value-ref="jCaptchaValidateFilter"/>
             </util:map>
         </property>
