@@ -3,8 +3,8 @@ package com.hy.sys.jcaptcha;
 import com.octo.captcha.service.image.DefaultManageableImageCaptchaService;
 
 /**
- * <p>User: Zhang Kaitao
- * <p>Date: 13-3-22 下午3:38
+ * <p>User:  
+ * <p>Date: 
  * <p>Version: 1.0
  */
 public class EsManageableImageCaptchaService extends DefaultManageableImageCaptchaService {

@@ -8,6 +8,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -53,13 +55,17 @@ public class UserController extends AbstractBasicController{
 	@RequestMapping("/saveuser")
 	public Map<String, Object>  saveUser(@ModelAttribute SysUser entity,HttpServletResponse response,HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		Date now = new Date();
-		
+		Date now = new Date();		
 		entity.setCreate_date(now);
+		String algorithmName = "md5";
+		int hashIterations = 2;
+		String newPassword = new SimpleHash(algorithmName, entity.getPassword(),
+				ByteSource.Util.bytes(entity.getCredentialsSalt()), hashIterations).toHex();
+		entity.setPassword(newPassword);
 		sysUserService.save(entity);
 		map.put("code", "0");
 		map.put("msg", "添加成功！");
-		//return "user/userlist";
+		
 		return map;
 	}
 	

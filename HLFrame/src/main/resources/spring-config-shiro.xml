@@ -127,7 +127,7 @@
                 /jcaptcha* = anon
                 ${admin.url.prefix}/logout = logout
                 ${admin.url.prefix}/login  = jCaptchaValidate,authc
-                /** = sysUser,onlineSession,user,syncOnlineSession,perms,roles
+                /** = sysUser,user,perms,roles
             </value>
         </property>
     </bean>

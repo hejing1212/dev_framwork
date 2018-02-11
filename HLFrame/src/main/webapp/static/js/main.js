@@ -119,6 +119,7 @@ var mainPlatform = {
 	},
 
 	_createSiderMenu: function(menu, index){
+		var basePath="/HLFrame";
 		$('.pf-sider').hide();
 		this._createPageContainer(index);
 		if($('.pf-sider[arrindex='+ index +']').size() > 0) {
@@ -141,13 +142,13 @@ var mainPlatform = {
         		if(m.children && m.children.length > 0) {
         			str = '<li class="current">';
         		}else{
-        			str = '<li class="current no-child" data-href="'+ m.href +'">';
+        			str = '<li class="current no-child" data-href="'+basePath+m.href +'">';
         		}
         	}else{
         		if(m.children && m.children.length > 0) {
         			str = '<li>';
         		}else{
-        			str = '<li class="no-child" data-href="'+ m.href +'">';
+        			str = '<li class="no-child" data-href="'+basePath+m.href +'">';
         		}
         	}
         	//str = m.isCurrent ? '<li class="current">' : '<li>';
@@ -162,14 +163,14 @@ var mainPlatform = {
             for(var j = 0, jlen = m.children.length; j < jlen; j++){
             	var child = m.children[j];
             	if(child.isCurrent){
-            		childStr += '<li class="active" text="'+ child.title +'" data-href="' + child.href + '"><a href="#">'+ child.title +'</a></li>';
+            		childStr += '<li class="active" text="'+ child.title +'" data-href="' +basePath+ child.href + '"><a href="#">'+ child.title +'</a></li>';
             		$('.easyui-tabs1[arrindex='+ index +']').tabs('add',{
 						title: child.title,
-						content: '<iframe class="page-iframe" src="'+ child.href +'" frameborder="no" border="no" height="100%" width="100%" scrolling="auto"></iframe>',
+						content: '<iframe class="page-iframe" src="'+basePath+ child.href +'" frameborder="no" border="no" height="100%" width="100%" scrolling="auto"></iframe>',
 						closable: true
 					});
             	}else {
-            		childStr += '<li text="'+ child.title +'" data-href="' + child.href + '"><a href="#">'+ child.title +'</a></li>';
+            		childStr += '<li text="'+ child.title +'" data-href="' +basePath+ child.href + '"><a href="#">'+ child.title +'</a></li>';
             	}
             }
 

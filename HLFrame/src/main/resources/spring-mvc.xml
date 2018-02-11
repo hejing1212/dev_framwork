@@ -11,8 +11,8 @@
 
 
 	<!-- 自动扫描@Controller注入为bean -->
-	<context:component-scan base-package="com.hy.sys.controller,com.hy.sys.core" />
-
+	<context:component-scan base-package="com.hy.sys.controller,com.hy.sys.core,com.hy.sys.jcaptcha.*" />
+     
 	<!-- 兼容到静态文件和Controller的配统一 -->
 	<mvc:annotation-driven>
 		<!-- 返回json数据，@response使用 -->

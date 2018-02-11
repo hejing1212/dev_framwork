@@ -171,7 +171,7 @@ public class UserUtils {
 	 */
 	public static SysMenu getCurrentMenu() {
 		String url = ServletUtils.getRequest().getServletPath();
-		if (url.endsWith(".jsp")) {
+		if (url.endsWith(".html")) {   //
 			return null;
 		}
 		//String adminUrlPrefix = JeewebPropertiesUtil.getConfig("admin.url.prefix");

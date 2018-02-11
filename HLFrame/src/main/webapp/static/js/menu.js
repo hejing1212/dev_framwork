@@ -8,23 +8,23 @@ var SystemMenu = [{
 		isCurrent: true,
 		children: [{
 			title: '首页',
-			href: '/home/index.html',
+			href: '/admin/index.html',
 			isCurrent: true
 		},{
-			title: '用户管理',
+			title: '添加用户',
 			href: '/user/adduser.html'
 		},{
-			title: '招标流程',
-			href: 'user/userlist.html'
+			title: '用户管理',
+			href: '/user/userlist.html'
 		},{
 			title: '供应商列表',
-			href: 'providers.html'
+			href: '/providers.html'
 		},{
 			title: '详细信息',
-			href: 'providers1.html'
+			href: '/providers1.html'
 		},{
 			title: '企业基本信息',
-			href: 'basic_info.html'
+			href: '/basic_info.html'
 		}]
 	},{
 		title: '采购组织',

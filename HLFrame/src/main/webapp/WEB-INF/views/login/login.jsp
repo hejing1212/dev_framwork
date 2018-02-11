@@ -37,20 +37,20 @@
 							</div>
 							<form>
 								<div class="lg-username input-item clearfix">
-									<i class="iconfont">&#xe60d;</i> <input type="text"
-										placeholder="账号/邮箱">
+									<i class="iconfont">&#xe60d;</i>
+									 <input type="text"	placeholder="账号/邮箱"  name="username">
 								</div>
 								<div class="lg-password input-item clearfix">
 									<i class="iconfont">&#xe634;</i> <input type="password"
-										placeholder="请输入密码">
+										placeholder="请输入密码" name="password">
 								</div>
 								<div class="lg-check clearfix">
 									<div class="input-item">
 										<i class="iconfont">&#xe633;</i> <input type="text"
-											placeholder="验证码">
+											placeholder="验证码" name="rememberMe">
 									</div>
 									<span class="check-code">
-<img id="img_jcaptcha"  src="${appPath}/jcaptcha.jpg" width="114" height="42" onclick="changeJcaptchaSrc();" />
+<img id="img_jcaptcha"  src="${appPath}/jcaptcha.jpg" width="80" height="36" onclick="changeJcaptchaSrc();" />
                                    </span>
 								</div>
 								<div class="tips clearfix">
@@ -59,7 +59,7 @@
 										href="javascript:;" class="forget-pwd">忘记密码？</a>
 								</div>
 								<div class="enter">
-									 <a href="javascript:;" class="purchaser" onClick="UserLogin()">采购商登录</a>
+									 <a href="javascript:;" class="purchaser" onClick="UserLogin()">管理员登录</a>
 									 <a 	href="javascript:;" class="supplier" onClick="javascript:window.location='main.html'">供应商登录</a>
 								</div>
 							</form>
