@@ -29,13 +29,12 @@ import com.hy.sys.utils.logs.UpdateLog;
 @DeleteLog(operationName = "删除用户信息", operationType = SysLogOperationType.Delete)
 @Service("sysUserService")
 public class SysUserServiceImpl extends BasicServiceImpl<SysUser> implements SysUserService {
-	
+
 	@Autowired
 	private SysUserDao sysUserDao;
 
 	@Override
-	public PageInfo<SysUser> getPageList(Map<String, Object> params, SysUser entity, int pageNo,
-			int pageSize) {
+	public PageInfo<SysUser> getPageList(Map<String, Object> params, SysUser entity, int pageNo, int pageSize) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -55,89 +54,91 @@ public class SysUserServiceImpl extends BasicServiceImpl<SysUser> implements Sys
 		sql.append(" FROM sys_user   ");
 		sql.append(" WHERE 1=1 ");
 
-		if (params.containsKey("queryKey")
-				&& params.get("queryKey") != null
-				&& !"".equals(params.get("queryKey"))) {
+		if (params.containsKey("queryKey") && params.get("queryKey") != null && !"".equals(params.get("queryKey"))) {
 			sql.append(" AND ( login_name like ? OR mobile like ? OR name like ? )");
 			String key = params.get("queryKey").toString().trim();
 			values.add("%" + key + "%");
 			values.add("%" + key + "%");
 			values.add("%" + key + "%");
 		}
-		
+
 		sql.append(" ORDER BY create_date DESC");
-		return (PageInfo<SysUser>) getBasicDao()
-				.findPageInfoByQueryJdbc(pageNo, pageSize,
-						sql.toString(), values.toArray(),
-						SysUser.class);
+		return (PageInfo<SysUser>) getBasicDao().findPageInfoByQueryJdbc(pageNo, pageSize, sql.toString(),
+				values.toArray(), SysUser.class);
 	}
 
-	/* 
+	/*
 	 * @see 根据用户名查询
 	 */
 	@Override
 	public SysUser findByUsername(String username) {
 		StringBuffer sql = new StringBuffer();
 		List<Object> values = new ArrayList<Object>();
-		//sql.append(" SELECT  * ");
-		sql.append(" FROM sys_user   ");
+	//sql.append(" SELECT * ");
+		sql.append(" FROM SysUser ");
 		sql.append(" WHERE 1=1 ");
 
-		 if(username!="") {
-			sql.append(" AND ( username = ?)");			 
-			values.add(username); 
+		if (username != "") {
+			sql.append(" AND ( username = ?)");
+			values.add(username);
 		}
-		
+ 
 		sql.append(" ORDER BY create_date DESC");
-		List<SysUser> list=getBasicDao().findByHql(sql.toString(), values.toArray());
-		return (SysUser)list.get(0);
+		//String sqls=" FROM sys_user WHERE 1=1 AND ( username = ?) ORDER BY create_date DESC";
+		List<SysUser> list = getBasicDao().findByHql(sql.toString(),values.toArray());
+		if (list.size() > 0) {
+			return (SysUser) list.get(0);
+		} else {
+			return null;
+		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.hy.sys.service.SysUserService#findByEmail(java.lang.String)
 	 */
 	@Override
 	public SysUser findByEmail(String email) {
 		StringBuffer sql = new StringBuffer();
 		List<Object> values = new ArrayList<Object>();
-		//sql.append(" SELECT  * ");
+		// sql.append(" SELECT * ");
 		sql.append(" FROM sys_user   ");
 		sql.append(" WHERE 1=1 ");
 
-		 if(email!="") {
-			sql.append(" AND ( email = ?)");			 
-			values.add(email); 
+		if (email != "") {
+			sql.append(" AND ( email = ?)");
+			values.add(email);
 		}
-		
+
 		sql.append(" ORDER BY create_date DESC");
-		
-		List<SysUser> list=getBasicDao().findByHql(sql.toString(), values.toArray());
-		return (SysUser)list.get(0);
+
+		List<SysUser> list = getBasicDao().findByHql(sql.toString(), values.toArray());
+		return (SysUser) list.get(0);
 	}
 
-	/* (non-Javadoc)
-	 * @see 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
 	 */
 	@Override
 	public SysUser findByPhone(String phone) {
 		StringBuffer sql = new StringBuffer();
 		List<Object> values = new ArrayList<Object>();
-		//sql.append(" SELECT  * ");
+		// sql.append(" SELECT * ");
 		sql.append(" FROM sys_user   ");
 		sql.append(" WHERE 1=1 ");
 
-		 if(phone!="") {
-			sql.append(" AND ( phone = ?)");			 
-			values.add(phone); 
+		if (phone != "") {
+			sql.append(" AND ( phone = ?)");
+			values.add(phone);
 		}
-		
+
 		sql.append(" ORDER BY create_date DESC");
-		
-		List<SysUser> list=getBasicDao().findByHql(sql.toString(), values.toArray());
-		return (SysUser)list.get(0);
+
+		List<SysUser> list = getBasicDao().findByHql(sql.toString(), values.toArray());
+		return (SysUser) list.get(0);
 	}
-	
-	
-	 
 
 }

@@ -22,7 +22,7 @@ import com.hy.sys.utils.StringUtils;
  * @title:  FormAuthenticationFilter.java   
  * @package cn.jeeweb.modules.sys.security.shiro.web.filter.authc   
  * @description:   表单验证  
- * @author: 王存见   
+ * @author:    
  * @date:   2017年6月26日 下午5:56:03   
  * @version V1.0 
  * @copyright: 2017 www.jeeweb.cn Inc. All rights reserved. 

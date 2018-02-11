@@ -65,7 +65,7 @@
 
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <!-- Single realm app.  If you have multiple realms, use the 'realms' property instead. -->
-        <!-- <property name="realm" ref="userRealm"/>-->
+        <property name="realm" ref="userRealm"/>
         <!--  <property name="sessionManager" ref="sessionManager"/>-->
         <property name="rememberMeManager" ref="rememberMeManager"/>
     </bean>
@@ -127,7 +127,7 @@
                 /jcaptcha* = anon
                 ${admin.url.prefix}/logout = logout
                 ${admin.url.prefix}/login  = jCaptchaValidate,authc
-                /** = sysUser,user,perms,roles
+                /** = sysUser,user,perms,roles,authc
             </value>
         </property>
     </bean>

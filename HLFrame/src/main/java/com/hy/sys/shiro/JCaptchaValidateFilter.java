@@ -18,7 +18,7 @@ import com.hy.sys.utils.StringUtils;
 /**
  * 验证码验证
  * 
- * @author 王存见
+ * @author 
  * @date 2017-02-23
  *
  */

@@ -8,8 +8,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.shiro.crypto.hash.SimpleHash;
-import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -21,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.hy.sys.core.controller.AbstractBasicController;
 import com.hy.sys.entity.SysUser;
 import com.hy.sys.service.SysUserService;
+import com.hy.sys.service.impl.PasswordService;
 import com.hy.sys.utils.ConvertJson;
 import com.hy.sys.utils.IntegerTools;
 import com.hy.sys.utils.PageInfo;
@@ -31,6 +30,8 @@ public class UserController extends AbstractBasicController{
 	@Autowired
 	private SysUserService sysUserService;
 
+	@Autowired
+	private PasswordService passwordService;
 	
 	@Override
 	protected void init(ModelMap mode, HttpServletRequest req) {
@@ -57,11 +58,7 @@ public class UserController extends AbstractBasicController{
 		Map<String, Object> map = new HashMap<String, Object>();
 		Date now = new Date();		
 		entity.setCreate_date(now);
-		String algorithmName = "md5";
-		int hashIterations = 2;
-		String newPassword = new SimpleHash(algorithmName, entity.getPassword(),
-				ByteSource.Util.bytes(entity.getCredentialsSalt()), hashIterations).toHex();
-		entity.setPassword(newPassword);
+		passwordService.encryptPassword(entity);
 		sysUserService.save(entity);
 		map.put("code", "0");
 		map.put("msg", "添加成功！");

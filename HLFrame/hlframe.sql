@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50559
 File Encoding         : 65001
 
-Date: 2018-02-10 23:19:47
+Date: 2018-02-11 22:58:15
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -146,7 +146,7 @@ CREATE TABLE `sys_user` (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('56bfce96b09c4d82b194df4e061016f4', null, 'admin', null, '123123', null, '123', '123', '123', null, '2018-02-10 23:19:08', null, null, null, null);
+INSERT INTO `sys_user` VALUES ('c48e5e7c03f34d1d97f1915b22428c21', '??', 'admin', null, '91936ebdba1fd07fa6947d5f1ffcfdae', 'f247b291e710e44096e7405e024cb78b', '3042415452@qq.com', '13595029936', '1', null, '2018-02-11 22:40:46', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for sys_user_role

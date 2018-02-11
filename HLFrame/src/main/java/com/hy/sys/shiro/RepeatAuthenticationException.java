@@ -5,7 +5,7 @@ import org.apache.shiro.authc.AuthenticationException;
 /**
  * 重复认证异常
  * 
- * @author 王存见
+ * @author 
  *
  */
 @SuppressWarnings("serial")

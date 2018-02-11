@@ -46,6 +46,8 @@ public class LoginController extends AbstractBasicController{
 	public String login(HttpServletRequest req) throws Exception {
 		return "/login/login";
 	}
+	
+	
     @RequestMapping(method=RequestMethod.POST,produces = "text/html; charset=utf-8")
 	public ModelAndView login(HttpServletRequest request, HttpServletRequest response, Model model) throws Exception {
 		System.out.println("开始登录===============ok==============a");

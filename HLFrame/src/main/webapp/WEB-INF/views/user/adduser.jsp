@@ -25,13 +25,16 @@
 							<td class="kv-label">登录名</td>
 							<td class="kv-content"><input class="easyui-textbox"
 								type="text" name="username" /></td>
+								
+								<td class="kv-label">真实姓名</td>
+							<td class="kv-content"><input class="easyui-textbox"
+								type="text" name="realname" /></td>
 								</tr>
 								<tr>
 							<td class="kv-label">登录密码</td>
 							<td class="kv-content"><input class="easyui-textbox"
 								type="text" name="password" /></td>
-								</tr>
-								<tr>
+								
 							<td class="kv-label">确认密码</td>
 							<td class="kv-content"><input class="easyui-textbox"
 								type="text" name="passwords" /></td>
