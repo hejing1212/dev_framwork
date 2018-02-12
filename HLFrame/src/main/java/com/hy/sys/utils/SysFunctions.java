@@ -26,7 +26,7 @@ public class SysFunctions {
 	 * @return: String
 	 */
 	public static String getAdminUrlPrefix() {
-		String adminUrlPrefix = "/admin";  //JeewebPropertiesUtil.getConfig("admin.url.prefix");
+		String adminUrlPrefix = "/admin";   
 		return adminUrlPrefix;
 	}
 
@@ -39,7 +39,7 @@ public class SysFunctions {
 	 * @return: String
 	 */
 	public static String get() {
-		String adminUrlPrefix = "/admin";  //JeewebPropertiesUtil.getConfig("admin.url.prefix");
+		String adminUrlPrefix = "/admin";   
 		return adminUrlPrefix;
 	}
 
@@ -54,7 +54,7 @@ public class SysFunctions {
 	 */
 	public static String getTheme() {
 		// 默认风格
-		String theme =  "/theme";  //JeewebPropertiesUtil.getConfig("admin.default.theme");
+		String theme =  "/theme";   
 		if (StringUtils.isEmpty(theme)) {
 			theme = "uadmin";
 		}

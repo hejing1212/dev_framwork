@@ -74,7 +74,6 @@ public class SysUserServiceImpl extends BasicServiceImpl<SysUser> implements Sys
 	public SysUser findByUsername(String username) {
 		StringBuffer sql = new StringBuffer();
 		List<Object> values = new ArrayList<Object>();
-	//sql.append(" SELECT * ");
 		sql.append(" FROM SysUser ");
 		sql.append(" WHERE 1=1 ");
 
@@ -84,7 +83,6 @@ public class SysUserServiceImpl extends BasicServiceImpl<SysUser> implements Sys
 		}
  
 		sql.append(" ORDER BY create_date DESC");
-		//String sqls=" FROM sys_user WHERE 1=1 AND ( username = ?) ORDER BY create_date DESC";
 		List<SysUser> list = getBasicDao().findByHql(sql.toString(),values.toArray());
 		if (list.size() > 0) {
 			return (SysUser) list.get(0);
@@ -96,21 +94,19 @@ public class SysUserServiceImpl extends BasicServiceImpl<SysUser> implements Sys
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.hy.sys.service.SysUserService#findByEmail(java.lang.String)
+	 * @see  
 	 */
 	@Override
 	public SysUser findByEmail(String email) {
 		StringBuffer sql = new StringBuffer();
 		List<Object> values = new ArrayList<Object>();
-		// sql.append(" SELECT * ");
-		sql.append(" FROM sys_user   ");
+		sql.append(" FROM SysUser   ");
 		sql.append(" WHERE 1=1 ");
 
 		if (email != "") {
 			sql.append(" AND ( email = ?)");
 			values.add(email);
 		}
-
 		sql.append(" ORDER BY create_date DESC");
 
 		List<SysUser> list = getBasicDao().findByHql(sql.toString(), values.toArray());
@@ -126,15 +122,13 @@ public class SysUserServiceImpl extends BasicServiceImpl<SysUser> implements Sys
 	public SysUser findByPhone(String phone) {
 		StringBuffer sql = new StringBuffer();
 		List<Object> values = new ArrayList<Object>();
-		// sql.append(" SELECT * ");
-		sql.append(" FROM sys_user   ");
+		sql.append(" FROM SysUser   ");
 		sql.append(" WHERE 1=1 ");
 
 		if (phone != "") {
 			sql.append(" AND ( phone = ?)");
 			values.add(phone);
 		}
-
 		sql.append(" ORDER BY create_date DESC");
 
 		List<SysUser> list = getBasicDao().findByHql(sql.toString(), values.toArray());
