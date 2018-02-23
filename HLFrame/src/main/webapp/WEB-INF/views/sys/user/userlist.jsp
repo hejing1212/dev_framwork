@@ -74,7 +74,7 @@
 		$(function() {
 			$('#dg').datagrid({
 				//data : getData()
-				url : "${basePath}/user/getlist.html",
+				url : "${basePath}/sys/user/getlist.html",
 				rownumbers : true,
 			}).datagrid('clientPaging');
 		});

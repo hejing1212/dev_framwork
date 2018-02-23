@@ -236,7 +236,7 @@ public class SysUser  extends AbstractBasicEntity{
 	}
 	
 	 @Transient
-	    public Set<String> getRolesName() {
+	 public Set<String> getRolesName() {
 	        Set<SysRole> roles = getRoleList();
 	        Set<String> set = new HashSet<String>();
 	        for (SysRole role : roles) {

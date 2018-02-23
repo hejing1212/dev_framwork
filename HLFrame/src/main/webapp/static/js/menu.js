@@ -11,11 +11,11 @@ var SystemMenu = [{
 			href: '/admin/index.html',
 			isCurrent: true
 		},{
-			title: '添加用户',
-			href: '/user/adduser.html'
-		},{
 			title: '用户管理',
-			href: '/user/userlist.html'
+			href: '/sys/user/userlist.html'
+		},{
+			title: '角色管理',
+			href: '/sys/role/rolelist.html'
 		},{
 			title: '供应商列表',
 			href: '/providers.html'

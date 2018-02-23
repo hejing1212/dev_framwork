@@ -37,7 +37,7 @@ public class SysRole extends AbstractBasicEntity {
 	private String update_by; // '更新者',
 	private Date update_date; // '更新时间',
 	private String remarks; // '备注信息',
-	private String del_flag; // '删除标记',
+	private String del_flag="0"; // '删除标记',
 
 	public SysRole() {
 
@@ -152,7 +152,7 @@ public class SysRole extends AbstractBasicEntity {
 		this.remarks = remarks;
 	}
 
-	@Column(name = "del_flag", length = 64)
+	@Column(name = "del_flag", length = 64,nullable=false)
 	public String getDel_flag() {
 		return del_flag;
 	}

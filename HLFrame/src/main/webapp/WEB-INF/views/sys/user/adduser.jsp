@@ -101,7 +101,7 @@
 		$('#save_user').form('submit', {
 			url : "${basePath}/user/saveuser.html",
 			onSubmit : function() {
-
+                return $(this).form('validate');
 			},
 			success : function(data) {
 				data = JSON.parse(data);

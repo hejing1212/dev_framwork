@@ -26,7 +26,7 @@ import com.hy.sys.utils.IntegerTools;
 import com.hy.sys.utils.PageInfo;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/sys/user")
 public class UserController extends AbstractBasicController {
 	@Autowired
 	private SysUserService sysUserService;
@@ -58,7 +58,7 @@ public class UserController extends AbstractBasicController {
 	public Map<String, Object> saveUser(@ModelAttribute SysUser entity, HttpServletResponse response,
 			HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		SysUser user=UserUtils.getByUserName(entity.getUsername());
+		SysUser user=sysUserService.findByUsername(entity.getUsername());
 		if(user==null) {
 			user=sysUserService.findByPhone(entity.getPhone());
 			if(user==null) {

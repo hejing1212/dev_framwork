@@ -81,9 +81,9 @@ public class SysUserServiceImpl extends BasicServiceImpl<SysUser> implements Sys
 			sql.append(" AND ( username = ?)");
 			values.add(username);
 		}
- 
+
 		sql.append(" ORDER BY create_date DESC");
-		List<SysUser> list = getBasicDao().findByHql(sql.toString(),values.toArray());
+		List<SysUser> list = getBasicDao().findByHql(sql.toString(), values.toArray());
 		if (list.size() > 0) {
 			return (SysUser) list.get(0);
 		} else {
@@ -94,7 +94,7 @@ public class SysUserServiceImpl extends BasicServiceImpl<SysUser> implements Sys
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see  
+	 * @see
 	 */
 	@Override
 	public SysUser findByEmail(String email) {
@@ -110,7 +110,11 @@ public class SysUserServiceImpl extends BasicServiceImpl<SysUser> implements Sys
 		sql.append(" ORDER BY create_date DESC");
 
 		List<SysUser> list = getBasicDao().findByHql(sql.toString(), values.toArray());
-		return (SysUser) list.get(0);
+		if (list.size() > 0) {
+			return (SysUser) list.get(0);
+		} else {
+			return null;
+		}
 	}
 
 	/*
@@ -132,7 +136,11 @@ public class SysUserServiceImpl extends BasicServiceImpl<SysUser> implements Sys
 		sql.append(" ORDER BY create_date DESC");
 
 		List<SysUser> list = getBasicDao().findByHql(sql.toString(), values.toArray());
-		return (SysUser) list.get(0);
+		if (list.size() > 0) {
+			return (SysUser) list.get(0);
+		} else {
+			return null;
+		}
 	}
 
 }

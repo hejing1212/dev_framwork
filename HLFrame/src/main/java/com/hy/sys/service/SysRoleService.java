@@ -12,4 +12,10 @@ public interface SysRoleService extends BasicService<SysRole>{
 	public PageInfo<SysRole> getList(Map<String, Object> params, SysRole entity, int pageNo, int pageSize);
 	
 	public List<SysRole> findListByUserId(String userid);
+
+	/**
+	 * @param name
+	 * @return
+	 */
+	public SysRole getRoleName(String name);
 }
