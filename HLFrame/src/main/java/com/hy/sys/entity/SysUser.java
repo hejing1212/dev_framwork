@@ -25,8 +25,8 @@ import com.hy.sys.utils.Comment;
  */
 @Entity
 @Table(name = "sys_user")
-@Comment(value="用户管理表")
-public class SysUser  extends AbstractBasicEntity{
+@Comment(value = "用户管理表")
+public class SysUser extends AbstractBasicEntity {
 
 	/**
 	 * 是否锁定（1：正常；-1：删除；0：锁定；）
@@ -34,15 +34,14 @@ public class SysUser  extends AbstractBasicEntity{
 	public static final String STATUS_DELETE = "-1";
 	public static final String STATUS_LOCKED = "0";
 	public static final String STATUS_NORMAL = "1";
-	
-	
+
 	private static final long serialVersionUID = 1L;
 	private String userid;
 	private String realname;
 	private String username;
 	private String portrait;
 	private String password;
-	private String salt; //加密随机数
+	private String salt; // 加密随机数
 	private String email;
 	private String phone;
 	private String status;
@@ -62,8 +61,8 @@ public class SysUser  extends AbstractBasicEntity{
 	}
 
 	public SysUser(String userid, String realname, String username, String portrait, String password, String salt,
-			String email, String phone, String status, String create_by, Date create_date, String update_by, Date update_date,
-			String remarks, String del_flag,Set<SysRole> roleList) {
+			String email, String phone, String status, String create_by, Date create_date, String update_by,
+			Date update_date, String remarks, String del_flag, Set<SysRole> roleList) {
 		this.userid = userid;
 		this.realname = realname;
 		this.username = username;
@@ -84,16 +83,16 @@ public class SysUser  extends AbstractBasicEntity{
 
 	@Id
 	@GeneratedValue(generator = "tableIdGenerator")
-	@GenericGenerator(name = "tableIdGenerator", strategy =UUID_GENERATED)	
+	@GenericGenerator(name = "tableIdGenerator", strategy = UUID_GENERATED)
 	@Column(name = "userid", unique = true, nullable = false, length = 64)
 	public String getUserid() {
 		return userid;
 	}
+
 	public void setUserid(String userid) {
 		this.userid = userid;
 	}
-	
-	
+
 	@Column(name = "realname", length = 64)
 	public String getRealname() {
 		return realname;
@@ -116,10 +115,11 @@ public class SysUser  extends AbstractBasicEntity{
 	public String getPortrait() {
 		return portrait;
 	}
-	
+
 	public void setPortrait(String portrait) {
 		this.portrait = portrait;
 	}
+
 	@Column(name = "password", length = 64)
 	public String getPassword() {
 		return password;
@@ -128,7 +128,7 @@ public class SysUser  extends AbstractBasicEntity{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 	@Column(name = "salt", length = 64)
 	public String getSalt() {
 		return salt;
@@ -137,7 +137,7 @@ public class SysUser  extends AbstractBasicEntity{
 	public void setSalt(String salt) {
 		this.salt = salt;
 	}
-	
+
 	@Column(name = "email", length = 64)
 	public String getEmail() {
 		return email;
@@ -188,7 +188,6 @@ public class SysUser  extends AbstractBasicEntity{
 		return update_by;
 	}
 
-
 	public void setUpdate_by(String update_by) {
 		this.update_by = update_by;
 	}
@@ -221,8 +220,9 @@ public class SysUser  extends AbstractBasicEntity{
 	}
 
 	@ManyToMany
-    @JoinTable(name = "sys_user_role", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "role_id")}) 
-	public Set<SysRole>  getRoleList() {
+	@JoinTable(name = "sys_user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "role_id") })
+	public Set<SysRole> getRoleList() {
 		return roleList;
 	}
 
@@ -234,19 +234,19 @@ public class SysUser  extends AbstractBasicEntity{
 	public String getCredentialsSalt() {
 		return username + salt;
 	}
-	
-	 @Transient
-	 public Set<String> getRolesName() {
-	        Set<SysRole> roles = getRoleList();
-	        Set<String> set = new HashSet<String>();
-	        for (SysRole role : roles) {
-			set.add(role.getName());
-	        }
-	        return set;
-	    }
 
-	
-	
-	
-	
+	@Transient
+	public Set<String> getRolesName() {
+		Set<SysRole> roles = getRoleList();
+		if (roles!=null && roles.size() > 0) {
+			Set<String> set = new HashSet<String>();
+			for (SysRole role : roles) {
+				set.add(role.getName());
+			}
+			return set;
+		} else {
+			return null;
+		}
+	}
+
 }
