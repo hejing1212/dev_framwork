@@ -87,6 +87,30 @@ public class SysMenuServiceImpl extends BasicServiceImpl<SysMenu> implements Sys
 						SysUser.class);
 	}
 
+	/*
+	 * @see 查询菜单是否添加过，避免重复添加
+	 */
+	@Override
+	public SysMenu findByName(String menuname) {
+		StringBuffer sql = new StringBuffer();
+		List<Object> values = new ArrayList<Object>();
+		sql.append(" FROM SysMenu ");
+		sql.append(" WHERE 1=1 ");
+
+		if (menuname != "") {
+			sql.append(" AND (name = ?)");
+			values.add(menuname);
+		}
+
+		sql.append(" ORDER BY create_date DESC");
+		List<SysMenu> list = getBasicDao().findByHql(sql.toString(), values.toArray());
+		if (list.size() > 0) {
+			return (SysMenu) list.get(0);
+		} else {
+			return null;
+		}
+	}
+	
 	@Override
 	protected BasicDao<SysMenu> getBasicDao() {
 		// TODO Auto-generated method stub

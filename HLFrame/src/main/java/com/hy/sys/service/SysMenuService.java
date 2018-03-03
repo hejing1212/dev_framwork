@@ -11,6 +11,6 @@ public interface SysMenuService extends BasicService<SysMenu> {
 	public PageInfo<SysMenu> getList(Map<String, Object> params, SysMenu entity, int pageNo, int pageSize);
 
 	public List<SysMenu> findMenuByUserId(String userid);
-	
+	public SysMenu findByName(String name);
 	 
 }

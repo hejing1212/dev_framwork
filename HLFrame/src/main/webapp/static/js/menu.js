@@ -17,8 +17,8 @@ var SystemMenu = [{
 			title: '角色管理',
 			href: '/sys/role/rolelist.html'
 		},{
-			title: '供应商列表',
-			href: '/providers.html'
+			title: '菜单管理',
+			href: '/sys/memu/memulist.html'
 		},{
 			title: '详细信息',
 			href: '/providers1.html'

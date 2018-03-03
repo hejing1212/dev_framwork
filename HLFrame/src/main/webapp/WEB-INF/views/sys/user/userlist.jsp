@@ -51,7 +51,7 @@
 					class="easyui-linkbutton" iconCls="icon-reload">重置</a>
 			</div>
 			<div class="opt-buttons">
-				<a href="${basePath}/user/adduser.html" class="easyui-linkbutton" data-options="iconCls:'icon-add'"> 新增</a>
+				<a href="${basePath}/sys/user/adduser.html" class="easyui-linkbutton" data-options="iconCls:'icon-add'"> 新增</a>
 				<a href="javascript:void(0)" onclick="editUser();" class="easyui-linkbutton" data-options="iconCls:'icon-edit'">修改</a> <a href="#"
 					class="easyui-linkbutton" data-options="iconCls:'icon-reload'">重置密码</a>  
 			</div>

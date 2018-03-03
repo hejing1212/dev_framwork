@@ -21,7 +21,7 @@ import com.hy.sys.utils.SpringContextHolder;
  * @author:   
  * @date:   2017年6月26日 下午5:55:43   
  * @version V1.0 
- * @copyright: 2017 www.jeeweb.cn Inc. All rights reserved. 
+ * @copyright: 2018 All rights reserved. 
  *
  */
 public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher {

@@ -99,7 +99,7 @@
 	 */
 	function submitFormData() {
 		$('#save_user').form('submit', {
-			url : "${basePath}/user/saveuser.html",
+			url : "${basePath}/sys/user/saveuser.html",
 			onSubmit : function() {
                 return $(this).form('validate');
 			},

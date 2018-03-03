@@ -4,8 +4,11 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -31,14 +34,17 @@ public class SysMenu extends AbstractBasicEntity {
 	private Integer sort; // '排序',
 	private String menu_icon; // '图标',
 	private String remarks; // '摘要',
-	private String create_by;
+	private SysUser create_by;
 	private Date create_date;
 	private String update_by;
 	private Date update_date;
 	private String del_flag;
 
+	public SysMenu() {
+		
+	}
 	public SysMenu(String menuid, String name, Integer type, String url, String parent_id, String parent_ids,
-			String permission, Integer isshow, Integer sort, String menu_icon, String remarks, String create_by,
+			String permission, Integer isshow, Integer sort, String menu_icon, String remarks, SysUser create_by,
 			Date create_date,String update_by,Date update_date,String del_flag) {
 		this.menuid=menuid;                            // '菜单ID',
 		this.name=name;                                // '资源路径',
@@ -160,13 +166,14 @@ public class SysMenu extends AbstractBasicEntity {
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
-
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "create_by")
 	@Column(name = "create_by", length = 32)
-	public String getCreate_by() {
+	public SysUser getCreate_by() {
 		return create_by;
 	}
 
-	public void setCreate_by(String create_by) {
+	public void setCreate_by(SysUser create_by) {
 		this.create_by = create_by;
 	}
 

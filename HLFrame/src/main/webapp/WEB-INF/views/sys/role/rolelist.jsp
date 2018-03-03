@@ -21,7 +21,7 @@
 <body>
 	<div class="container">
 
-		<table id="dg" style="width: 100%; height: 554px" title="全体供应商列表"
+		<table id="dg" style="width: 100%; height: 554px" title="角色列表"
 			data-options="  rownumbers:true,
                 singleSelect:false, autoRowHeight:false,  pagination:true, fitColumns:true,  striped:true,  checkOnSelect:false,
                 selectOnCheck:false, collapsible:true,  toolbar:'#tb',  pageSize:10">
@@ -52,7 +52,8 @@
 			</div>
 			<div class="opt-buttons">
 				<a href="${basePath}/sys/role/addrole.html" class="easyui-linkbutton" data-options="iconCls:'icon-add'"> 新增</a>
-				<a href="javascript:void(0)" onclick="editUser();" class="easyui-linkbutton" data-options="iconCls:'icon-edit'">修改</a> 
+				<a href="javascript:void(0)" onclick=" " class="easyui-linkbutton" data-options="iconCls:'icon-edit'">修改</a>
+				<a href="javascript:void(0)" onclick="setRole();" class="easyui-linkbutton" data-options="iconCls:'icon-edit'">角色受权管理</a>  
 			</div>
 
 		</div>
@@ -79,7 +80,7 @@
 		});
 		
 		//编辑角色
-		function editUser() {
+		function editRole() {
 		    var row = $('#dg').datagrid('getSelected');
 		    if (row) {
 		        if (row.userid == '') {
@@ -103,6 +104,10 @@
 		            showType: 'slide'
 		        });
 		    }
+		}
+		
+		function setRole(){
+			 var row = $('#dg').datagrid('getSelected');
 		}
 	</script>
 
