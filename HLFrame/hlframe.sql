@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50559
 File Encoding         : 65001
 
-Date: 2018-02-11 22:58:15
+Date: 2018-03-04 23:47:35
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -68,12 +68,20 @@ CREATE TABLE `sys_menu` (
   `del_flag` char(1) DEFAULT NULL,
   PRIMARY KEY (`menuid`),
   KEY `idx_sys_resource_parent_id` (`parent_id`),
-  KEY `idx_sys_resource_parent_ids` (`parent_ids`(255))
+  KEY `idx_sys_resource_parent_ids` (`parent_ids`(255)),
+  KEY `FK_chmy2umajqqsxs72xupaw2bp2` (`create_by`),
+  KEY `FK_qpmp4gcxex623foonm8iatf2s` (`update_by`),
+  CONSTRAINT `FK_chmy2umajqqsxs72xupaw2bp2` FOREIGN KEY (`create_by`) REFERENCES `sys_user` (`userid`),
+  CONSTRAINT `FK_qpmp4gcxex623foonm8iatf2s` FOREIGN KEY (`update_by`) REFERENCES `sys_user` (`userid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_menu
 -- ----------------------------
+INSERT INTO `sys_menu` VALUES ('4028817261ec86300161ec87e7070000', '用户管理', '1', 'sys/user/userlist.html', '0', null, 'sys:user', '1', '1', '2av', '用户管理', 'c48e5e7c03f34d1d97f1915b22428c21', '2018-03-03 23:42:58', null, null, null);
+INSERT INTO `sys_menu` VALUES ('4028817261ec86300161ec8b18d90001', '角色管理', '1', 'sys/role/rolelist.html', '4028817261ec86300161ec87e7070000', null, 'sys:role', '1', '1', '2av', '角色管理', 'c48e5e7c03f34d1d97f1915b22428c21', '2018-03-03 23:46:33', null, null, null);
+INSERT INTO `sys_menu` VALUES ('4028817261ee84fb0161ee86b8d30000', '菜单管理', '1', '/sys/menu', '4028817261ec86300161ec87e7070000', null, 'sys:menu', '1', '1', null, '菜单管理', 'c48e5e7c03f34d1d97f1915b22428c21', '2018-03-04 09:01:02', null, null, null);
+INSERT INTO `sys_menu` VALUES ('4028817261f0a66a0161f0b6ea960000', '菜单添加', '1', 'sys/menu/add.html', '4028817261ee84fb0161ee86b8d30000', null, 'sys:menu:add', '1', '0', null, '菜单添加', 'c48e5e7c03f34d1d97f1915b22428c21', '2018-03-04 19:12:52', null, null, null);
 
 -- ----------------------------
 -- Table structure for sys_role
