@@ -62,6 +62,15 @@ public class SysMenuServiceImpl extends BasicServiceImpl<SysMenu> implements Sys
 		// TODO Auto-generated method stub
 		return null;
 	}
+/**
+ * 方法未实现 
+ * @param userid
+ * @return
+ */
+	public List<SysMenu> findMenuByUserId(String userid) {
+		List<SysMenu> list=new ArrayList<SysMenu>();
+		return list;
+	}
 
 	/**
 	 * 查询所有菜单，遍历后返回
@@ -93,11 +102,11 @@ public class SysMenuServiceImpl extends BasicServiceImpl<SysMenu> implements Sys
 	 * @return
 	 */
 	public ArrayList<SysMenu> CreateMenuTree(List<SysMenu> list, String menuid, ArrayList<SysMenu> li) {
- 
+
 		for (int i = 0; i < list.size(); i++) {
 			SysMenu menu = list.get(i);
 			if (menu.getParent_id().equals(menuid)) {
-				ArrayList<SysMenu> retli=new ArrayList<SysMenu>();
+				ArrayList<SysMenu> retli = new ArrayList<SysMenu>();
 				ArrayList<SysMenu> childenList = CreateMenuTree(list, menu.getMenuid(), retli);
 				if (childenList.size() > 0) {
 					menu.setChildren(childenList);
@@ -105,7 +114,7 @@ public class SysMenuServiceImpl extends BasicServiceImpl<SysMenu> implements Sys
 				li.add(menu);
 			}
 		}
-		
+
 		return li;
 	}
 
