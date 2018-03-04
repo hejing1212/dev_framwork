@@ -1,6 +1,7 @@
 package com.hy.sys.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,8 +12,6 @@ import com.hy.sys.core.dao.BasicDao;
 import com.hy.sys.core.service.impl.BasicServiceImpl;
 import com.hy.sys.dao.SysMenuDao;
 import com.hy.sys.entity.SysMenu;
-import com.hy.sys.entity.SysRole;
-import com.hy.sys.entity.SysUser;
 import com.hy.sys.service.SysMenuService;
 import com.hy.sys.utils.PageInfo;
 import com.hy.sys.utils.logs.DeleteLog;
@@ -24,68 +23,9 @@ import com.hy.sys.utils.logs.UpdateLog;
 @UpdateLog(operationName = "修改用户信息", operationType = SysLogOperationType.Update)
 @DeleteLog(operationName = "删除用户信息", operationType = SysLogOperationType.Delete)
 @Service("sysMenuService")
-public class SysMenuServiceImpl extends BasicServiceImpl<SysMenu> implements SysMenuService{
-
-	@Override
-	public List<SysMenu> findMenuByUserId(String id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+public class SysMenuServiceImpl extends BasicServiceImpl<SysMenu> implements SysMenuService {
 	@Autowired
 	private SysMenuDao sysMenuDao;
-	
-	@SuppressWarnings("unchecked")
-	@Override
-	public PageInfo<SysMenu> getPageList(Map<String, Object> params, SysMenu entity, int pageNo, int pageSize) {
-		StringBuffer sql = new StringBuffer();
-		List<Object> values = new ArrayList<Object>();
-		sql.append(" SELECT  * ");
-		sql.append(" FROM sys_menu   ");
-		sql.append(" WHERE 1=1 ");
-
-		if (params.containsKey("queryKey")
-				&& params.get("queryKey") != null
-				&& !"".equals(params.get("queryKey"))) {
-			sql.append(" AND ( name like ? OR type = ? OR url like ? )");
-			String key = params.get("queryKey").toString().trim();
-			values.add("%" + key + "%");
-			values.add("%" + key + "%");
-			values.add("%" + key + "%");
-		}
-		
-		sql.append(" ORDER BY create_date DESC");
-		return (PageInfo<SysMenu>) getBasicDao()
-				.findPageInfoByQueryJdbc(pageNo, pageSize,
-						sql.toString(), values.toArray(),
-						SysUser.class);
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public PageInfo<SysMenu> getList(Map<String, Object> params, SysMenu entity, int pageNo, int pageSize) {
-		StringBuffer sql = new StringBuffer();
-		List<Object> values = new ArrayList<Object>();
-		sql.append(" SELECT  * ");
-		sql.append(" FROM sys_menu   ");
-		sql.append(" WHERE 1=1 ");
-
-		if (params.containsKey("queryKey")
-				&& params.get("queryKey") != null
-				&& !"".equals(params.get("queryKey"))) {
-			sql.append(" AND ( name like ? OR type = ? OR url like ? )");
-			String key = params.get("queryKey").toString().trim();
-			values.add("%" + key + "%");
-			values.add("%" + key + "%");
-			values.add("%" + key + "%");
-		}
-		
-		sql.append(" ORDER BY create_date DESC");
-		return (PageInfo<SysMenu>) getBasicDao()
-				.findPageInfoByQueryJdbc(pageNo, pageSize,
-						sql.toString(), values.toArray(),
-						SysUser.class);
-	}
 
 	/*
 	 * @see 查询菜单是否添加过，避免重复添加
@@ -110,14 +50,63 @@ public class SysMenuServiceImpl extends BasicServiceImpl<SysMenu> implements Sys
 			return null;
 		}
 	}
-	
+
 	@Override
 	protected BasicDao<SysMenu> getBasicDao() {
 		// TODO Auto-generated method stub
 		return sysMenuDao;
 	}
 
-	 
-	 
+	@Override
+	public PageInfo<SysMenu> getPageList(Map<String, Object> params, SysMenu entity, int pageNo, int pageSize) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * 查询所有菜单，遍历后返回
+	 */
+	@Override
+	public ArrayList<SysMenu> getMenuTree() {
+		List<SysMenu> list = getBasicDao().findAll(SysMenu.class);
+		ArrayList<SysMenu> arraylist = new ArrayList<SysMenu>();
+		ArrayList<SysMenu> retlist = new ArrayList<SysMenu>();
+		if (list.size() > 0) {
+			SysMenu menu = new SysMenu();
+			menu.setMenuid("0");
+			menu.setName("顶级菜单");
+			ArrayList<SysMenu> arlist = CreateMenuTree(list, "0", retlist);
+			if (arlist.size() > 0) {
+				menu.setChildren(arlist);
+			}
+			arraylist.add(menu);
+			return arraylist;
+		} else {
+			return null;
+		}
+	}
+
+	/**
+	 * 根据菜单的子父级关系生成上下级关系的数据
+	 * 
+	 * @param menu
+	 * @return
+	 */
+	public ArrayList<SysMenu> CreateMenuTree(List<SysMenu> list, String menuid, ArrayList<SysMenu> li) {
+ 
+		for (int i = 0; i < list.size(); i++) {
+			SysMenu menu = list.get(i);
+			if (menu.getParent_id().equals(menuid)) {
+				ArrayList<SysMenu> retli=new ArrayList<SysMenu>();
+				ArrayList<SysMenu> childenList = CreateMenuTree(list, menu.getMenuid(), retli);
+				if (childenList.size() > 0) {
+					menu.setChildren(childenList);
+				}
+				li.add(menu);
+			}
+		}
+		
+		return li;
+	}
 
 }

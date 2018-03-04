@@ -1,5 +1,6 @@
 package com.hy.sys.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -10,12 +11,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hy.sys.core.entity.AbstractBasicEntity;
 import com.hy.sys.utils.Comment;
 
+import antlr.collections.List;
+ 
 @Entity
 @Table(name = "sys_menu")
 @Comment(value = "菜单管理表")
@@ -36,16 +41,16 @@ public class SysMenu extends AbstractBasicEntity {
 	private String remarks; // '摘要',
 	private SysUser create_by;
 	private Date create_date;
-	private String update_by;
+	private SysUser update_by;
 	private Date update_date;
 	private String del_flag;
-
+	private ArrayList<SysMenu> children;
 	public SysMenu() {
 		
 	}
 	public SysMenu(String menuid, String name, Integer type, String url, String parent_id, String parent_ids,
 			String permission, Integer isshow, Integer sort, String menu_icon, String remarks, SysUser create_by,
-			Date create_date,String update_by,Date update_date,String del_flag) {
+			Date create_date,SysUser update_by,Date update_date,String del_flag) {
 		this.menuid=menuid;                            // '菜单ID',
 		this.name=name;                                // '资源路径',
 		this.type=type;                                // 菜单类型{1:菜单,2:功能}',
@@ -168,7 +173,7 @@ public class SysMenu extends AbstractBasicEntity {
 	}
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "create_by")
-	@Column(name = "create_by", length = 32)
+	@JsonIgnore
 	public SysUser getCreate_by() {
 		return create_by;
 	}
@@ -185,13 +190,14 @@ public class SysMenu extends AbstractBasicEntity {
 	public void setCreate_date(Date create_date) {
 		this.create_date = create_date;
 	}
-
-	@Column(name = "update_by", length = 32)
-	public String getUpdate_by() {
+		
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "update_by") 
+	public SysUser getUpdate_by() {
 		return update_by;
 	}
 
-	public void setUpdate_by(String update_by) {
+	public void setUpdate_by(SysUser update_by) {
 		this.update_by = update_by;
 	}
 
@@ -211,6 +217,14 @@ public class SysMenu extends AbstractBasicEntity {
 
 	public void setDel_flag(String del_flag) {
 		this.del_flag = del_flag;
+	}
+	/**增加了一个数据库没有的字段**/
+	@Transient
+	public ArrayList<SysMenu> getChildren() {
+		return children;
+	}
+	public void setChildren(ArrayList<SysMenu> children) {
+		this.children = children;
 	}
 
 }

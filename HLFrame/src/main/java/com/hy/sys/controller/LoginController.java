@@ -53,7 +53,7 @@ public class LoginController extends AbstractBasicController{
 		System.out.println("开始登录===============ok==============a");
 		Principal principal = UserUtils.getPrincipal(); // 如果已经登录，则跳转到管理首页
 		if (principal != null && !principal.isMobileLogin()) {
-			return new ModelAndView("redirect:/admin");
+			return new ModelAndView("redirect:/admin/main.html");
 		}
 
 		String useruame = WebUtils.getCleanParam(request, FormAuthenticationFilter.DEFAULT_USERNAME_PARAM);

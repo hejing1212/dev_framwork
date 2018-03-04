@@ -52,7 +52,7 @@
 					class="easyui-linkbutton" iconCls="icon-reload">重置</a>
 			</div>
 			<div class="opt-buttons">
-				<a href="${basePath}/sys/user/addmemu.html" class="easyui-linkbutton" data-options="iconCls:'icon-add'"> 新增</a>
+				<a href="${basePath}/sys/memu/addmemu.html" class="easyui-linkbutton" data-options="iconCls:'icon-add'"> 新增</a>
 				<a href="javascript:void(0)" onclick="editMemu();" class="easyui-linkbutton" data-options="iconCls:'icon-edit'">修改</a>
 			</div>
 

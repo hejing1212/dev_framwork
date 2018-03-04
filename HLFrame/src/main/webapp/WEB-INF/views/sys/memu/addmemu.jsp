@@ -17,64 +17,68 @@
 </head>
 <body>
 	<div class="container">
-		<form id="save_user" method="post">
+		<form id="save_menu" method="post">
 			<div class="content">
 				<div class="column">
-					<span class="current">基础信息</span>
+					<span class="current">菜单信息</span>
 				</div>
 				<table class="kv-table">
 					<tbody>
 						<tr>
-							<td class="kv-label">菜单名称</td>
+						<td class="kv-label">上级资源</td>
+							<td class="kv-content">
+							<select class="easyui-combotree" name="parent_id"  id="parent_id" data-options="required:true"   style="height:35px;width:40%">
+							</select>
+                             </td>
+								
+							<td class="kv-label">资源名称</td>
 							<td class="kv-content"><input class="easyui-textbox"
-								type="text" name="name" data-options="required:true" /></td>
+								type="text" name="name" data-options="required:true" style="height:35px;" /></td>
 
-							<td class="kv-label">真实姓名</td>
+							
+						</tr>
+						 
+						<tr>
+							<td class="kv-label">权限字符</td>
 							<td class="kv-content"><input class="easyui-textbox"
-								type="text" name="realname" data-options="required:true" /></td>
+								type="text" name="permission" data-options="required:true"  style="height:35px;"/></td>
+								
+								<td class="kv-label">地址</td>
+							<td class="kv-content"><input class="easyui-textbox"
+								type="text" name="url" data-options="required:true"  style="height:35px;"/></td>
+						 
 						</tr>
 						<tr>
-							<td class="kv-label">登录密码</td>
-							<td class="kv-content"><input class="easyui-textbox"
-								type="password" name="password" data-options="required:true" /></td>
-
-							<td class="kv-label">确认密码</td>
-							<td class="kv-content"><input class="easyui-textbox"
-								type="password" name="passwords" data-options="required:true" /></td>
+						<td class="kv-label">图标</td>
+							<td class="kv-content"> 
+							<input class="easyui-filebox" name="file1" data-options="prompt:'请选择文件...', buttonText:' 选 择 '"   style="width:80%;height:35px;">
+							</td>
+								 <td class="kv-label">排序</td>
+							<td class="kv-content"  ><input class="easyui-textbox"
+								type="text" name="sort" data-options="required:true"  style="height:35px;"/></td>
+								
 						</tr>
 						<tr>
-							<td class="kv-label">联系电话</td>
-							<td class="kv-content"><input class="easyui-textbox"
-								type="text" name="phone" data-options="required:true" /></td>
-							<td class="kv-label">邮箱</td>
-							<td class="kv-content"><input class="easyui-textbox"
-								type="text" name="email"
-								data-options="required:true,validType:'email" /></td>
+						<td class="kv-label">就否显示</td>
+							<td class="kv-content"  ><input type="radio"
+								name="isshow" value="1" checked="checked"
+								class="easyui-radiobox"> 显示 <input type="radio"
+								name="isshow" value="0" class="easyui-radiobox"> 隐藏</td>
+							<td class="kv-label">类型</td>
+							<td class="kv-content"  ><input type="radio"
+								name="type" value="1" checked="checked"
+								class="easyui-radiobox"> 模块 <input type="radio"
+								name="type" value="0" class="easyui-radiobox"> 菜单</td>
 						</tr>
-						<tr>
-							<td class="kv-label">状态</td>
-							<td class="kv-content" colspan="3"><input type="radio"
-								name="status" value="1" checked="checked"
-								class="easyui-radiobox"> 正常 <input type="radio"
-								name="status" value="0" class="easyui-radiobox"> 锁定</td>
-						</tr>
-
-					</tbody>
-				</table>
-				<div class="column">
-					<span class="current">扩展信息</span>
-				</div>
-				<table class="kv-table">
-					<tbody>
-						
-						<tr>
-							<td class="kv-label">备注</td>
-							<td class="kv-content" colspan="5">
+						 <tr>
+							<td class="kv-label">摘要</td>
+							<td class="kv-content" colspan="3">
 							<textarea rows="5" cols="50" name="remarks"></textarea></td>
 
 						</tr>
 					</tbody>
 				</table>
+				 
 				<div class="easyui-panel" style="padding: 10px;">
 					<a href="javascript:void(0)" class="easyui-linkbutton"
 						data-options="iconCls:'icon-save'" onclick="submitFormData()">保存</a>
@@ -98,8 +102,8 @@
 	 * 提交表单
 	 */
 	function submitFormData() {
-		$('#save_user').form('submit', {
-			url : "${basePath}/sys/user/saveuser.html",
+		$('#save_menu').form('submit', {
+			url : "${basePath}/sys/memu/savemenu.html",
 			onSubmit : function() {
                 return $(this).form('validate');
 			},
@@ -121,4 +125,18 @@
 	function clearForm() {
 		$('#save_user').form('clear');
 	}
+	
+	$(function(){ 
+		$("#parent_id").combotree({
+			url:"${basePath}/sys/memu/memuTreeJson.html",
+			 
+			idField: 'menuid',
+			treeField: 'name',
+			onLoadSuccess:function(node, data){
+				$("#parent_id").combotree('setValue',data[0].menuid);
+			}
+		});
+	})
+	
+
 </script>
