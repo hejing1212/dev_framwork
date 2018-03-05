@@ -12,6 +12,7 @@ import com.hy.sys.core.dao.BasicDao;
 import com.hy.sys.core.service.impl.BasicServiceImpl;
 import com.hy.sys.dao.SysMenuDao;
 import com.hy.sys.entity.SysMenu;
+import com.hy.sys.entity.TreeNode;
 import com.hy.sys.service.SysMenuService;
 import com.hy.sys.utils.PageInfo;
 import com.hy.sys.utils.logs.DeleteLog;
@@ -76,19 +77,19 @@ public class SysMenuServiceImpl extends BasicServiceImpl<SysMenu> implements Sys
 	 * 查询所有菜单，遍历后返回
 	 */
 	@Override
-	public ArrayList<SysMenu> getMenuTree() {
+	public ArrayList<TreeNode> getMenuTree() {
 		List<SysMenu> list = getBasicDao().findAll(SysMenu.class);
-		ArrayList<SysMenu> arraylist = new ArrayList<SysMenu>();
-		ArrayList<SysMenu> retlist = new ArrayList<SysMenu>();
+		ArrayList<TreeNode> arraylist = new ArrayList<TreeNode>();
+		ArrayList<TreeNode> retlist = new ArrayList<TreeNode>();
 		if (list.size() > 0) {
-			SysMenu menu = new SysMenu();
-			menu.setMenuid("0");
-			menu.setName("顶级菜单");
-			ArrayList<SysMenu> arlist = CreateMenuTree(list, "0", retlist);
+			TreeNode tree = new TreeNode();
+			tree.setId("0");
+			tree.setText("顶级菜单");
+			ArrayList<TreeNode> arlist = CreateMenuTree(list, "0", retlist);
 			if (arlist.size() > 0) {
-				menu.setChildren(arlist);
+				tree.setChildren(arlist);
 			}
-			arraylist.add(menu);
+			arraylist.add(tree);
 			return arraylist;
 		} else {
 			return null;
@@ -101,20 +102,60 @@ public class SysMenuServiceImpl extends BasicServiceImpl<SysMenu> implements Sys
 	 * @param menu
 	 * @return
 	 */
-	public ArrayList<SysMenu> CreateMenuTree(List<SysMenu> list, String menuid, ArrayList<SysMenu> li) {
+	public ArrayList<TreeNode> CreateMenuTree(List<SysMenu> list, String menuid, ArrayList<TreeNode> li) {
 
 		for (int i = 0; i < list.size(); i++) {
 			SysMenu menu = list.get(i);
 			if (menu.getParent_id().equals(menuid)) {
+				TreeNode tree=new TreeNode();
+				tree.setId(menu.getMenuid());
+				tree.setText(menu.getName());
+				ArrayList<TreeNode> retli = new ArrayList<TreeNode>();
+				ArrayList<TreeNode> childenList = CreateMenuTree(list, menu.getMenuid(), retli);
+				if (childenList.size() > 0) {
+					tree.setChildren(childenList);
+				}
+				li.add(tree);
+			}
+		}
+		return li;
+	}
+	
+	/**
+	 * 查询所有菜单，遍历后返回列表
+	 */
+	@Override
+	public ArrayList<SysMenu> getMenuList() {
+		List<SysMenu> list = getBasicDao().findAll(SysMenu.class);
+		ArrayList<SysMenu> retlist = new ArrayList<SysMenu>();
+		if (list.size() > 0) {
+			ArrayList<SysMenu> arlist = CreateMenuList(list, "0", retlist);
+			return arlist;
+		} else {
+			return null;
+		}
+	}
+	
+	/**
+	 * 根据菜单的子父级关系生成上下级关系的数据
+	 * 
+	 * @param menu
+	 * @return
+	 */
+	public ArrayList<SysMenu> CreateMenuList(List<SysMenu> list, String menuid, ArrayList<SysMenu> li) {
+
+		for (int i = 0; i < list.size(); i++) {
+			SysMenu menu = list.get(i);
+			if (menu.getParent_id().equals(menuid)) {
+				 
 				ArrayList<SysMenu> retli = new ArrayList<SysMenu>();
-				ArrayList<SysMenu> childenList = CreateMenuTree(list, menu.getMenuid(), retli);
+				ArrayList<SysMenu> childenList = CreateMenuList(list, menu.getMenuid(), retli);
 				if (childenList.size() > 0) {
 					menu.setChildren(childenList);
 				}
 				li.add(menu);
 			}
 		}
-
 		return li;
 	}
 

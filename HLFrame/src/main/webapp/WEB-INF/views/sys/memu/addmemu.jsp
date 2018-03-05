@@ -125,15 +125,14 @@
 	function clearForm() {
 		$('#save_user').form('clear');
 	}
-	
+	/***
+	*设置父级菜单选择树
+	**/
 	$(function(){ 
 		$("#parent_id").combotree({
 			url:"${basePath}/sys/memu/memuTreeJson.html",
-			 
-			idField: 'menuid',
-			treeField: 'name',
 			onLoadSuccess:function(node, data){
-				$("#parent_id").combotree('setValue',data[0].menuid);
+				$("#parent_id").combotree('setValue',data[0].id);
 			}
 		});
 	})

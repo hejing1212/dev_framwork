@@ -85,7 +85,7 @@
               <span>信息管理系统&nbsp;v1.0</span>
             </div>
             <div class="copyright-name">
-              <span>CopyRight&nbsp;2016&nbsp;&nbsp;uimaker.com&nbsp;版权所有</span>
+              <span>CopyRight&nbsp;2016&nbsp;&nbsp;海誉科技 &nbsp;版权所有</span>
               <i class="iconfont" >&#xe6ff;</i>
             </div>
         </div>

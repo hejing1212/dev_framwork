@@ -20,6 +20,7 @@ import com.alibaba.fastjson.JSON;
 import com.hy.sys.core.controller.AbstractBasicController;
 import com.hy.sys.entity.SysMenu;
 import com.hy.sys.entity.SysUser;
+import com.hy.sys.entity.TreeNode;
 import com.hy.sys.service.SysMenuService;
 import com.hy.sys.shiro.UserUtils;
 import com.hy.sys.utils.ConvertJson;
@@ -87,15 +88,26 @@ public class MemuController extends AbstractBasicController{
 		return view;
 	}
 	/**
-	 * 返回菜单选择树
+	 * 返回菜单选择树，提供前台页面下拉框显示
 	 */
 	@ResponseBody
 	@RequestMapping("/memuTreeJson")
-	public SysMenu getMenuTreeJsion(@ModelAttribute SysMenu entity, HttpServletResponse response,HttpServletRequest request) {
-		
-		ArrayList<SysMenu> list=sysMenuService.getMenuTree();
+	public ArrayList<TreeNode> getMenuTreeJsion(@ModelAttribute SysMenu entity, HttpServletResponse response,HttpServletRequest request) {
+		ArrayList<TreeNode> list=sysMenuService.getMenuTree();
 		String jsonStr=JSON.toJSONString(list);
 		writeResult(jsonStr, response);
-		return null;
+		return list;
+	}
+	
+	/**
+	 * 返回菜单选择树，提供前台列表页面显示
+	 */
+	@ResponseBody
+	@RequestMapping("/getMenuList")
+	public ArrayList<SysMenu> getMenuList  (@ModelAttribute SysMenu entity, HttpServletResponse response,HttpServletRequest request) {
+		ArrayList<SysMenu> list=sysMenuService.getMenuList();
+		String jsonStr=JSON.toJSONString(list);
+		writeResult(jsonStr, response);
+		return list;
 	}
 }
