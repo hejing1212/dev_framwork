@@ -5,7 +5,6 @@ var mainPlatform = {
 		this.bindEvent();
 		this._createTopMenu();
 	},
-
 	bindEvent: function(){
 		var self = this;
 		// 顶部大菜单单击事件
@@ -25,12 +24,14 @@ var mainPlatform = {
             // if is no-child
             if($(this).closest('.no-child').size() > 0) {
             	var index = $(this).closest('.pf-sider').attr('arrindex');
+            	var test=$(this).find('.sider-nav-title').text();
 	        	if($('.easyui-tabs1[arrindex='+ index +']').tabs('exists', $(this).find('.sider-nav-title').text())){
 	        		$('.easyui-tabs1[arrindex='+ index +']').tabs('select', $(this).find('.sider-nav-title').text())
 	        		return false;
 	        	}
 	        	$('.easyui-tabs1[arrindex='+ index +']').tabs('add',{
 					title: $(this).find('.sider-nav-title').text(),
+					id:$(this).attr('arrmenuid'),
 					content: '<iframe class="page-iframe" src="'+ $(this).closest('.no-child').data('href') +'" frameborder="no" border="no" height="100%" width="100%" scrolling="auto"></iframe>',
 					closable: true
 				});
@@ -46,16 +47,19 @@ var mainPlatform = {
 			  location.href= 'login.html'; 
 			});
         });
+        /*右边菜单连接点击后处理*/
         $(document).on('click', '.sider-nav-s li', function(e){
         	var index = $(this).closest('.pf-sider').attr('arrindex');
         	$(this).closest('.pf-sider').find('.active').removeClass('active');
         	$(this).addClass('active');
+        	 
         	if($('.easyui-tabs1[arrindex='+ index +']').tabs('exists', $(this).text())){
         		$('.easyui-tabs1[arrindex='+ index +']').tabs('select', $(this).text())
         		return false;
         	}
         	$('.easyui-tabs1[arrindex='+ index +']').tabs('add',{
 				title: $(this).text(),
+				id:$(this).attr('arrmenuid'),
 				content: '<iframe class="page-iframe" src="'+ $(this).data('href') +'" frameborder="no" border="no" height="100%" width="100%" scrolling="auto"></iframe>',
 				closable: true
 			});
@@ -101,7 +105,7 @@ var mainPlatform = {
 		var menuStr = '',
 			currentIndex = 0;
 		for(var i = 0, len = SystemMenu.length; i < len; i++) {
-			menuStr += '<li class="pf-nav-item project" data-sort="'+ i +'" data-menu="system_menu_" + i>'+
+			menuStr += '<li class="pf-nav-item project" data-sort="'+ i +'" arrmenuid="'+SystemMenu[i].menuid+'" data-menu="system_menu_" + i>'+
                       '<a href="javascript:;">'+
                           '<span class="iconfont">'+ SystemMenu[i].icon +'</span>'+
                           '<span class="pf-nav-title">'+ SystemMenu[i].title +'</span>'+
@@ -142,13 +146,13 @@ var mainPlatform = {
         		if(m.children && m.children.length > 0) {
         			str = '<li class="current">';
         		}else{
-        			str = '<li class="current no-child" data-href="'+basePath+m.href +'">';
+        			str = '<li class="current no-child" arrmenuid="'+m.menuid+'" data-href="'+basePath+m.href +'">';
         		}
         	}else{
         		if(m.children && m.children.length > 0) {
         			str = '<li>';
         		}else{
-        			str = '<li class="no-child" data-href="'+basePath+m.href +'">';
+        			str = '<li class="no-child" arrmenuid="'+m.menuid+'" data-href="'+basePath+m.href +'">';
         		}
         	}
         	//str = m.isCurrent ? '<li class="current">' : '<li>';
@@ -163,22 +167,19 @@ var mainPlatform = {
             for(var j = 0, jlen = m.children.length; j < jlen; j++){
             	var child = m.children[j];
             	if(child.isCurrent){
-            		childStr += '<li class="active" text="'+ child.title +'" data-href="' +basePath+ child.href + '"><a href="#">'+ child.title +'</a></li>';
+            		childStr += '<li class="active" text="'+ child.title +'" arrmenuid="'+child.menuid+'" data-href="' +basePath+ child.href + '"><a href="#">'+ child.title +'</a></li>';
             		$('.easyui-tabs1[arrindex='+ index +']').tabs('add',{
 						title: child.title,
+						id:child.menuid,
 						content: '<iframe class="page-iframe" src="'+basePath+ child.href +'" frameborder="no" border="no" height="100%" width="100%" scrolling="auto"></iframe>',
 						closable: true
 					});
             	}else {
-            		childStr += '<li text="'+ child.title +'" data-href="' +basePath+ child.href + '"><a href="#">'+ child.title +'</a></li>';
+            		childStr += '<li text="'+ child.title +'" arrmenuid="'+child.menuid+'" data-href="' +basePath+ child.href + '"><a href="#">'+ child.title +'</a></li>';
             	}
             }
-
             mstr = str + childStr + '</ul></li>';
-
-            menuStr += mstr;
-
-            
+            menuStr += mstr;            
         }
         $('.pf-sider-wrap').append($('<div class="pf-sider" arrindex="'+ index +'"></div>').html(menuStr + '</ul>'));
 
@@ -190,7 +191,7 @@ var mainPlatform = {
 			$('.easyui-tabs1[arrindex='+ index +']').show();
 			return false;
 		}
-		var $tabs = $('<div class="easyui-tabs1" arrindex="'+ index +'" style="width:100%;height:100%;">');
+		var $tabs = $('<div id="tabs" class="easyui-tabs1" arrindex="'+ index +'" style="width:100%;height:100%;">');
 		$('#pf-page').append($tabs);
 		$tabs.tabs({
 	      tabHeight: 44,
@@ -215,7 +216,45 @@ var mainPlatform = {
         		$('#mm').data("currtab",subtitle.text());
 	    	}
 	    })
-	}
+	},
+	
+	/*hejing -add */
+	
+	_createWindows: function(title,url,icon,tabid){
+    	var index =$('.pf-sider').attr('arrindex');   	 
+    	if($('.easyui-tabs1[arrindex='+ index +']').tabs('exists', title)){
+    		$('.easyui-tabs1[arrindex='+ index +']').tabs('select', title);
+    		return false;
+    	}
+     	var pid=getSelected()[0].id;
+     	$('.easyui-tabs1[arrindex='+ index +']').tabs('add',{
+     		    id:getSelected()[0].id+"_"+tabid,
+				title: title,
+				content: '<iframe class="page-iframe" src="'+ url +'" frameborder="no" border="no" height="100%" width="100%" scrolling="auto"></iframe>',
+				closable: true
+			});
+     },
+	
+	//刷新父页面datagrid表格数据，关闭当前页面
+	parentReloadTabGrid:function (){
+		var id=this.getSelected()[0].id;
+		var parentId=id.substring(0,id.indexOf("_"));
+		if ($("#tabs").tabs("existsById", parentId)) {
+			//选中父页面，并刷新
+			$('#tabs').tabs('selectById', parentId);
+			window.top.reload_Abnormal_Monitor.call();
+		}
+		if ($("#tabs").tabs("existsById", id)) {
+			//选中
+			$('#tabs').tabs('selectById',id);
+			$('#tabs').tabs('closeById',id);
+		}
+	},
+     
+     getSelected:function() {       
+    		return $('#tabs').tabs('getSelected');
+    	}
+	/* add comm*/
 
 };
 

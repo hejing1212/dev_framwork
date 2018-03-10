@@ -22,4 +22,8 @@ public interface SysUserService  extends BasicService<SysUser>{
 	   
 	   public SysUser findByPhone(String username);
 	   
+	   public SysUser findByPhone(String phone, String userid);
+	   public SysUser findByEmail(String email, String userid);
+	   public SysUser findByUsername(String username, String userid);
+	   
 }

@@ -142,5 +142,84 @@ public class SysUserServiceImpl extends BasicServiceImpl<SysUser> implements Sys
 			return null;
 		}
 	}
+	
+	
+	/*
+	 * @see 根据用户名查询
+	 */
+	@Override
+	public SysUser findByUsername(String username,String userid) {
+		StringBuffer sql = new StringBuffer();
+		List<Object> values = new ArrayList<Object>();
+		sql.append(" FROM SysUser ");
+		sql.append(" WHERE 1=1 ");
+
+		if (username != "") {
+			sql.append(" AND ( username = ?) AND (userid!=?)");
+			values.add(username);
+			values.add(userid);
+		}
+
+		sql.append(" ORDER BY create_date DESC");
+		List<SysUser> list = getBasicDao().findByHql(sql.toString(), values.toArray());
+		if (list.size() > 0) {
+			return (SysUser) list.get(0);
+		} else {
+			return null;
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 */
+	@Override
+	public SysUser findByEmail(String email,String userid) {
+		StringBuffer sql = new StringBuffer();
+		List<Object> values = new ArrayList<Object>();
+		sql.append(" FROM SysUser   ");
+		sql.append(" WHERE 1=1 ");
+
+		if (email != "") {
+			sql.append(" AND ( email = ?) AND (userid!=?)");
+			values.add(email);
+			values.add(userid);
+		}
+		sql.append(" ORDER BY create_date DESC");
+
+		List<SysUser> list = getBasicDao().findByHql(sql.toString(), values.toArray());
+		if (list.size() > 0) {
+			return (SysUser) list.get(0);
+		} else {
+			return null;
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 */
+	@Override
+	public SysUser findByPhone(String phone,String userid) {
+		StringBuffer sql = new StringBuffer();
+		List<Object> values = new ArrayList<Object>();
+		sql.append(" FROM SysUser   ");
+		sql.append(" WHERE 1=1 ");
+		if (phone != "") {
+			sql.append(" AND ( phone = ?) AND (userid!=?)");
+			values.add(phone);
+			values.add(userid);
+		}
+		sql.append(" ORDER BY create_date DESC");
+
+		List<SysUser> list = getBasicDao().findByHql(sql.toString(), values.toArray());
+		if (list.size() > 0) {
+			return (SysUser) list.get(0);
+		} else {
+			return null;
+		}
+	}
 
 }

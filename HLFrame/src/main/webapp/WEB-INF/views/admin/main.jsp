@@ -16,25 +16,16 @@
         <div id="pf-hd">
             <div class="pf-logo">
                 <img src="${basePath}/static/images/main/main_logo.png" alt="logo">
-            </div>
-            
+            </div>    
             <div class="pf-nav-wrap">
-              <!--<div class="pf-nav-ww">-->
               <div class="pf-nav-ww">
-               
                 <ul class="pf-nav">
-                  
                 </ul>
               </div>
               <!-- </div> -->
-              
-
               <a href="javascript:;" class="pf-nav-prev disabled iconfont">&#xe606;</a>
               <a href="javascript:;" class="pf-nav-next iconfont">&#xe607;</a>
             </div>
-            
-
-
             <div class="pf-user">
                 <div class="pf-user-photo">
                     <img src="${basePath}/static/images/main/user.png" alt="">
@@ -65,20 +56,13 @@
                     </ul>
                 </div>
             </div>
-
         </div>
-
         <div id="pf-bd">
-            <div class="pf-sider-wrap">
-              
+            <div class="pf-sider-wrap">      
             </div>
-            
-
             <div id="pf-page">
-             
             </div>
         </div>
-
         <div id="pf-ft">
             <div class="system-name">
               <i class="iconfont">&#xe6fe;</i>

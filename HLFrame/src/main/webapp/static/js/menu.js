@@ -2,33 +2,42 @@ var SystemMenu = [{
 	title: '系统管理',
 	icon: '&#xe63f;',
 	isCurrent: true,
+	menuid:'xtgl',
 	menu: [{
 		title: '供应商管理',
 		icon: '&#xe620;',
 		isCurrent: true,
+		menuid:'gysgl',
 		children: [{
 			title: '首页',
 			href: '/admin/index.html',
+			menuid:'souy',
 			isCurrent: true
 		},{
 			title: '用户管理',
+			menuid:'yfgl',
 			href: '/sys/user/userlist.html'
 		},{
 			title: '角色管理',
+			menuid:'jsgl',
 			href: '/sys/role/rolelist.html'
 		},{
 			title: '菜单管理',
+			menuid:'cdgl',
 			href: '/sys/memu/memulist.html'
 		},{
 			title: '详细信息',
+			menuid:'xxxx',
 			href: '/providers1.html'
 		},{
 			title: '企业基本信息',
+			menuid:'gbxx',
 			href: '/basic_info.html'
 		}]
 	},{
 		title: '采购组织',
 		icon: '&#xe625;',
+		menuid:'cgll',
 		href: 'basic_info.html',
 		children: []
 	},{

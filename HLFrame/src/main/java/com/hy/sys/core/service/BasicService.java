@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.hy.sys.core.entity.AbstractBasicEntity;
+import com.hy.sys.entity.SysUser;
 import com.hy.sys.utils.PageInfo;
 
 
@@ -62,6 +63,7 @@ public  interface BasicService <T extends AbstractBasicEntity> {
 	 * @return
 	 */
 	public List<T> findALlList();
+	
 
 	
 	
