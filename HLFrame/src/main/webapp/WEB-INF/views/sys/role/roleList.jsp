@@ -12,9 +12,8 @@
 <link href="${basePath}/static/css/base.css" rel="stylesheet">
 <link rel="stylesheet"
 	href="${basePath}/static/easyui/darkblue/easyui.css">
-<link rel="stylesheet" href="${basePath}/static/easyui/darkblue/icon.css">
-<link rel="stylesheet" type="text/css"
-	href="${basePath}/sys/easyui/darkblue/icon.css">
+ <link rel="stylesheet"
+	href="${basePath}/static/easyui/darkblue/icon.css">
 <link rel="stylesheet" href="${basePath}/static/css/providers.css">
 
 </head>
@@ -51,8 +50,8 @@
 					class="easyui-linkbutton" iconCls="icon-reload">重置</a>
 			</div>
 			<div class="opt-buttons">
-				<a href="${basePath}/sys/role/addrole.html" class="easyui-linkbutton" data-options="iconCls:'icon-add'"> 新增</a>
-				<a href="javascript:void(0)" onclick=" " class="easyui-linkbutton" data-options="iconCls:'icon-edit'">修改</a>
+				<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="window.parent.mainPlatform._createWindows('添加用户','${basePath}/sys/role/addRole.html','icon-add','addRole');"> 新增</a>
+				<a href="javascript:void(0)" onclick="editRole();" class="easyui-linkbutton" data-options="iconCls:'icon-edit'">修改</a>
 				<a href="javascript:void(0)" onclick="setRole();" class="easyui-linkbutton" data-options="iconCls:'icon-edit'">角色受权管理</a>  
 			</div>
 
@@ -74,16 +73,20 @@
 		$(function() {
 			$('#dg').datagrid({
 				//data : getData()
-				url : "${basePath}/sys/role/getRolelist.html",
+				url : "${basePath}/sys/role/getRoleList.html",
 				rownumbers : true,
-			}).datagrid('clientPaging');
+			});
 		});
-		
+		//子页面调用后刷新列表
+	    window.top["reload_Abnormal_Monitor"]=function(){
+	    	$("#dg").datagrid('reload');
+	    };
+	    
 		//编辑角色
 		function editRole() {
 		    var row = $('#dg').datagrid('getSelected');
 		    if (row) {
-		        if (row.userid == '') {
+		        if (row.roleid == '') {
 		            $.messager.show({
 		                title: '操作提示',
 		                msg: '请先选择用户后再进行此操作!',
@@ -92,10 +95,10 @@
 		            return;
 		        }
 		        var index = $('#dg').datagrid('getRowIndex', row);
-		        //关闭子页面
-		       // window.parent.closeChildTab("edit");
-		    	//打开新增子页面
-		       // window.parent.createChildTab("编辑","${basePath}/user/edituser.html?userid=" + row.userid + "&index=" + index,"icon-add",'edit');
+		        window.parent.mainPlatform._createWindows("编辑用户",
+						"${basePath}/sys/role/editRole.html?roleid="
+								+ row.roleid + "&index=" + index, "icon-edit",
+						'edit');
 		    } else {
 		        $.messager.show({
 		            title: '操作提示',
@@ -106,6 +109,7 @@
 		    }
 		}
 		
+		//设置角色权限
 		function setRole(){
 			 var row = $('#dg').datagrid('getSelected');
 		}

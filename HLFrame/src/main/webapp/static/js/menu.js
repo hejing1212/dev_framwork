@@ -20,7 +20,7 @@ var SystemMenu = [{
 		},{
 			title: '角色管理',
 			menuid:'jsgl',
-			href: '/sys/role/rolelist.html'
+			href: '/sys/role/roleList.html'
 		},{
 			title: '菜单管理',
 			menuid:'cdgl',

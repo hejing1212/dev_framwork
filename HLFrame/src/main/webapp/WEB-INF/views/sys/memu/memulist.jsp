@@ -33,11 +33,11 @@
 					data-options="selected:true">查询</a> <a href="#"
 					class="easyui-linkbutton" iconCls="icon-reload">重置</a>
 			</div>
-		</div>
-		<div style="margin:20px 0;"></div>
+ </div>
+		
 		<table title="菜单管理列表" class="easyui-treegrid" style="width:100%;height:600px"
 			data-options="
-url: '${basePath}/sys/memu/getMenuList.html',method: 'get',rownumbers: true,idField: 'menuid',treeField: 'name'">
+url: '${basePath}/sys/memu/getMenuList.html',method: 'get',rownumbers: true,idField: 'menuid',treeField: 'name', toolbar:'#tb'">
 		<thead>
 			<tr>
 				<th data-options="field:'name'" width="220" align="center">名称</th>

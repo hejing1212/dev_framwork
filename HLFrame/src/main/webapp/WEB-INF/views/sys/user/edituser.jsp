@@ -46,13 +46,13 @@
 							<td class="kv-label">邮箱</td>
 							<td class="kv-content"><input class="easyui-textbox"
 								type="text" name="email" value="${user.email}"
-								data-options="required:true,validType:'email,missingMessage:'请输入邮箱！'" /></td>
+								data-options="required:true,validType:'email',missingMessage:'请输入邮箱！'" /></td>
 						</tr>
 						<tr>
 							<td class="kv-label">状态</td>
 							<td class="kv-content" colspan="3"><input type="radio"
 								name="status" value="1"
-								<c:if test="${user.status eq 1}">checked="checked"</c:if>
+								<c:if test="${user.status eq 1}"> checked="checked"</c:if>
 								class="easyui-radiobox"> 正常 <input type="radio"
 								name="status" value="0" class="easyui-radiobox"
 								<c:if test="${user.status eq 0}">checked="checked"</c:if>>
@@ -98,23 +98,7 @@
 	/**
 	 * 提交表单
 	 */
-	function submitFormData() {
-		$('#save_user').form('submit', {
-			url : "${basePath}/sys/user/saveuser.html",
-			onSubmit : function() {
-				return $(this).form('validate');
-			},
-			success : function(data) {
-				data = JSON.parse(data);
 
-				if (data.code == '1') {
-					$.messager.alert('添加成功', data.msg);
-				} else {
-					$.messager.alert('添加失败', data.msg, 'error');
-				}
-			}
-		});
-	}
 	
 	function submitFormData(){
    	 var regular=/^[0-9a-z/_]*$/g;

@@ -27,11 +27,11 @@
 						<tr>
 							<td class="kv-label">角色名称</td>
 							<td class="kv-content"><input class="easyui-textbox"
-								type="text" name="name" data-options="required:true" /></td>
+								type="text" name="name" data-options="required:true,missingMessage:'请输入角色名称！'" /></td>
 
 							<td class="kv-label">英文名称</td>
 							<td class="kv-content"><input class="easyui-textbox"
-								type="text" name="code" data-options="required:true" /></td>
+								type="text" name="code" data-options="required:true,missingMessage:'请输入角色名称！'"/></td>
 						</tr>
 						<tr>
 							<td class="kv-label">是否系统数据</td>
@@ -84,15 +84,16 @@
 	 */
 	function submitFormData() {
 		$('#save_user').form('submit', {
-			url : "${basePath}/sys/role/saverole.html",
+			url : "${basePath}/sys/role/saveRole.html",
 			onSubmit : function() {
                 return $(this).form('validate');
 			},
 			success : function(data) {
 				data = JSON.parse(data);
-
 				if (data.code == '1') {
-					$.messager.alert('添加成功', data.msg);
+					$.messager.alert('添加成功', data.msg,'info',function(){
+						window.parent.reloadRoleList();
+					});
 				} else {
 					$.messager.alert('添加失败', data.msg, 'error');
 				}

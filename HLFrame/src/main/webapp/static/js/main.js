@@ -1,7 +1,40 @@
+// 自定义tabls方法根据id获取页面信息
+$.extend($.fn.tabs.methods, {
+	getTabById : function(jq, id) {
+		var tabs = $.data(jq[0], 'tabs').tabs;
+		for (var i = 0; i < tabs.length; i++) {
+			var tab = tabs[i];
+			if (tab.panel('options').id == id) {
+				return tab;
+			}
+		}
+		return null;
+	},
+	selectById : function(jq, id) {
+		var tab;
+		var tabs = $.data(jq[0], 'tabs').tabs;
+		for (var i = 0; i < tabs.length; i++) {
+			tab = tabs[i];
+			if (tab.panel('options').id == id) {
+				break;
+			}
+		}
+		if (tab != undefined) {
+			var curTabIndex = $("#tabs").tabs("getTabIndex", tab);
+			$('#tabs').tabs('select', curTabIndex);
+		}
+	},
+	existsById : function(jq, id) {
+		return jq.tabs('getTabById', id) != null;
+	},
+	closeById : function(jq, id) {
+		jq.tabs('selectById', id);
+		$("#tabs").find("li.tabs-selected").find("a.tabs-close").click();
+	}
+});
+
 var mainPlatform = {
-
 	init: function(){
-
 		this.bindEvent();
 		this._createTopMenu();
 	},
@@ -226,9 +259,9 @@ var mainPlatform = {
     		$('.easyui-tabs1[arrindex='+ index +']').tabs('select', title);
     		return false;
     	}
-     	var pid=getSelected()[0].id;
+     	var pid=this.getSelected()[0].id;
      	$('.easyui-tabs1[arrindex='+ index +']').tabs('add',{
-     		    id:getSelected()[0].id+"_"+tabid,
+     		    id:pid+"_"+tabid,
 				title: title,
 				content: '<iframe class="page-iframe" src="'+ url +'" frameborder="no" border="no" height="100%" width="100%" scrolling="auto"></iframe>',
 				closable: true

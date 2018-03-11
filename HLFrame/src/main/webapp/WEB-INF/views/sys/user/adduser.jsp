@@ -17,7 +17,7 @@
 </head>
 <body>
 	<div class="container">
-		<form id="save_user" method="post">
+		<form id="save_user_form" method="post">
 			<div class="content">
 				<div class="column">
 					<span class="current">基础信息</span>
@@ -49,7 +49,7 @@
 							<td class="kv-label">邮箱</td>
 							<td class="kv-content"><input class="easyui-textbox"
 								type="text" name="email"
-								data-options="required:true,validType:'email,missingMessage:'请输入邮箱！'" /></td>
+								data-options="required:true,validType:'email',missingMessage:'请输入邮箱！'" /></td>
 						</tr>
 						<tr>
 							<td class="kv-label">状态</td>
@@ -77,10 +77,10 @@
 				</table>
 				<div class="easyui-panel" style="padding: 10px;">
 					<a href="javascript:void(0)" class="easyui-linkbutton"
-						data-options="iconCls:'icon-save'" onclick="submitFormData()">保存</a>
-					&nbsp;&nbsp;&nbsp; <a href="javascript:void(0)"
+						data-options="iconCls:'icon-save'" onclick="submitFormData();">保存</a>
+					&nbsp;&nbsp;&nbsp; <a href="javascript:void(0);"
 						class="easyui-linkbutton" data-options="iconCls:'icon-remove'"
-						onclick="clearForm()">重 置</a>
+						onclick="clearForm();">重 置</a>
 				</div>
 
 			</div>
@@ -93,6 +93,9 @@
 	src="${basePath}/static/easyui/jquery.min.js"></script>
 <script type="text/javascript"
 	src="${basePath}/static/easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript"
+		src="${basePath}/static/easyui/easyui-lang-zh_CN.js"></script>
+		
 <script type="text/javascript">
 	/**
 	 * 提交表单
@@ -107,7 +110,10 @@
 				data = JSON.parse(data);
 
 				if (data.code == '1') {
-					$.messager.alert('添加成功', data.msg);
+					$.messager.alert('添加成功', data.msg,'info',function(){
+						window.parent.mainPlatform.parentReloadTabGrid();
+					});
+					
 				} else {
 					$.messager.alert('添加失败', data.msg, 'error');
 				}
@@ -119,6 +125,7 @@
 	 *清除表单内容
 	 **/
 	function clearForm() {
-		$('#save_user').form('clear');
+		$("#save_user_form").form('clear');
 	}
+	
 </script>

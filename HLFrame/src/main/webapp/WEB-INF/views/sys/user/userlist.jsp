@@ -18,12 +18,11 @@
 
 </head>
 <body>
-	<div class="easyui-layout" style="width:100%;height:550px;">
-		
+	<div class="easyui-layout" style="width:100%;height:620px;">		
 		<div
 			data-options="region:'center',title:'管理员',iconCls:'icon-ok'">
 		 
-				<table id="dg" style="width: 100%; height: 554px" data-options="  rownumbers:true,
+				<table id="dg" style="width: 100%; height: 554px" data-options="rownumbers:true,
                 singleSelect:false, autoRowHeight:false,  pagination:true, fitColumns:true,  striped:true,  checkOnSelect:false,
                 selectOnCheck:false, collapsible:true,  toolbar:'#tb',  pageSize:10">
 					<thead>
@@ -63,14 +62,14 @@
 				</div>
 			 
 		</div>
-	<div data-options="region:'east',split:true,collapsed:true," title="角色设置" style="width:300px;">
-	
+	<!-- 显示角色列表 -->	
+	<div data-options="region:'east',split:true,collapsed:true," title="角色设置" style="width:300px;">	
 	<div style="padding:5px 0;text-align: right;">
-		<a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-add'">分配</a>
+		<a href="#" onclick="getRoleList();" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-add'">分配</a>
 		<a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-remove'">移除</a>
 		 
 	</div>
-	<table class="easyui-datagrid" data-options="url:'#',method:'get',border:false,singleSelect:true,fit:true,fitColumns:true">
+	<table id="role_dg" class="easyui-datagrid" data-options="url:'#',method:'get',border:false,singleSelect:true,fit:true,fitColumns:true">
 				<thead>
 					<tr>
 						<th data-options="field:'name'" width="80">角色名称</th>
@@ -78,10 +77,14 @@
 						<th data-options="field:'remarks'" width="100">角色描述</th>
 					</tr>
 				</thead>
-			</table>
+	 </table>
 	</div>
-		
+	<!-- 显示角色列表结束 -->		
+	
 	</div>
+	<!-- 打印角色选择界面 -->
+	 <div id="dialog"  class="easyui-dialog" closed="true"></div>
+	 
 	<script type="text/javascript"
 		src="${basePath}/static/easyui/jquery.min.js"></script>
 	<script type="text/javascript"
@@ -98,9 +101,17 @@
 				//data : getData()
 				url : "${basePath}/sys/user/getlist.html",
 				rownumbers : true,
-			}).datagrid('clientPaging');
+			});
 		});
 
+		//子页面调用后刷新列表
+	    window.top["reload_Abnormal_Monitor"]=function(){
+	    	$("#dg").datagrid('reload');
+	    };
+	    
+	    function reloadRoleList(){
+	    	$("#role_dg").datagrid('reload');
+	    }
 		//编辑用户
 		function editUser() {
 			var row = $('#dg').datagrid('getSelected');
@@ -127,6 +138,29 @@
 				});
 			}
 		}
+	//打开选择角色界面
+	function getRoleList(){
+		var row = $('#dg').datagrid('getSelected');	
+		if (row==null || row == '') {
+			$.messager.show({
+				title : '操作提示',
+				msg : '请先选择用户后再进行此操作!',
+				showType : 'slide'
+			});
+			return;
+		}
+		var userid=row.userid;
+		var url="${basePath}/sys/role/role.html?userid="+userid+"";
+		$("#dialog").dialog({
+		    title:'选择角色',
+		    width:800,
+		    height:400,
+		    queryParames:{userid:row.userid},
+		    modal:true,
+		    content:"<iframe scrolling='auto' frameborder='0' src='${basePath}/sys/role/role.html?userid="+userid+"' style='width:100%; height:100%; display:block;'></iframe>"
+		}).dialog('open');
+	}
+	
 	</script>
 
 </body>
