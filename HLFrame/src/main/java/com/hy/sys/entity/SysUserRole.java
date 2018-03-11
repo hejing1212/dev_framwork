@@ -1,8 +1,11 @@
 package com.hy.sys.entity;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -10,6 +13,7 @@ import org.hibernate.annotations.GenericGenerator;
 import com.hy.sys.core.entity.AbstractBasicEntity;
 import com.hy.sys.utils.Comment;
 
+@Entity
 @Table(name = "sys_user_role")
 @Comment(value = "用户 角色 联表")
 public class SysUserRole extends AbstractBasicEntity{
@@ -21,6 +25,8 @@ public class SysUserRole extends AbstractBasicEntity{
 	private String user_id;        //  '用户编号',
 	private String role_id;         // '角色编号',
 	
+	private SysRole role;         // '角色列表',
+	private SysUser user;         // '用户列表',
 	
 	@Id
 	@GeneratedValue(generator = "paymentableGenerator")
@@ -48,4 +54,26 @@ public class SysUserRole extends AbstractBasicEntity{
 	public void setRole_id(String role_id) {
 		this.role_id = role_id;
 	}
+
+	@ManyToOne
+	@JoinColumn(name = "role_id", nullable = false, updatable = false, insertable = false)
+	public SysRole getRole() {
+		return role;
+	}
+
+	public void setRole(SysRole role) {
+		this.role = role;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "user_id", nullable = false, updatable = false, insertable = false)
+	public SysUser getUser() {
+		return user;
+	}
+
+	public void setUser(SysUser user) {
+		this.user = user;
+	}
+	
+	
 }

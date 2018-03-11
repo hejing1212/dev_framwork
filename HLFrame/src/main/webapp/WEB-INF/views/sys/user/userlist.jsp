@@ -18,58 +18,62 @@
 
 </head>
 <body>
-	<div class="easyui-layout" style="width:100%;height:620px;">		
-		<div
-			data-options="region:'center',title:'管理员',iconCls:'icon-ok'">
-		 
-				<table id="dg" style="width: 100%; height: 554px" data-options="rownumbers:true,
+	<div id="mypanels" class="easyui-layout" style="width: 100%; height: 620px;">
+		<div data-options="region:'center',title:'管理员',iconCls:'icon-ok'">
+
+			<table id="dg" style="width: 100%; height: 554px"
+				data-options="rownumbers:true,
                 singleSelect:false, autoRowHeight:false,  pagination:true, fitColumns:true,  striped:true,  checkOnSelect:false,
                 selectOnCheck:false, collapsible:true,  toolbar:'#tb',  pageSize:10">
-					<thead>
-						<tr>
-							<th field="userid" width="160" align="center">用户编号</th>
-							<th field="realname" width="120" align="center">真实姓名</th>
-							<th field="username" width="120" align="center">用户名</th>
-							<th field="email" width="150" align="center">邮箱</th>
-							<th field="phone" width="130" align="center">手机号</th>
-							<th field="status" width="100" align="center">状态</th>
+				<thead>
+					<tr>
+						<th field="userid" width="160" align="center">用户编号</th>
+						<th field="realname" width="120" align="center">真实姓名</th>
+						<th field="username" width="120" align="center">用户名</th>
+						<th field="email" width="150" align="center">邮箱</th>
+						<th field="phone" width="130" align="center">手机号</th>
+						<th field="status" width="100" align="center">状态</th>
 
-							<th field="create_date" width="120" align="center">创建日期</th>
-							<th field="remarks" width="200">备注</th>
-						</tr>
-					</thead>
-				</table>
+						<th field="create_date" width="120" align="center">创建日期</th>
+						<th field="remarks" width="200">备注</th>
+					</tr>
+				</thead>
+			</table>
 
-				<div id="tb" style="padding: 0 30px;">
-					<div class="conditions">
-						真实姓名: <input class="easyui-textbox" type="text" name="code"
-							style="width: 166px; height: 35px; line-height: 35px;"></input>
-						手机号: <input class="easyui-textbox" type="text" name="name"
-							style="width: 166px; height: 35px; line-height: 35px;"></input> <a
-							href="#" class="easyui-linkbutton" iconCls="icon-search"
-							data-options="selected:true">查询</a> <a href="#"
-							class="easyui-linkbutton" iconCls="icon-reload">重置</a>
-					</div>
-					<div class="opt-buttons">
-						<a href="javascript:void(0)"
-							onclick="window.parent.mainPlatform._createWindows('添加用户','${basePath}/sys/user/adduser.html','icon-add','addusere');"
-							class="easyui-linkbutton" data-options="iconCls:'icon-add'">
-							新增</a> <a href="javascript:void(0)" onclick="editUser();"
-							class="easyui-linkbutton" data-options="iconCls:'icon-edit'">编辑用户</a>
-						<a href="#" class="easyui-linkbutton"
-							data-options="iconCls:'icon-reload'">重置密码</a>
-					</div>
+			<div id="tb" style="padding: 0 30px;">
+				<div class="conditions">
+					真实姓名: <input class="easyui-textbox" type="text" name="code"
+						style="width: 166px; height: 35px; line-height: 35px;"></input>
+					手机号: <input class="easyui-textbox" type="text" name="name"
+						style="width: 166px; height: 35px; line-height: 35px;"></input> <a
+						href="#" class="easyui-linkbutton" iconCls="icon-search"
+						data-options="selected:true">查询</a> <a href="#"
+						class="easyui-linkbutton" iconCls="icon-reload">重置</a>
 				</div>
-			 
+				<div class="opt-buttons">
+					<a href="javascript:void(0)"
+						onclick="window.parent.mainPlatform._createWindows('添加用户','${basePath}/sys/user/adduser.html','icon-add','addusere');"
+						class="easyui-linkbutton" data-options="iconCls:'icon-add'">
+						新增</a> <a href="javascript:void(0)" onclick="editUser();"
+						class="easyui-linkbutton" data-options="iconCls:'icon-edit'">编辑用户</a>
+					<a href="#" class="easyui-linkbutton"
+						data-options="iconCls:'icon-reload'">重置密码</a>
+				</div>
+			</div>
+
 		</div>
-	<!-- 显示角色列表 -->	
-	<div data-options="region:'east',split:true,collapsed:true," title="角色设置" style="width:300px;">	
-	<div style="padding:5px 0;text-align: right;">
-		<a href="#" onclick="getRoleList();" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-add'">分配</a>
-		<a href="#" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-remove'">移除</a>
-		 
-	</div>
-	<table id="role_dg" class="easyui-datagrid" data-options="url:'#',method:'get',border:false,singleSelect:true,fit:true,fitColumns:true">
+		<!-- 显示角色列表 -->
+		<div  data-options="region:'east',split:true,collapsed:true,"
+			title="角色设置" style="width: 300px;">
+			<div style="padding: 5px 0; text-align: right;">
+				<a href="#" onclick="getRoleList();" class="easyui-linkbutton"
+					data-options="plain:true,iconCls:'icon-add'">分配</a> <a href="#"
+					class="easyui-linkbutton"
+					data-options="plain:true,iconCls:'icon-remove'">移除</a>
+
+			</div>
+			<table id="role_dg" class="easyui-datagrid"
+				data-options="method:'get',border:false,singleSelect:true,fit:true,fitColumns:true">
 				<thead>
 					<tr>
 						<th data-options="field:'name'" width="80">角色名称</th>
@@ -77,14 +81,14 @@
 						<th data-options="field:'remarks'" width="100">角色描述</th>
 					</tr>
 				</thead>
-	 </table>
-	</div>
-	<!-- 显示角色列表结束 -->		
-	
+			</table>
+		</div>
+		<!-- 显示角色列表结束 -->
+
 	</div>
 	<!-- 打印角色选择界面 -->
-	 <div id="dialog"  class="easyui-dialog" closed="true"></div>
-	 
+	<div id="dialog" class="easyui-dialog" closed="true"></div>
+
 	<script type="text/javascript"
 		src="${basePath}/static/easyui/jquery.min.js"></script>
 	<script type="text/javascript"
@@ -98,20 +102,26 @@
 		 */
 		$(function() {
 			$('#dg').datagrid({
-				//data : getData()
 				url : "${basePath}/sys/user/getlist.html",
 				rownumbers : true,
+				onClickRow : function(rowlndex, rowData) {
+				 $("#mypanels").layout('expand','east');
+					 $("#role_dg").datagrid({
+						 url : "${basePath}/sys/user/getUserRoleList.html?userid="+rowData.userid+"",
+						 rownumbers : true
+					 });
+				}
 			});
 		});
 
 		//子页面调用后刷新列表
-	    window.top["reload_Abnormal_Monitor"]=function(){
-	    	$("#dg").datagrid('reload');
-	    };
-	    
-	    function reloadRoleList(){
-	    	$("#role_dg").datagrid('reload');
-	    }
+		window.top["reload_Abnormal_Monitor"] = function() {
+			$("#dg").datagrid('reload');
+		};
+
+		function reloadRoleList() {
+			$("#role_dg").datagrid('reload');
+		}
 		//编辑用户
 		function editUser() {
 			var row = $('#dg').datagrid('getSelected');
@@ -138,29 +148,34 @@
 				});
 			}
 		}
-	//打开选择角色界面
-	function getRoleList(){
-		var row = $('#dg').datagrid('getSelected');	
-		if (row==null || row == '') {
-			$.messager.show({
-				title : '操作提示',
-				msg : '请先选择用户后再进行此操作!',
-				showType : 'slide'
-			});
-			return;
+		//打开选择角色界面
+		function getRoleList() {
+			var row = $('#dg').datagrid('getSelected');
+			if (row == null || row == '') {
+				$.messager.show({
+					title : '操作提示',
+					msg : '请先选择用户后再进行此操作!',
+					showType : 'slide'
+				});
+				return;
+			}
+			var userid = row.userid;
+			var url = "${basePath}/sys/role/role.html?userid=" + userid + "";
+			$("#dialog")
+					.dialog(
+							{
+								title : '选择角色',
+								width : 800,
+								height : 400,
+								queryParames : {
+									userid : row.userid
+								},
+								modal : true,
+								content : "<iframe scrolling='auto' frameborder='0' src='${basePath}/sys/role/role.html?userid="
+										+ userid
+										+ "' style='width:100%; height:100%; display:block;'></iframe>"
+							}).dialog('open');
 		}
-		var userid=row.userid;
-		var url="${basePath}/sys/role/role.html?userid="+userid+"";
-		$("#dialog").dialog({
-		    title:'选择角色',
-		    width:800,
-		    height:400,
-		    queryParames:{userid:row.userid},
-		    modal:true,
-		    content:"<iframe scrolling='auto' frameborder='0' src='${basePath}/sys/role/role.html?userid="+userid+"' style='width:100%; height:100%; display:block;'></iframe>"
-		}).dialog('open');
-	}
-	
 	</script>
 
 </body>

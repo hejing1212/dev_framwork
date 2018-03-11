@@ -8,8 +8,8 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 /** 
 
- * @author He.Xu.Dong 
- * @Date 2015年11月26日 下午2:47:31 
+ * @author 
+ * @Date 2017年11月26日 下午2:47:31 
  * @version 1.0 
  */
 public class AbstractBasicDao {

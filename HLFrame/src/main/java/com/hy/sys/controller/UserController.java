@@ -17,6 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.hy.sys.core.controller.AbstractBasicController;
 import com.hy.sys.entity.SysUser;
+import com.hy.sys.entity.SysUserRole;
+import com.hy.sys.service.SysUserRoleService;
 import com.hy.sys.service.SysUserService;
 import com.hy.sys.service.impl.PasswordServiceImpl;
 import com.hy.sys.shiro.UserUtils;
@@ -34,6 +36,9 @@ public class UserController extends AbstractBasicController {
 	@Autowired
 	private PasswordServiceImpl passwordService;
 
+	@Autowired
+	private SysUserRoleService sysRoleUserService;
+	
 	@Override
 	protected void init(ModelMap mode, HttpServletRequest req) {
 		// TODO Auto-generated method stub
@@ -150,7 +155,12 @@ public class UserController extends AbstractBasicController {
 
 		return pages;
 	}
-
+	/**
+	 * 显示编辑用户信息
+	 * @param response
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping("/edituser")
 	public ModelAndView editUser(HttpServletResponse response, HttpServletRequest request) {
 		ModelAndView view = new ModelAndView();
@@ -158,5 +168,29 @@ public class UserController extends AbstractBasicController {
 		view.addObject("user", user);
 		return view;
 	}
+	
+	/**
+	 * 显示用户对应的角色列表
+	 * @param response
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/getUserRoleList")
+	public PageInfo<SysUserRole> getUserRoleList( HttpServletResponse response, HttpServletRequest request) {
+		int pageNo = (request.getParameter("page") == null) ? PAGE_NO
+				: IntegerTools.parseInt(request.getParameter("page"));
+		int pageSize = (request.getParameter("rows") == null) ? PAGE_SIZE
+				: IntegerTools.parseInt(request.getParameter("rows"));
+        String userId=request.getParameter("userid");
+        PageInfo<SysUserRole> pages = sysRoleUserService.getPageListByUser(userId,pageNo,pageSize);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("total", pages.getTotalrecond());
+		map.put("rows", pages.getResultlist());
+		String jsonStr = ConvertJson.map2json(map);
+		writeResult(jsonStr, response);
+
+		return pages;
+	}
+	
 
 }

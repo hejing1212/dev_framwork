@@ -87,7 +87,7 @@
 						data = JSON.parse(data);
 						if (data.code == '1') {
 							$.messager.alert('添加成功', data.msg,'info',function(){
-								window.parent.mainPlatform.parentReloadTabGrid();
+								window.parent.reloadRoleList();
 							});
 						} else {
 							$.messager.alert('添加失败', data.msg, 'error');

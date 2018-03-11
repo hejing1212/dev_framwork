@@ -10,6 +10,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.Transactional;
 
 import org.apache.shiro.dao.DataAccessException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ import com.hy.sys.entity.SysRole;
 import com.hy.sys.entity.SysUser;
 import com.hy.sys.entity.SysUserRole;
 import com.hy.sys.service.SysRoleService;
+import com.hy.sys.service.SysUserRoleService;
 import com.hy.sys.shiro.UserUtils;
 import com.hy.sys.utils.ConvertJson;
 import com.hy.sys.utils.IntegerTools;
@@ -41,6 +43,8 @@ public class RoleController extends AbstractBasicController {
 
 	@Autowired
 	private SysRoleService sysRoleService;
+	@Autowired
+	private SysUserRoleService sysRoleUserService;
 
 	/*
 	 * (non-Javadoc)
@@ -54,21 +58,25 @@ public class RoleController extends AbstractBasicController {
 		// TODO Auto-generated method stub
 
 	}
-/**
- * 显示添加模板
- * @return
- */
+
+	/**
+	 * 显示添加模板
+	 * 
+	 * @return
+	 */
 	@RequestMapping("/addRole")
 	public ModelAndView addRole() {
 		ModelAndView view = new ModelAndView();
 		return view;
 	}
-/**
- * 显示编辑模板及数据
- * @param response
- * @param request
- * @return
- */
+
+	/**
+	 * 显示编辑模板及数据
+	 * 
+	 * @param response
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping("/editRole")
 	public ModelAndView editRole(HttpServletResponse response, HttpServletRequest request) {
 		ModelAndView view = new ModelAndView();
@@ -79,16 +87,17 @@ public class RoleController extends AbstractBasicController {
 
 	/**
 	 * 显示角色选择列表
+	 * 
 	 * @return
 	 */
-		@RequestMapping("/role")
-		public ModelAndView Role(HttpServletResponse response, HttpServletRequest request) {
-			ModelAndView view = new ModelAndView();
-			String userId=request.getParameter("userid");
-			view.addObject("userid", userId);
-			return view;
-		}
-	
+	@RequestMapping("/role")
+	public ModelAndView Role(HttpServletResponse response, HttpServletRequest request) {
+		ModelAndView view = new ModelAndView();
+		String userId = request.getParameter("userid");
+		view.addObject("userid", userId);
+		return view;
+	}
+
 	/****
 	 * 保存用户信息
 	 */
@@ -110,20 +119,20 @@ public class RoleController extends AbstractBasicController {
 				map.put("code", "0");
 				map.put("msg", "角色名称已经存在，添加失败！");
 			}
-		}else {
+		} else {
 			try {
-			SysRole dbrole = sysRoleService.get(role.getRoleid());
-			dbrole.setName(role.getName());
-			dbrole.setCode(role.getCode());
-			dbrole.setIs_sys(role.getIs_sys());
-			dbrole.setUsable(role.getUsable());
-			dbrole.setRemarks(role.getRemarks());
-			dbrole.setUpdate_by(UserUtils.getUser().getUserid());
-			dbrole.setUpdate_date(now);
-			sysRoleService.save(dbrole);
-			map.put("code", 1);
-			map.put("msg", "修改角色信息成功！");
-			}catch (DataAccessException e) {
+				SysRole dbrole = sysRoleService.get(role.getRoleid());
+				dbrole.setName(role.getName());
+				dbrole.setCode(role.getCode());
+				dbrole.setIs_sys(role.getIs_sys());
+				dbrole.setUsable(role.getUsable());
+				dbrole.setRemarks(role.getRemarks());
+				dbrole.setUpdate_by(UserUtils.getUser().getUserid());
+				dbrole.setUpdate_date(now);
+				sysRoleService.save(dbrole);
+				map.put("code", 1);
+				map.put("msg", "修改角色信息成功！");
+			} catch (DataAccessException e) {
 				map.put("code", 1);
 				map.put("msg", e.toString());
 			}
@@ -133,6 +142,7 @@ public class RoleController extends AbstractBasicController {
 
 	/**
 	 * 显示角色管理列表
+	 * 
 	 * @return
 	 */
 	@ResponseBody
@@ -141,13 +151,15 @@ public class RoleController extends AbstractBasicController {
 		ModelAndView view = new ModelAndView();
 		return view;
 	}
-/**
- * 获取角色列表数据
- * @param entity
- * @param response
- * @param request
- * @return
- */
+
+	/**
+	 * 获取角色列表数据
+	 * 
+	 * @param entity
+	 * @param response
+	 * @param request
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping("/getRoleList")
 	public PageInfo<SysRole> getList(@ModelAttribute SysRole entity, HttpServletResponse response,
@@ -168,14 +180,36 @@ public class RoleController extends AbstractBasicController {
 
 		return pages;
 	}
+/**
+ *设置用户角色
+ * @param role
+ * @param response
+ * @param request
+ * @return
+ */
+	@Transactional
 	@ResponseBody
 	@RequestMapping("/saveUserRole")
-	public Map<String,Object> saveUserRole(@ModelAttribute SysUserRole role, HttpServletResponse response,
-			HttpServletRequest request){
+	public Map<String, Object> saveUserRole(@ModelAttribute SysUserRole role, HttpServletResponse response,
+			HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		String roleids=role.getRole_id();
-		map.put("code", 1);
-		map.put("msg", "修改角色信息成功！");
+		try {
+			if (role != null) {
+				sysRoleUserService.deleteRoleByUserId(role.getUser_id());
+				String roleids[] = role.getRole_id().split(",");
+				for (int i = 0; i < roleids.length; i++) {
+					SysUserRole userRole = new SysUserRole();
+					userRole.setRole_id(roleids[i]);
+					userRole.setUser_id(role.getUser_id());
+					sysRoleUserService.save(userRole);
+				}
+			}
+			map.put("code", 1);
+			map.put("msg", "修改角色信息成功！");
+		} catch (DataAccessException e) {
+			map.put("code", 0);
+			map.put("msg", e.toString());
+		}
 		return map;
 	}
 
