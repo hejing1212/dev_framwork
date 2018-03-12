@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.hy.sys.core.dao.BasicDao;
 import com.hy.sys.core.service.impl.BasicServiceImpl;
 import com.hy.sys.dao.SysUserRoleDao;
+import com.hy.sys.entity.SysRole;
 import com.hy.sys.entity.SysUserRole;
 import com.hy.sys.service.SysUserRoleService;
 import com.hy.sys.utils.PageInfo;
@@ -23,26 +24,7 @@ public class SysUserRoleServiceImpl extends BasicServiceImpl<SysUserRole> implem
 			return null; 
 	}
 
-	/**
-	 * 根据用户ID查询用户对应角色列表
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public PageInfo<SysUserRole> getPageListByUser(String userId, int pageNo, int pageSize) {
-		StringBuffer hql = new StringBuffer();
-		List<Object> values = new ArrayList<Object>();
-		hql.append(" FROM SysUser ");
-		hql.append(" WHERE 1=1 ");
-		
-		String hqlCount ="select count(*)  FROM SysUser WHERE 1=1";
-				
-		if (userId != "") {
-			hql.append(" AND ( userid = ?)");
-			values.add(userId);
-		}
-		hql.append(" ORDER BY create_date DESC");
-		return (PageInfo<SysUserRole>)getBasicDao().findPageInfoByQuery(pageNo, pageSize, hql.toString(),hqlCount, new Object[] {userId});
-	}
+	
 	@Override
 	protected BasicDao<SysUserRole> getBasicDao() {
 		// TODO Auto-generated method stub

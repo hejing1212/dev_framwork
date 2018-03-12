@@ -18,4 +18,12 @@ public interface SysRoleService extends BasicService<SysRole>{
 	 * @return
 	 */
 	public SysRole getRoleName(String name);
+   /**
+    * 查询用户对应的角色列表
+    * @param userId
+    * @param pageNo
+    * @param pageSize
+    * @return
+    */
+	public PageInfo<SysRole> getPageListByUser(String userId, int pageNo, int pageSize);
 }

@@ -93,4 +93,26 @@ public class SysRoleServiceImpl extends BasicServiceImpl<SysRole> implements Sys
 		// TODO Auto-generated method stub
 		return sysRoleDao;
 	}
+	
+	/**
+	 * 根据用户ID查询用户对应角色列表
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public PageInfo<SysRole> getPageListByUser(String userId, int pageNo, int pageSize) {
+		StringBuffer hql = new StringBuffer();
+		List<Object> values = new ArrayList<Object>();
+		//hql.append("SELECT a.* ");
+		hql.append(" FROM SysUserRole  ");
+		hql.append(" WHERE 1=1 ");
+		
+		String hqlCount ="select count(*)  FROM SysUserRole WHERE 1=1";
+				
+		if (userId != "") {
+			hql.append(" AND ( user_id = ?)");
+			values.add(userId);
+		}
+		//hql.append(" ORDER BY create_date DESC");
+		return (PageInfo<SysRole>)getBasicDao().findPageInfoByQuery(pageNo, pageSize, hql.toString(),hqlCount, new Object[] {userId});
+	}
 }

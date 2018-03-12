@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hy.sys.core.controller.AbstractBasicController;
+import com.hy.sys.entity.SysRole;
 import com.hy.sys.entity.SysUser;
-import com.hy.sys.entity.SysUserRole;
-import com.hy.sys.service.SysUserRoleService;
+import com.hy.sys.service.SysRoleService;
 import com.hy.sys.service.SysUserService;
 import com.hy.sys.service.impl.PasswordServiceImpl;
 import com.hy.sys.shiro.UserUtils;
@@ -37,7 +37,7 @@ public class UserController extends AbstractBasicController {
 	private PasswordServiceImpl passwordService;
 
 	@Autowired
-	private SysUserRoleService sysRoleUserService;
+	private SysRoleService sysRoleService;
 	
 	@Override
 	protected void init(ModelMap mode, HttpServletRequest req) {
@@ -176,13 +176,13 @@ public class UserController extends AbstractBasicController {
 	 * @return
 	 */
 	@RequestMapping("/getUserRoleList")
-	public PageInfo<SysUserRole> getUserRoleList( HttpServletResponse response, HttpServletRequest request) {
+	public PageInfo<SysRole> getUserRoleList( HttpServletResponse response, HttpServletRequest request) {
 		int pageNo = (request.getParameter("page") == null) ? PAGE_NO
 				: IntegerTools.parseInt(request.getParameter("page"));
 		int pageSize = (request.getParameter("rows") == null) ? PAGE_SIZE
 				: IntegerTools.parseInt(request.getParameter("rows"));
         String userId=request.getParameter("userid");
-        PageInfo<SysUserRole> pages = sysRoleUserService.getPageListByUser(userId,pageNo,pageSize);
+        PageInfo<SysRole> pages = sysRoleService.getPageListByUser(userId,pageNo,pageSize);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("total", pages.getTotalrecond());
 		map.put("rows", pages.getResultlist());
