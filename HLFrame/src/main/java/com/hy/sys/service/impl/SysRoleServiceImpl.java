@@ -102,17 +102,17 @@ public class SysRoleServiceImpl extends BasicServiceImpl<SysRole> implements Sys
 	public PageInfo<SysRole> getPageListByUser(String userId, int pageNo, int pageSize) {
 		StringBuffer hql = new StringBuffer();
 		List<Object> values = new ArrayList<Object>();
-		//hql.append("SELECT a.* ");
-		hql.append(" FROM SysUserRole  ");
-		hql.append(" WHERE 1=1 ");
+		hql.append("SELECT a ");
+		hql.append(" FROM SysRole a, SysUserRole b ");
+		hql.append(" WHERE a.roleid=b.role_id ");
 		
-		String hqlCount ="select count(*)  FROM SysUserRole WHERE 1=1";
+		String hqlCount ="select count(*)  FROM SysUserRole WHERE  user_id = ? ";
 				
 		if (userId != "") {
-			hql.append(" AND ( user_id = ?)");
+			hql.append(" AND ( b.user_id = ?)");
 			values.add(userId);
 		}
-		//hql.append(" ORDER BY create_date DESC");
-		return (PageInfo<SysRole>)getBasicDao().findPageInfoByQuery(pageNo, pageSize, hql.toString(),hqlCount, new Object[] {userId});
+		hql.append(" ORDER BY create_date DESC");
+		return getBasicDao().findPageInfoByQuery(pageNo, pageSize, hql.toString(),hqlCount, values.toArray());
 	}
 }

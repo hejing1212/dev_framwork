@@ -175,6 +175,7 @@ public class UserController extends AbstractBasicController {
 	 * @param request
 	 * @return
 	 */
+	@ResponseBody
 	@RequestMapping("/getUserRoleList")
 	public PageInfo<SysRole> getUserRoleList( HttpServletResponse response, HttpServletRequest request) {
 		int pageNo = (request.getParameter("page") == null) ? PAGE_NO
