@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -192,6 +193,27 @@ public class UserController extends AbstractBasicController {
 
 		return pages;
 	}
-	
+	/***
+	 * 批量删除用户权限
+	 * @param userId
+	 * @param roleIds
+	 * @param response
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/deleteUserRole")
+	public Map<String,Object> deleteUserRole(@RequestParam(required = true) String userId,String roleIds,HttpServletResponse response, HttpServletRequest request){
+		Map<String,Object> map=new HashMap<String, Object>();
+		if(StringTools.isNotBlank(userId)){
+			sysRoleService.deleteUserRole(userId,roleIds.split(","));
+			map.put("code", "1");
+			map.put("msg", "删除成功");
+		}else{
+			map.put("code", "0");
+			map.put("msg", "参数错误");
+		}
+		return map;
+	}
 
 }

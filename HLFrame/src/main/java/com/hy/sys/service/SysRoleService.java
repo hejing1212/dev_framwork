@@ -26,4 +26,11 @@ public interface SysRoleService extends BasicService<SysRole>{
     * @return
     */
 	public PageInfo<SysRole> getPageListByUser(String userId, int pageNo, int pageSize);
+	
+	/**
+	 * 删除用户的角色
+	 * @param userId
+	 * @param roleIds
+	 */
+	public void deleteUserRole(String userId, String[] roleIds);
 }

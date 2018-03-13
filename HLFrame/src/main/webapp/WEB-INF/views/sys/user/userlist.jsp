@@ -23,7 +23,7 @@
 
 			<table id="dg" style="width: 100%; height: 554px"
 				data-options="rownumbers:true,
-                singleSelect:false, autoRowHeight:false,  pagination:true, fitColumns:true,  striped:true,  checkOnSelect:false,
+                singleSelect:true, autoRowHeight:false,  pagination:true, fitColumns:true,  striped:true,  checkOnSelect:false,
                 selectOnCheck:false, collapsible:true,  toolbar:'#tb',  pageSize:10">
 				<thead>
 					<tr>
@@ -67,8 +67,8 @@
 			title="角色设置" style="width: 300px;">
 			<div style="padding: 5px 0; text-align: right;">
 				<a href="#" onclick="getRoleList();" class="easyui-linkbutton"
-					data-options="plain:true,iconCls:'icon-add'">分配</a> <a href="#"
-					class="easyui-linkbutton"
+					data-options="plain:true,iconCls:'icon-add'">分配</a> 
+					<a href="#" onclick="delUserRole();" class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon-remove'">移除</a>
 
 			</div>
@@ -114,6 +114,49 @@
 			});
 		});
 
+		function delUserRole(){
+			var userid = $('#dg').datagrid('getSelected').userid;
+			var rowRole=$('#role_dg').datagrid('getSelected');
+			if (userid == '') {
+				$.messager.show({
+					title : '操作提示',
+					msg : '请先选择用户后再进行此操作!',
+					showType : 'slide'
+				});
+				return;
+			}
+			if (rowRole == '') {
+				$.messager.show({
+					title : '操作提示',
+					msg : '请先选择要删除的数据!',
+					showType : 'slide'
+				});
+				return;
+			}
+			var param = {};
+			param['userId'] = userid;
+			param['roleIds'] = rowRole['roleid'];
+			$.ajax({
+   				url:"${basePath}/sys/user/deleteUserRole.html",
+				type:"post",
+				data:param,
+				dataType:"json",
+				async:false,
+		   		//提交成功后回调的函数
+             	success: function(data){
+             		if(data){
+             			if(data.code == 1){
+             				$('#role_dg').datagrid('reload');
+             				$.messager.show({ title: '提示',msg: data.msg,timeout: 2000,showType: 'slide'});
+             			}else{
+             				$.messager.show({ title: '错误',msg: data.msg,timeout: 2000,showType: 'slide'});
+             			}
+             		}
+				} 
+			});		
+			
+			
+		}
 		//子页面调用后刷新列表
 		window.top["reload_Abnormal_Monitor"] = function() {
 			$("#dg").datagrid('reload');
