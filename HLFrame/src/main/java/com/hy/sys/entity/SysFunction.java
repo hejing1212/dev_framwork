@@ -2,7 +2,11 @@ package com.hy.sys.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
 
 import com.hy.sys.core.entity.BaseSpuerEntity;
 import com.hy.sys.utils.Comment;
@@ -25,8 +29,15 @@ public class SysFunction extends BaseSpuerEntity{
 	private String menu_icon; // '按钮图标',
 	private String remarks; // '备注',
 
-
+	public SysFunction() {
+		
+	}
 	
+	
+
+	@Id
+	@GeneratedValue(generator = "paymentableGenerator")
+	@GenericGenerator(name = "paymentableGenerator", strategy = "uuid")
 	@Column(name = "funid", length = 32)
 	public String getFunid() {
 		return funid;

@@ -100,42 +100,7 @@ public class SysRole extends BaseSpuerEntity {
 		this.usable = usable;
 	}
 
-	@Column(name = "create_by", length = 64)
-	public String getCreate_by() {
-		return create_by;
-	}
-
-	public void setCreate_by(String create_by) {
-		this.create_by = create_by;
-	}
-
-	@Column(name = "create_date", length = 64)
-	public Date getCreate_date() {
-		return create_date;
-	}
-
-	public void setCreate_date(Date create_date) {
-		this.create_date = create_date;
-	}
-
-	@Column(name = "update_by", length = 64)
-	public String getUpdate_by() {
-		return update_by;
-	}
-
-	public void setUpdate_by(String update_by) {
-		this.update_by = update_by;
-	}
-
-	@Column(name = "update_date", length = 64)
-	public Date getUpdate_date() {
-		return update_date;
-	}
-
-	public void setUpdate_date(Date update_date) {
-		this.update_date = update_date;
-	}
-
+	 
 	@Column(name = "remarks", length = 64)
 	public String getRemarks() {
 		return remarks;
@@ -145,13 +110,5 @@ public class SysRole extends BaseSpuerEntity {
 		this.remarks = remarks;
 	}
 
-	@Column(name = "del_flag", length = 64,nullable=false)
-	public String getDel_flag() {
-		return del_flag;
-	}
-
-	public void setDel_flag(String del_flag) {
-		this.del_flag = del_flag;
-	}
-
+	 
 }

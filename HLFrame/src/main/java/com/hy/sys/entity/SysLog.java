@@ -41,6 +41,8 @@ public class SysLog extends AbstractBasicEntity {
 	private String title; // '日志标题',
 	private String content; // 日志内容',
 	private String logtype; // '操作方式',
+	private SysUser create_by;
+	private Date   create_date;
 	private String remote_addr; // '操作IP地址',
 	private String user_agent; // '用户代理',
 	private String request_uri; // '请求URI',

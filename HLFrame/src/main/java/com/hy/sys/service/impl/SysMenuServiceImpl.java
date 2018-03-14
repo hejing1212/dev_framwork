@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.hy.sys.core.dao.BasicDao;
 import com.hy.sys.core.service.impl.BasicServiceImpl;
 import com.hy.sys.dao.SysMenuDao;
+import com.hy.sys.entity.SysFunction;
 import com.hy.sys.entity.SysMenu;
 import com.hy.sys.entity.TreeNode;
 import com.hy.sys.service.SysMenuService;
@@ -33,23 +34,7 @@ public class SysMenuServiceImpl extends BasicServiceImpl<SysMenu> implements Sys
 	 */
 	@Override
 	public SysMenu findByName(String menuname) {
-		StringBuffer sql = new StringBuffer();
-		List<Object> values = new ArrayList<Object>();
-		sql.append(" FROM SysMenu ");
-		sql.append(" WHERE 1=1 ");
-
-		if (menuname != "") {
-			sql.append(" AND (name = ?)");
-			values.add(menuname);
-		}
-
-		sql.append(" ORDER BY create_date DESC");
-		List<SysMenu> list = getBasicDao().findByHql(sql.toString(), values.toArray());
-		if (list.size() > 0) {
-			return (SysMenu) list.get(0);
-		} else {
-			return null;
-		}
+		return sysMenuDao.findByName(menuname);
 	}
 
 	@Override
@@ -63,13 +48,15 @@ public class SysMenuServiceImpl extends BasicServiceImpl<SysMenu> implements Sys
 		// TODO Auto-generated method stub
 		return null;
 	}
-/**
- * 获取当前用户授权菜单-方法未实现 
- * @param userid
- * @return
- */
+
+	/**
+	 * 获取当前用户授权菜单-方法未实现
+	 * 
+	 * @param userid
+	 * @return
+	 */
 	public List<SysMenu> findMenuByUserId(String userid) {
-		List<SysMenu> list=new ArrayList<SysMenu>();
+		List<SysMenu> list = new ArrayList<SysMenu>();
 		return list;
 	}
 
@@ -107,7 +94,7 @@ public class SysMenuServiceImpl extends BasicServiceImpl<SysMenu> implements Sys
 		for (int i = 0; i < list.size(); i++) {
 			SysMenu menu = list.get(i);
 			if (menu.getParent_id().equals(menuid)) {
-				TreeNode tree=new TreeNode();
+				TreeNode tree = new TreeNode();
 				tree.setId(menu.getMenuid());
 				tree.setText(menu.getName());
 				ArrayList<TreeNode> retli = new ArrayList<TreeNode>();
@@ -120,7 +107,7 @@ public class SysMenuServiceImpl extends BasicServiceImpl<SysMenu> implements Sys
 		}
 		return li;
 	}
-	
+
 	/**
 	 * 查询所有菜单，遍历后返回列表
 	 */
@@ -135,19 +122,20 @@ public class SysMenuServiceImpl extends BasicServiceImpl<SysMenu> implements Sys
 			return null;
 		}
 	}
-	
+
 	/**
 	 * 根据菜单的子父级关系生成上下级关系的数据
 	 * 
 	 * @param menu
 	 * @return
 	 */
+	@Override
 	public ArrayList<SysMenu> CreateMenuList(List<SysMenu> list, String menuid, ArrayList<SysMenu> li) {
 
 		for (int i = 0; i < list.size(); i++) {
 			SysMenu menu = list.get(i);
 			if (menu.getParent_id().equals(menuid)) {
-				 
+
 				ArrayList<SysMenu> retli = new ArrayList<SysMenu>();
 				ArrayList<SysMenu> childenList = CreateMenuList(list, menu.getMenuid(), retli);
 				if (childenList.size() > 0) {
@@ -159,4 +147,5 @@ public class SysMenuServiceImpl extends BasicServiceImpl<SysMenu> implements Sys
 		return li;
 	}
 
+	
 }

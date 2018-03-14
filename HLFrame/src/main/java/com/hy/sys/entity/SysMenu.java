@@ -159,9 +159,7 @@ public class SysMenu extends BaseSpuerEntity {
 	}
 	
 
-	public void setDel_flag(String del_flag) {
-		this.del_flag = del_flag;
-	}
+	 
 	/**增加了一个数据库没有的字段**/
 	@Transient
 	public ArrayList<SysMenu> getChildren() {

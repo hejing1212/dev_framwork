@@ -161,7 +161,7 @@
 		window.top["reload_Abnormal_Monitor"] = function() {
 			$("#dg").datagrid('reload');
 		};
-
+//刷新用户对应的角色列表
 		function reloadRoleList() {
 			$("#role_dg").datagrid('reload');
 			$("#dialog").dialog('close');
@@ -206,8 +206,7 @@
 			var userid = row.userid;
 			var url = "${basePath}/sys/role/role.html?userid=" + userid + "";
 			$("#dialog")
-					.dialog(
-							{
+					.dialog({
 								title : '选择角色',
 								width : 800,
 								height : 400,
