@@ -64,7 +64,7 @@ public class SysMenuServiceImpl extends BasicServiceImpl<SysMenu> implements Sys
 		return null;
 	}
 /**
- * 方法未实现 
+ * 获取当前用户授权菜单-方法未实现 
  * @param userid
  * @return
  */

@@ -14,86 +14,56 @@ public class BaseSpuerEntity extends AbstractBasicEntity {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String createUserId;// 添加人ID
-	private String createUserName;// 创建人用户名称
-	private Date createTime;// 添加时间	
-	private String updateUserId;// 最后一次操作用户ID
-	private String updateUserName;// 最后一次操作用户名称
-	private Date updateTime;// 最后一次更新时间
-	private Integer optLock;// 乐观锁
-	private Integer dataState=1;//数据状态
+	private String create_by;
+	private Date create_date;
+	private String update_by;
+	private Date update_date;
+	private String del_flag;
 	
-	@Column(name = "create_user_id", length = 32)
-	public String getCreateUserId() {
-		return createUserId;
+
+	@Column(name = "create_by", length = 64)
+	public String getCreate_by() {
+		return create_by;
 	}
 
-	public void setCreateUserId(String createUserId) {
-		this.createUserId = createUserId;
-	}
-	
-	@Column(name = "create_user_name", length = 20)
-	public String getCreateUserName() {
-		return createUserName;
+	public void setCreate_by(String create_by) {
+		this.create_by = create_by;
 	}
 
-	public void setCreateUserName(String createUserName) {
-		this.createUserName = createUserName;
+	@Column(name = "create_date", length = 64)
+	public Date getCreate_date() {
+		return create_date;
 	}
 
-	@Column(name = "create_time", length = 20)
-	public Date getCreateTime() {
-		return createTime;
+	public void setCreate_date(Date create_date) {
+		this.create_date = create_date;
+	}
+		
+	@Column(name = "update_by", length = 64)
+	public String getUpdate_by() {
+		return update_by;
 	}
 
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
+	public void setUpdate_by(String update_by) {
+		this.update_by = update_by;
 	}
 
-	@Column(name = "update_user_id", length = 32)
-	public String getUpdateUserId() {
-		return updateUserId;
+	@Column(name = "update_date", length = 64)
+	public Date getUpdate_date() {
+		return update_date;
 	}
 
-	public void setUpdateUserId(String updateUserId) {
-		this.updateUserId = updateUserId;
+	public void setUpdate_date(Date update_date) {
+		this.update_date = update_date;
 	}
 
-	@Column(name = "update_user_name", length = 20)
-	public String getUpdateUserName() {
-		return updateUserName;
+	@Column(name = "del_flag", length = 12)
+	public String getDel_flag() {
+		return del_flag;
 	}
 
-	public void setUpdateUserName(String updateUserName) {
-		this.updateUserName = updateUserName;
-	}
-
-	@Column(name = "update_time", length = 20)
-	public Date getUpdateTime() {
-		return updateTime;
-	}
-
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
-	}
-
-	@Version
-	@Column(name = "opt_lock", length = 11)
-	public Integer getOptLock() {
-		return optLock;
-	}
-
-	public void setOptLock(Integer optLock) {
-		this.optLock = optLock;
-	}
-	
-	@Column(name = "data_state", length = 11)
-	public Integer getDataState() {
-		return dataState;
-	}
-
-	public void setDataState(Integer dataState) {
-		this.dataState = dataState;
+	public void setDel_flag(String del_flag) {
+		this.del_flag = del_flag;
 	}
 	
 }

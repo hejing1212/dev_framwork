@@ -41,7 +41,7 @@ url: '${basePath}/sys/memu/getMenuList.html',method: 'get',rownumbers: true,idFi
 		<thead>
 			<tr>
 				<th data-options="field:'name'" width="220" align="center">名称</th>
-				<th data-options="field:'url'" width="220" align="center">连接地址</th>
+				<th data-options="field:'url'" width="220" align="center">菜单路径</th>
 				<th data-options="field:'permission'" width="220" align="center">权限字符</th>
 				<th data-options="field:'isshow'" width="220" align="center">是否显示</th>
 				<th data-options="field:'type'" width="100" align="center">资源类型</th>

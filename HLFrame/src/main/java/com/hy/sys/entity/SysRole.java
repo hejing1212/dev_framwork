@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import com.hy.sys.core.entity.AbstractBasicEntity;
+import com.hy.sys.core.entity.BaseSpuerEntity;
 import com.hy.sys.utils.Comment;
 
 /**
@@ -23,7 +23,7 @@ import com.hy.sys.utils.Comment;
 @Entity
 @Table(name = "sys_role")
 @Comment(value = "用户角色管理表")
-public class SysRole extends AbstractBasicEntity {
+public class SysRole extends BaseSpuerEntity {
 
 	private static final long serialVersionUID = 1L;
 
@@ -32,30 +32,23 @@ public class SysRole extends AbstractBasicEntity {
 	private String code; // '英文名称',
 	private String is_sys; // '是否系统数据',
 	private String usable; // '是否可用',
-	private String create_by; // '创建者',
-	private Date create_date; // '创建时间',
-	private String update_by; // '更新者',
-	private Date update_date; // '更新时间',
+
 	private String remarks; // '备注信息',
-	private String del_flag="0"; // '删除标记',
+	
 
 	public SysRole() {
 
 	}
 
-	public SysRole(String roleid, String name, String code, String is_sys, String usable, String create_by,
-			Date create_date, String update_by, Date update_date, String remarks, String del_flag) {
+	public SysRole(String roleid, String name, String code, String is_sys, String usable, String remarks) {
 		this.roleid = roleid;
 		this.name = name;
 		this.code = code;
 		this.is_sys = is_sys;
 		this.usable = usable;
-		this.create_by = create_by;
-		this.create_date = create_date;
-		this.update_by = update_by;
-		this.update_date = update_date;
+		
 		this.remarks = remarks;
-		this.del_flag = del_flag;
+		
 
 	}
 

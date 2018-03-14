@@ -1,7 +1,6 @@
 package com.hy.sys.entity;
 // Generated 2017-6-26 17:18:09 by Hibernate Tools 4.3.5.Final
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,7 +16,7 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
-import com.hy.sys.core.entity.AbstractBasicEntity;
+import com.hy.sys.core.entity.BaseSpuerEntity;
 import com.hy.sys.utils.Comment;
 
 /**
@@ -26,7 +25,7 @@ import com.hy.sys.utils.Comment;
 @Entity
 @Table(name = "sys_user")
 @Comment(value = "用户管理表")
-public class SysUser extends AbstractBasicEntity {
+public class SysUser extends BaseSpuerEntity {
 
 	/**
 	 * 是否锁定（1：正常；-1：删除；0：锁定；）
@@ -45,12 +44,9 @@ public class SysUser extends AbstractBasicEntity {
 	private String email;
 	private String phone;
 	private String status;
-	private String create_by;
-	private Date create_date;
-	private String update_by;
-	private Date update_date;
+	
 	private String remarks;
-	private String del_flag;
+
 	private Set<SysRole> roleList;
 
 	public SysUser() {
@@ -61,8 +57,7 @@ public class SysUser extends AbstractBasicEntity {
 	}
 
 	public SysUser(String userid, String realname, String username, String portrait, String password, String salt,
-			String email, String phone, String status, String create_by, Date create_date, String update_by,
-			Date update_date, String remarks, String del_flag, Set<SysRole> roleList) {
+			String email, String phone, String status,String remarks, Set<SysRole> roleList) {
 		this.userid = userid;
 		this.realname = realname;
 		this.username = username;
@@ -72,12 +67,7 @@ public class SysUser extends AbstractBasicEntity {
 		this.email = email;
 		this.phone = phone;
 		this.status = status;
-		this.create_by = create_by;
-		this.create_date = create_date;
-		this.update_by = update_by;
-		this.update_date = update_date;
 		this.remarks = remarks;
-		this.del_flag = del_flag;
 		this.roleList = roleList;
 	}
 
@@ -165,41 +155,7 @@ public class SysUser extends AbstractBasicEntity {
 		this.status = status;
 	}
 
-	@Column(name = "create_by", length = 64)
-	public String getCreate_by() {
-		return create_by;
-	}
-
-	public void setCreate_by(String create_by) {
-		this.create_by = create_by;
-	}
-
-	@Column(name = "create_date", length = 64)
-	public Date getCreate_date() {
-		return create_date;
-	}
-
-	public void setCreate_date(Date create_date) {
-		this.create_date = create_date;
-	}
-
-	@Column(name = "update_by", length = 64)
-	public String getUpdate_by() {
-		return update_by;
-	}
-
-	public void setUpdate_by(String update_by) {
-		this.update_by = update_by;
-	}
-
-	@Column(name = "update_date", length = 64)
-	public Date getUpdate_date() {
-		return update_date;
-	}
-
-	public void setUpdate_date(Date update_date) {
-		this.update_date = update_date;
-	}
+	
 
 	@Column(name = "remarks", length = 2048)
 	public String getRemarks() {
@@ -210,14 +166,7 @@ public class SysUser extends AbstractBasicEntity {
 		this.remarks = remarks;
 	}
 
-	@Column(name = "del_flag", length = 32)
-	public String getDel_flag() {
-		return del_flag;
-	}
-
-	public void setDel_flag(String del_flag) {
-		this.del_flag = del_flag;
-	}
+	
 
 	@ManyToMany
 	@JoinTable(name = "sys_user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
