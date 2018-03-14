@@ -164,6 +164,7 @@
 
 		function reloadRoleList() {
 			$("#role_dg").datagrid('reload');
+			$("#dialog").dialog('close');
 		}
 		//编辑用户
 		function editUser() {
