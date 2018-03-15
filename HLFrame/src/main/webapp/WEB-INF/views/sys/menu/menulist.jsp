@@ -23,9 +23,9 @@
 		<div data-options="region:'center',title:'菜单管理',iconCls:'icon-ok'">
 			<div id="tb" style="padding: 0 30px;">
 				<div class="conditions">
-					<a href="${basePath}/sys/memu/addmemu.html"
+					<a href="${basePath}/sys/menu/addmenu.html"
 						class="easyui-linkbutton" data-options="iconCls:'icon-add'">
-						新增</a> <a href="javascript:void(0)" onclick="editMemu();"
+						新增</a> <a href="javascript:void(0)" onclick="editMenu();"
 						class="easyui-linkbutton" data-options="iconCls:'icon-edit'">修改</a>
 
 					名称: <input class="easyui-textbox" type="text" name="code"
@@ -41,7 +41,7 @@
 			<table id="menuTree" title="菜单管理列表" class="easyui-treegrid"
 				style="width: 100%; height: 600px"
 				data-options="
-url: '${basePath}/sys/memu/getMenuList.html',method: 'get',rownumbers: true,idField: 'menuid',treeField: 'name', toolbar:'#tb'">
+url: '${basePath}/sys/menu/getMenuList.html',method: 'get',rownumbers: true,idField: 'menuid',treeField: 'name', toolbar:'#tb'">
 				<thead>
 					<tr>
 						<th data-options="field:'name'" width="220" align="center">名称</th>
@@ -71,15 +71,14 @@ url: '${basePath}/sys/memu/getMenuList.html',method: 'get',rownumbers: true,idFi
 				data-options="method:'get',border:false,singleSelect:true,fit:true,fitColumns:true">
 				<thead>
 					<tr>
-						<th data-options="field:'name'" width="90" align="center">功能名称</th>
-						<th data-options="field:'usable'" width="90" align="center">功能命令</th>
-						<th data-options="field:'remarks'" width="120" align="center">描述</th>
+						<th data-options="field:'name'" width="80" align="center">功能名称</th>
+						<th data-options="field:'permission'" width="100" align="center">功能命令</th>
+						<th data-options="field:'remarks'" width="80" align="center">描述</th>
 					</tr>	
 				</thead>
 			</table>
 		</div>
 		<!-- 显示功能列表结束 -->
-
 	</div>
 	
 	<!-- 打印功能添加或编辑界面 -->
@@ -98,7 +97,7 @@ url: '${basePath}/sys/memu/getMenuList.html',method: 'get',rownumbers: true,idFi
                  onClickRow : function(rowlndex, rowData) {
 				 $("#mypanels").layout('expand','east');
 					 $("#function_dg").datagrid({
-						 url : "${basePath}/sys/menu/getMenuFunList.html?menuId="+rowData.menuid+"",
+						 url : "${basePath}/sys/menu/getMenuFunList.html?menuId="+rowlndex.menuid+"",
 						 rownumbers : true
 					 });
 				}
@@ -124,17 +123,21 @@ url: '${basePath}/sys/memu/getMenuList.html',method: 'get',rownumbers: true,idFi
         			}
         			var menuid = row.menuid;
         			$("#dialog") .dialog({
-        								title : '选择角色',
+        								title : '功能添加',
         								width : 800,
-        								height : 400,
-        								queryParames : {
+        								height : 450,
+        								queryParams : {
         									menuid : menuid
         								},
         								modal : true,
+        								top:$(document).scrollTop()+($(window).height()-250)*0.3,
+        							    left:$(document).scrollLeft()+($(window).width()-800)*0.5,
+        							    
         								content : "<iframe scrolling='auto' frameborder='0' src='${basePath}/sys/menu/showFunction.html?menuid="
         										+ menuid
         										+ "' style='width:100%; height:100%; display:block;'></iframe>"
         							}).dialog('open');
+        			 
         		     }
         		
         		
@@ -151,16 +154,52 @@ url: '${basePath}/sys/memu/getMenuList.html',method: 'get',rownumbers: true,idFi
         			}
         			var funid = row.funid;
         			$("#dialog") .dialog({
-        								title : '选择角色',
+        								title : '功能编辑',
         								width : 800,
-        								height : 400,
-        								queryParames : {
-        									funid : funid
-        								},
+        								height : 450,  								 
         								modal : true,
-        								content : "<iframe scrolling='auto' frameborder='0' src='${basePath}/sys/menu/showFunction.html  style='width:100%; height:100%; display:block;'></iframe>"
+        								top:$(document).scrollTop()+($(window).height()-250)*0.3,
+        							    left:$(document).scrollLeft()+($(window).width()-800)*0.5,
+        								content : "<iframe scrolling='auto' frameborder='0' src='${basePath}/sys/menu/showFunction.html?funid="+funid+"'  style='width:100%; height:100%; display:block;'></iframe>"
         							}).dialog('open');
         		}
+        		
+        		//删除菜单对应功能
+        		function delUserFun(){
+        			var row = $('#function_dg').datagrid('getSelected');
+        			if (row == null || row == '') {
+        				$.messager.show({
+        					title : '操作提示',
+        					msg : '未选择操作数据!',
+        					showType : 'slide'
+        				});
+        				return;
+        			}
+        			var funid = row.funid;
+        			var param = {};
+        			param['funid'] = funid;
+        			$.ajax({
+           				url:"${basePath}/sys/menu/deleteMenuFun.html",
+        				type:"post",
+        				data:param,
+        				dataType:"json",
+        				async:false,
+        		   		//提交成功后回调的函数
+                     	success: function(data){
+                     		if(data){
+                     			if(data.code == 1){
+                     				$('#function_dg').datagrid('reload');
+                     				$.messager.show({ title: '提示',msg: data.msg,timeout: 2000,showType: 'slide'});
+                     			}else{
+                     				$.messager.show({ title: '错误',msg: data.msg,timeout: 2000,showType: 'slide'});
+                     			}
+                     		}
+        				} 
+        			});		
+        			
+        			
+        		}
+
          </script>				
 </body>
 </html>

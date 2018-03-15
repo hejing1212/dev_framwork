@@ -103,7 +103,7 @@
 	 */
 	function submitFormData() {
 		$('#save_menu').form('submit', {
-			url : "${basePath}/sys/memu/savemenu.html",
+			url : "${basePath}/sys/menu/savemenu.html",
 			onSubmit : function() {
                 return $(this).form('validate');
 			},
@@ -130,7 +130,7 @@
 	**/
 	$(function(){ 
 		$("#parent_id").combotree({
-			url:"${basePath}/sys/memu/memuTreeJson.html",
+			url:"${basePath}/sys/menu/menuTreeJson.html",
 			onLoadSuccess:function(node, data){
 				$("#parent_id").combotree('setValue',data[0].id);
 			}

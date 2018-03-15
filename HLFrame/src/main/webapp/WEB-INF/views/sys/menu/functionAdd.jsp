@@ -17,23 +17,23 @@
 </head>
 <body>
 	<div class="container">
-		<form id="save_menu" method="post">
+		<form id="form_add_fun" method="post">
 			<div class="content">
 				<div class="column">
 					<span class="current">功能信息</span>
-					<input type="hidden" name="funid" value="${sysFunction.funid}"> 
+					<input type="hidden" name="menuid" value="${menuid}"> 
 				</div>
 				<table class="kv-table">
 					<tbody>
 						<tr>
 							<td class="kv-label">功能名称</td>
 							<td class="kv-content"><input class="easyui-textbox"
-								type="text" name="name" value="${sysFunction.name}" data-options="required:true,missingMessage:'请输入功能名称！'"
+								type="text" name="name" data-options="required:true,missingMessage:'请输入功能名称！'"
 								style="height: 35px;" /></td>
 
 							<td class="kv-label">方法名称</td>
 							<td class="kv-content"><input class="easyui-textbox"
-								type="text" name="fun_action" value="${sysFunction.fun_action}" data-options="required:true,missingMessage:'请输入方法名称！'"
+								type="text" name="fun_action" data-options="required:true,missingMessage:'请输入方法名称！'"
 								style="height: 35px;" /></td>
 
 
@@ -42,7 +42,7 @@
 						<tr>
 							<td class="kv-label">权限字符</td>
 							<td class="kv-content"><input class="easyui-textbox"
-								type="text" name="permission" value="${sysFunction.permission}" data-options="required:true,missingMessage:'请输入权限字符！'"
+								type="text" name="permission" data-options="required:true,missingMessage:'请输入权限字符！'"
 								style="height: 35px;" /></td>
 							<td class="kv-label">功能图标</td>
 							<td class="kv-content"> 
@@ -52,14 +52,14 @@
 						<tr>
 							<td class="kv-label">排序</td>
 							<td class="kv-content" colspan="3"><input
-								class="easyui-textbox" type="text" value="${sysFunction.sort}" name="sort"
+								class="easyui-textbox" type="text" name="sort"
 								data-options="required:true" style="height: 35px;" /></td>
 						</tr>
 						<tr>
 						<tr>
 							<td class="kv-label">功能说明</td>
 							<td class="kv-content" colspan="3"><textarea rows="5"
-									cols="50" name="remarks">${sysFunction.remarks}</textarea></td>
+									cols="50" name="remarks"></textarea></td>
 
 						</tr>
 					</tbody>
@@ -88,8 +88,8 @@
 	 * 提交表单
 	 */
 	function submitFormData() {
-		$('#edit_function').form('submit', {
-			url : "${basePath}/sys/memu/editFunction.html",
+		$('#form_add_fun').form('submit', {
+			url : "${basePath}/sys/menu/editFunction.html",
 			onSubmit : function() {
 				return $(this).form('validate');
 			},

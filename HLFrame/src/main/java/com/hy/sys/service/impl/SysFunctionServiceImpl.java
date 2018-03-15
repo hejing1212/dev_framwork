@@ -14,11 +14,11 @@ import com.hy.sys.service.SysFunctionService;
 import com.hy.sys.utils.PageInfo;
 
 @Service("sysFunService")
-public class SysFunctionServiceImpl  extends BasicServiceImpl<SysFunction> implements SysFunctionService {
+public class SysFunctionServiceImpl extends BasicServiceImpl<SysFunction> implements SysFunctionService {
 
 	@Autowired
-	private SysFunctionDao  sysFunctionDao;
-	
+	private SysFunctionDao sysFunctionDao;
+
 	@Override
 	public PageInfo<SysFunction> getPageList(Map<String, Object> params, SysFunction entity, int pageNo, int pageSize) {
 		// TODO Auto-generated method stub
@@ -30,7 +30,7 @@ public class SysFunctionServiceImpl  extends BasicServiceImpl<SysFunction> imple
 	 */
 	@Override
 	public ArrayList<SysFunction> getFunListByMenuid(String menuId) {
-		ArrayList<SysFunction> list=sysFunctionDao.getMenuFunByMenuid(menuId);
+		ArrayList<SysFunction> list = sysFunctionDao.getMenuFunByMenuid(menuId);
 		return list;
 	}
 
@@ -39,7 +39,12 @@ public class SysFunctionServiceImpl  extends BasicServiceImpl<SysFunction> imple
 		// TODO Auto-generated method stub
 		return sysFunctionDao;
 	}
-
-	
-	 
+	/**
+	 * 删除菜单功能
+	 * @param funids
+	 */
+	@Override
+	public void deleteMenuFun(String[] funids) {
+		sysFunctionDao.deleteMenuFun(funids);
+	}
 }

@@ -13,4 +13,10 @@ public interface SysFunctionDao extends BasicDao<SysFunction>{
 	 * @return
 	 */
 	public	ArrayList<SysFunction> getMenuFunByMenuid(String menuId);
+
+	/**
+	 * 删除菜单对应的功能
+	 * @param funids
+	 */
+	void deleteMenuFun(String[] funids);
 }

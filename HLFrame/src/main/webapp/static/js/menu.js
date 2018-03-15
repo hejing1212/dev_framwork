@@ -24,7 +24,7 @@ var SystemMenu = [{
 		},{
 			title: '菜单管理',
 			menuid:'cdgl',
-			href: '/sys/memu/memulist.html'
+			href: '/sys/menu/menulist.html'
 		},{
 			title: '详细信息',
 			menuid:'xxxx',

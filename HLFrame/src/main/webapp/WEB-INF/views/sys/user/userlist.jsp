@@ -113,7 +113,7 @@
 				}
 			});
 		});
-
+      //删除用户角色
 		function delUserRole(){
 			var userid = $('#dg').datagrid('getSelected').userid;
 			var rowRole=$('#role_dg').datagrid('getSelected');

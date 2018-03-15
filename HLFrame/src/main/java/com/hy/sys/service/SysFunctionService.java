@@ -12,5 +12,11 @@ public interface SysFunctionService extends BasicService<SysFunction> {
 	 * @param menuId
 	 * @return
 	 */
-	ArrayList<SysFunction> getFunListByMenuid(String menuId);
+	public ArrayList<SysFunction> getFunListByMenuid(String menuId);
+
+	/**
+	 * 删除菜单功能
+	 * @param funids
+	 */
+	public void deleteMenuFun(String[] funids);
 }
