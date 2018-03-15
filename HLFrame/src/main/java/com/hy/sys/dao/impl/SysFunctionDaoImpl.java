@@ -13,6 +13,7 @@ import com.hy.sys.dao.SysFunctionDao;
 import com.hy.sys.entity.SysFunction;
 import com.hy.sys.entity.SysUser;
 import com.hy.sys.shiro.UserUtils;
+import com.hy.sys.utils.PageInfo;
 import com.hy.sys.utils.logs.LogUtil;
 
 @Repository("sysFunctionDao")
@@ -25,49 +26,51 @@ public class SysFunctionDaoImpl extends BasicDaoImpl<SysFunction> implements Sys
 	 * @return
 	 */
 	@Override
-	public ArrayList<SysFunction> getMenuFunByMenuid(String menuId) {
+	public PageInfo<SysFunction> getMenuFunByMenuid(int pageNo, int pageSize,String menuId) {
 		StringBuffer sql = new StringBuffer();
 		List<Object> values = new ArrayList<Object>();
 		sql.append(" FROM SysFunction ");
 		sql.append(" WHERE 1=1 ");
+		
+		String hqlCount="SELECT count(*) FROM SysFunction WHERE menuid = ?";
+		
 		if (menuId != "") {
 			sql.append(" AND (menuid = ?)");
 			values.add(menuId);
 		}
 		sql.append(" ORDER BY create_date DESC");
-		ArrayList<SysFunction> list =(ArrayList<SysFunction>)this.findByHql(sql.toString(), values.toArray());
-		if (list.size() > 0) {
-			return list;
-		} else {
-			return null;
-		}
+		PageInfo<SysFunction> page = this.findPageInfoByQuery(pageNo,pageSize,sql.toString(),hqlCount, values.toArray());
+		return page;
+
 	}
 
 	@Override
 	public Class<SysFunction> getEntityClass() {
 		// TODO Auto-generated method stub
-		return  SysFunction.class;
+		return SysFunction.class;
 	}
 
 	/**
 	 * 删除菜单对应的功能
+	 * 
 	 * @param funids
 	 */
 	@Override
 	public void deleteMenuFun(String[] funids) {
-		String sql = "DELETE FROM sys_function WHERE funid = ? ";		
+		String sql = "DELETE FROM sys_function WHERE funid = ? ";
 		if ((funids != null) && (funids.length > 0)) {
-			this.getJdbcTemplate().batchUpdate(sql, new BatchPreparedStatementSetter() {  
-	            public int getBatchSize() {  
-	                return funids.length; 
-	            }  
-	            public void setValues(PreparedStatement ps, int i)throws SQLException { 
-	                ps.setString(2, funids[i]);  	               
-	            }  
-	        });  
+			this.getJdbcTemplate().batchUpdate(sql, new BatchPreparedStatementSetter() {
+				public int getBatchSize() {
+					return funids.length;
+				}
+
+				public void setValues(PreparedStatement ps, int i) throws SQLException {
+					ps.setString(1, funids[i]);
+				}
+			});
 			SysUser user = UserUtils.getUser();
-			for(String funis:funids){
-				LogUtil.info("功能删除：被删除功能ID,"+funis+"删除人："+user.getUserid());	               
+			for (String funis : funids) {
+				LogUtil.info("功能删除：被删除功能ID," + funis + "删除人：" + user.getUserid());
 			}
 		}
 	}

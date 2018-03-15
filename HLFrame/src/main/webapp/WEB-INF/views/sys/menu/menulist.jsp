@@ -19,7 +19,8 @@
 
 </head>
 <body>
-	<div id="mypanels" class="easyui-layout" style="width: 100%; height: 620px;"> 
+	<div id="mypanels" class="easyui-layout"
+		style="width: 100%; height: 620px;">
 		<div data-options="region:'center',title:'菜单管理',iconCls:'icon-ok'">
 			<div id="tb" style="padding: 0 30px;">
 				<div class="conditions">
@@ -60,31 +61,31 @@ url: '${basePath}/sys/menu/getMenuList.html',method: 'get',rownumbers: true,idFi
 			title="功能编辑" style="width: 300px;">
 			<div style="padding: 5px 0; text-align: right;">
 				<a href="#" onclick="addFun()" class="easyui-linkbutton"
-					data-options="plain:true,iconCls:'icon-add'">添加</a> 
-					<a href="#" onclick="editFun()" class="easyui-linkbutton"
-					data-options="plain:true,iconCls:'icon-edit'">编辑</a> 
-					<a href="#" onclick=";" class="easyui-linkbutton"
+					data-options="plain:true,iconCls:'icon-add'">添加</a> <a href="#"
+					onclick="editFun()" class="easyui-linkbutton"
+					data-options="plain:true,iconCls:'icon-edit'">编辑</a> <a href="#"
+					onclick="delMenuFun();" class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon-remove'">移除</a>
 
 			</div>
 			<table id="function_dg" class="easyui-datagrid"
-				data-options="method:'get',border:false,singleSelect:true,fit:true,fitColumns:true">
+				data-options="method:'get',border:false,singleSelect:false,fit:true,fitColumns:true">
 				<thead>
 					<tr>
 						<th data-options="field:'name'" width="80" align="center">功能名称</th>
 						<th data-options="field:'permission'" width="100" align="center">功能命令</th>
 						<th data-options="field:'remarks'" width="80" align="center">描述</th>
-					</tr>	
+					</tr>
 				</thead>
 			</table>
 		</div>
 		<!-- 显示功能列表结束 -->
 	</div>
-	
+
 	<!-- 打印功能添加或编辑界面 -->
 	<div id="dialog" class="easyui-dialog" closed="true"></div>
-	
-	
+
+
 	<script type="text/javascript"
 		src="${basePath}/static/easyui/jquery.min.js"></script>
 	<script type="text/javascript"
@@ -92,7 +93,7 @@ url: '${basePath}/sys/menu/getMenuList.html',method: 'get',rownumbers: true,idFi
 	<script type="text/javascript"
 		src="${basePath}/static/easyui/easyui-lang-zh_CN.js"></script>
 
-           <script type="text/javascript">
+	<script type="text/javascript">
                 $('#menuTree').treegrid({
                  onClickRow : function(rowlndex, rowData) {
 				 $("#mypanels").layout('expand','east');
@@ -165,8 +166,8 @@ url: '${basePath}/sys/menu/getMenuList.html',method: 'get',rownumbers: true,idFi
         		}
         		
         		//删除菜单对应功能
-        		function delUserFun(){
-        			var row = $('#function_dg').datagrid('getSelected');
+        		function delMenuFun(){
+        			var row = $('#function_dg').datagrid('getSelections');
         			if (row == null || row == '') {
         				$.messager.show({
         					title : '操作提示',
@@ -175,9 +176,16 @@ url: '${basePath}/sys/menu/getMenuList.html',method: 'get',rownumbers: true,idFi
         				});
         				return;
         			}
-        			var funid = row.funid;
-        			var param = {};
-        			param['funid'] = funid;
+        			 
+        			$.messager.confirm('系统提示','删除后不可恢复,您确定要删除选中聊天记录?',function(r){
+        			
+        				var funids=[];	
+        				for(var i=0;i<row.length;i++){
+        					funids.push(row[i]['funid']);
+        				}
+        				
+        				var param = {};
+        			    param['funid'] = funids.join(',');
         			$.ajax({
            				url:"${basePath}/sys/menu/deleteMenuFun.html",
         				type:"post",
@@ -196,10 +204,10 @@ url: '${basePath}/sys/menu/getMenuList.html',method: 'get',rownumbers: true,idFi
                      		}
         				} 
         			});		
-        			
+        		 });
         			
         		}
 
-         </script>				
+         </script>
 </body>
 </html>

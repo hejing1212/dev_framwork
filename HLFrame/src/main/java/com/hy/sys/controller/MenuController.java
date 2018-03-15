@@ -27,6 +27,8 @@ import com.hy.sys.service.SysFunctionService;
 import com.hy.sys.service.SysMenuService;
 import com.hy.sys.shiro.UserUtils;
 import com.hy.sys.utils.ConvertJson;
+import com.hy.sys.utils.IntegerTools;
+import com.hy.sys.utils.PageInfo;
 import com.hy.sys.utils.StringTools;
 
 /***
@@ -133,13 +135,25 @@ public class MenuController extends AbstractBasicController {
 	 */
 	@ResponseBody
 	@RequestMapping("/getMenuFunList")
-	public ArrayList<SysFunction> getMenuFunList(HttpServletResponse response, HttpServletRequest request) {
+	public PageInfo<SysFunction> getMenuFunList(HttpServletResponse response, HttpServletRequest request) {
+		
+		int pageNo = (request.getParameter("page") == null) ? PAGE_NO
+				: IntegerTools.parseInt(request.getParameter("page"));
+		int pageSize = (request.getParameter("rows") == null) ? PAGE_SIZE
+				: IntegerTools.parseInt(request.getParameter("rows"));
+		
+		
 		String menuId = request.getParameter("menuId");
-		ArrayList<SysFunction> list = sysFunService.getFunListByMenuid(menuId);
-		String jsonStr = JSON.toJSONString(list);
+		PageInfo<SysFunction> pages = sysFunService.getFunListByMenuid(pageNo,pageSize,menuId);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("total", pages.getTotalrecond());
+		map.put("rows", pages.getResultlist());
+				
+		String jsonStr = JSON.toJSONString(map);
 		writeResult(jsonStr, response);
 
-		return list;
+		return pages;
 	}
 
 	/**

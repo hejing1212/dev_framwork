@@ -1,9 +1,8 @@
 package com.hy.sys.dao;
 
-import java.util.ArrayList;
-
 import com.hy.sys.core.dao.BasicDao;
 import com.hy.sys.entity.SysFunction;
+import com.hy.sys.utils.PageInfo;
 
 public interface SysFunctionDao extends BasicDao<SysFunction>{
 
@@ -12,7 +11,7 @@ public interface SysFunctionDao extends BasicDao<SysFunction>{
 	 * @param menuId
 	 * @return
 	 */
-	public	ArrayList<SysFunction> getMenuFunByMenuid(String menuId);
+	public	PageInfo<SysFunction> getMenuFunByMenuid(int pageNo, int pageSize,String menuId);
 
 	/**
 	 * 删除菜单对应的功能

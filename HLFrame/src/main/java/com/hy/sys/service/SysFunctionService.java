@@ -1,9 +1,8 @@
 package com.hy.sys.service;
 
-import java.util.ArrayList;
-
 import com.hy.sys.core.service.BasicService;
 import com.hy.sys.entity.SysFunction;
+import com.hy.sys.utils.PageInfo;
 
 public interface SysFunctionService extends BasicService<SysFunction> {
 
@@ -12,7 +11,7 @@ public interface SysFunctionService extends BasicService<SysFunction> {
 	 * @param menuId
 	 * @return
 	 */
-	public ArrayList<SysFunction> getFunListByMenuid(String menuId);
+	public PageInfo<SysFunction> getFunListByMenuid(int pageNo, int pageSize,String menuId);
 
 	/**
 	 * 删除菜单功能

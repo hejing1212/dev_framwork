@@ -29,8 +29,8 @@ public class SysFunctionServiceImpl extends BasicServiceImpl<SysFunction> implem
 	 * 返回菜单对应的功能
 	 */
 	@Override
-	public ArrayList<SysFunction> getFunListByMenuid(String menuId) {
-		ArrayList<SysFunction> list = sysFunctionDao.getMenuFunByMenuid(menuId);
+	public PageInfo<SysFunction> getFunListByMenuid(int pageNo, int pageSize,String menuId) {
+		PageInfo<SysFunction> list = sysFunctionDao.getMenuFunByMenuid(pageNo,pageSize,menuId);
 		return list;
 	}
 

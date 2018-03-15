@@ -116,7 +116,7 @@
       //删除用户角色
 		function delUserRole(){
 			var userid = $('#dg').datagrid('getSelected').userid;
-			var rowRole=$('#role_dg').datagrid('getSelected');
+			var rowRole=$('#role_dg').datagrid('getSelections');
 			if (userid == '') {
 				$.messager.show({
 					title : '操作提示',
@@ -133,9 +133,15 @@
 				});
 				return;
 			}
+			
+			var roleIds=[];	
+			for(var i=0;i<rowRole.length;i++){
+				roleIds.push(rowRole[i]['funid']);
+			}
+			
 			var param = {};
 			param['userId'] = userid;
-			param['roleIds'] = rowRole['roleid'];
+			param['roleIds'] = roleIds.join(',');
 			$.ajax({
    				url:"${basePath}/sys/user/deleteUserRole.html",
 				type:"post",
