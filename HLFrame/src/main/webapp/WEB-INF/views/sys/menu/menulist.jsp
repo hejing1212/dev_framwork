@@ -161,7 +161,7 @@ url: '${basePath}/sys/menu/getMenuList.html',method: 'get',rownumbers: true,idFi
         								top:$(document).scrollTop()+($(window).height()-250)*0.3,
         							    left:$(document).scrollLeft()+($(window).width()-800)*0.5,
         								content : "<iframe scrolling='auto' frameborder='0' src='${basePath}/sys/menu/showFunction.html?funid="+funid+"'  style='width:100%; height:100%; display:block;'></iframe>"
-        							}).dialog('open');
+        			}).dialog('open');
         		}
         		
         		//删除菜单对应功能
