@@ -15,30 +15,25 @@
  <link rel="stylesheet"
 	href="${basePath}/static/easyui/darkblue/icon.css">
 <link rel="stylesheet" href="${basePath}/static/css/providers.css">
-
 </head>
 <body>
 	<div class="container">
-
 		<table id="dg" style="width: 100%; height: 554px" title="角色列表"
 			data-options="  rownumbers:true,
                 singleSelect:false, autoRowHeight:false,  pagination:true, fitColumns:true,  striped:true,  checkOnSelect:false,
-                selectOnCheck:false, collapsible:true,  toolbar:'#tb',  pageSize:10">
+                selectOnCheck:false, collapsible:true,  toolbar:'#tb',  pageSize:10 ,iconCls:'icon-list'">
 			<thead>
 				<tr>
 					<th field="roleid" width="160" align="center">角色ID</th>
 					<th field="name" width="120" align="center">角色名称</th>
 					<th field="code" width="120" align="center">英文名称</th>
-					<th field="is_sys" width="150" align="center">是否系统数据</th>
-					<th field="usable" width="130" align="center">是否可用</th>
-					 
-
+					<th field="is_sys" width="80" align="center">是否系统数据</th>
+					<th field="usable" width="80" align="center">是否可用</th>					 
 					<th field="create_date" width="120" align="center">创建日期</th>
 					<th field="remarks" width="200">备注</th>
 				</tr>
 			</thead>
 		</table>
-
 		<div id="tb" style="padding: 0 30px;">
 			<div class="conditions">
 				真实姓名: <input class="easyui-textbox" type="text" name="code"
@@ -46,17 +41,14 @@
 				手机号: <input class="easyui-textbox" type="text" name="name"
 					style="width: 166px; height: 35px; line-height: 35px;"></input> <a
 					href="#" class="easyui-linkbutton" iconCls="icon-search"
-					data-options="selected:true">查询</a> <a href="#"
-					class="easyui-linkbutton" iconCls="icon-reload">重置</a>
+					data-options="selected:true">查询</a> 
 			</div>
 			<div class="opt-buttons">
-				<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="window.parent.mainPlatform._createWindows('添加用户','${basePath}/sys/role/addRole.html','icon-add','addRole');"> 新增</a>
+				<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="window.parent.mainPlatform._createWindows('添加角色','${basePath}/sys/role/addRole.html','icon-add','addRole');"> 新增</a>
 				<a href="javascript:void(0)" onclick="editRole();" class="easyui-linkbutton" data-options="iconCls:'icon-edit'">修改</a>
-				<a href="javascript:void(0)" onclick="setRole();" class="easyui-linkbutton" data-options="iconCls:'icon-edit'">角色受权管理</a>  
+				<a href="javascript:void(0)" onclick="setRole();" class="easyui-linkbutton" data-options="iconCls:'icon-set'">授限管理</a>  
 			</div>
-
 		</div>
-
 	</div>
 
 	<script type="text/javascript"
@@ -107,8 +99,7 @@
 		            showType: 'slide'
 		        });
 		    }
-		}
-		
+		}		
 		//设置角色权限
 		function setRole(){
 			 var row = $('#dg').datagrid('getSelected');

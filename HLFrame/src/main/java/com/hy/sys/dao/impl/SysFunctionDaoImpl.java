@@ -41,9 +41,30 @@ public class SysFunctionDaoImpl extends BasicDaoImpl<SysFunction> implements Sys
 		sql.append(" ORDER BY create_date DESC");
 		PageInfo<SysFunction> page = this.findPageInfoByQuery(pageNo,pageSize,sql.toString(),hqlCount, values.toArray());
 		return page;
-
 	}
 
+	/**
+	 * 获取菜单对应的功能数量
+	 * @param menuId
+	 * @return
+	 */
+	@Override
+	public long getMenuCountByMenuid(String menuId) {
+		StringBuffer sql = new StringBuffer();
+		List<Object> values = new ArrayList<Object>();
+		sql.append(" SELECT count(*) FROM SysFunction ");
+		sql.append(" WHERE 1=1 ");
+
+		if (menuId != "") {
+			sql.append(" AND (menuid = ?)");
+			values.add(menuId);
+		}
+		sql.append(" ORDER BY create_date DESC");
+		long count= this.getTotalCount(sql.toString(), values.toArray());
+		return count;
+	}
+	
+	
 	@Override
 	public Class<SysFunction> getEntityClass() {
 		// TODO Auto-generated method stub

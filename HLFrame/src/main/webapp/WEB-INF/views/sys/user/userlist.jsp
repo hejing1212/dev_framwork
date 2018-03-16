@@ -19,12 +19,12 @@
 </head>
 <body>
 	<div id="mypanels" class="easyui-layout" style="width: 100%; height: 620px;">
-		<div data-options="region:'center',title:'管理员',iconCls:'icon-ok'">
+		<div data-options="region:'center',title:'管理员',iconCls:'icon-list'">
 
 			<table id="dg" style="width: 100%; height: 554px"
 				data-options="rownumbers:true,
                 singleSelect:true, autoRowHeight:false,  pagination:true, fitColumns:true,  striped:true,  checkOnSelect:false,
-                selectOnCheck:false, collapsible:true,  toolbar:'#tb',  pageSize:10">
+                selectOnCheck:false, collapsible:true,  toolbar:'#tb',  pageSize:10 ">
 				<thead>
 					<tr>
 						<th field="userid" width="160" align="center">用户编号</th>
@@ -47,17 +47,13 @@
 					手机号: <input class="easyui-textbox" type="text" name="name"
 						style="width: 166px; height: 35px; line-height: 35px;"></input> <a
 						href="#" class="easyui-linkbutton" iconCls="icon-search"
-						data-options="selected:true">查询</a> <a href="#"
-						class="easyui-linkbutton" iconCls="icon-reload">重置</a>
+						data-options="selected:true">查询</a>  
 				</div>
 				<div class="opt-buttons">
-					<a href="javascript:void(0)"
-						onclick="window.parent.mainPlatform._createWindows('添加用户','${basePath}/sys/user/adduser.html','icon-add','addusere');"
-						class="easyui-linkbutton" data-options="iconCls:'icon-add'">
-						新增</a> <a href="javascript:void(0)" onclick="editUser();"
-						class="easyui-linkbutton" data-options="iconCls:'icon-edit'">编辑用户</a>
-					<a href="#" class="easyui-linkbutton"
-						data-options="iconCls:'icon-reload'">重置密码</a>
+					<a href="javascript:void(0)" onclick="window.parent.mainPlatform._createWindows('添加用户','${basePath}/sys/user/adduser.html','icon-add','addusere');"
+						class="easyui-linkbutton" data-options="iconCls:'icon-add'"> 新增</a>
+						 <a href="javascript:void(0)" onclick="editUser();" class="easyui-linkbutton" data-options="iconCls:'icon-edit'">编辑用户</a>
+					<a href="javascript:void(0)" class="easyui-linkbutton" onclick="resetPassword()" data-options="iconCls:'icon-reload'">重置密码</a>
 				</div>
 			</div>
 
@@ -224,6 +220,39 @@
 										+ userid
 										+ "' style='width:100%; height:100%; display:block;'></iframe>"
 							}).dialog('open');
+		}
+		
+		
+		//重置密码
+		function resetPassword(){
+			var userid = $('#dg').datagrid('getSelected').userid;
+			if (userid == null || userid == '') {
+				$.messager.show({
+					title : '操作提示',
+					msg : '请先选择用户后再进行此操作!',
+					showType : 'slide'
+				});
+				return;
+			}
+			var param = {};
+			param['userId'] = userid; 
+			$.ajax({
+   				url:"${basePath}/sys/user/resetPassWord.html",
+				type:"post",
+				data:param,
+				dataType:"json",
+				async:false,
+		   		//提交成功后回调的函数
+             	success: function(data){
+             		if(data){
+             			if(data.code == 1){
+             				$.messager.show({ title: '提示',msg: data.msg,timeout: 2000,showType: 'slide'});
+             			}else{
+             				$.messager.show({ title: '错误',msg: data.msg,timeout: 2000,showType: 'slide'});
+             			}
+             		}
+				} 
+			});		
 		}
 	</script>
 

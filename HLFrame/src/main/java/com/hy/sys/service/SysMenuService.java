@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.hy.sys.core.service.BasicService;
-import com.hy.sys.entity.SysFunction;
 import com.hy.sys.entity.SysMenu;
 import com.hy.sys.entity.TreeNode;
 
@@ -44,4 +43,23 @@ public interface SysMenuService extends BasicService<SysMenu> {
 	 * @return
 	 */
 	ArrayList<SysMenu> CreateMenuList(List<SysMenu> list, String menuid, ArrayList<SysMenu> li);
+	
+	
+	/**
+	 * 查询该菜单下的子工菜单数量
+	 * @param menuid
+	 * @return
+	 */
+	public long getChildCountByMenuid(String menuid);
+	/**
+	 * 删除菜单
+	 * @param menuid
+	 */
+	public void deleteMenu(String menuid);
+	
+	/**
+	 * 查询所有可用的菜单
+	 * @return
+	 */
+	public List<SysMenu> getALLMenuList();
 }

@@ -276,7 +276,7 @@ public abstract class BasicDaoImpl<T extends AbstractBasicEntity> extends Abstra
 	 * 根据sql查询出listMap数据
 	 *@param sql
 	 *@return List<Map<String,Object>> 
-	 *@author lignlin
+	 *@author 
 	 *@Time  2017年4月5日 上午11:09:45
 	 */
 	public List<Map<String, Object>> findBysqlListMap(String sql){

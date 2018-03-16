@@ -17,5 +17,12 @@ public interface SysFunctionDao extends BasicDao<SysFunction>{
 	 * 删除菜单对应的功能
 	 * @param funids
 	 */
-	void deleteMenuFun(String[] funids);
+	public  void deleteMenuFun(String[] funids);
+
+	/**
+	 * 获取菜单对应的功能数量
+	 * @param menuId
+	 * @return
+	 */
+	public long getMenuCountByMenuid(String menuId);
 }

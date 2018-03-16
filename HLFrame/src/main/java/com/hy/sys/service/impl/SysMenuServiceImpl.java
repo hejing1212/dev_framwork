@@ -147,8 +147,46 @@ public class SysMenuServiceImpl extends BasicServiceImpl<SysMenu> implements Sys
 		return li;
 	}
 	
-	
-	
+	/**
+	 * 查询该菜单下的子工菜单数量
+	 * @param menuid
+	 * @return
+	 */
+	@Override
+	public long getChildCountByMenuid(String menuid) {
+		return sysMenuDao.getChildCountByMenuid(menuid);
+	}
 
+	/**
+	 * 删除菜单
+	 * 
+	 * @param funids
+	 */
+	@Override
+	public void deleteMenu(String menuid) {
+		sysMenuDao.deleteMenu(menuid);
+	}
 	
+	/**
+	 * 查询所有可用的菜单
+	 * @return
+	 */
+	@Override
+	public List<SysMenu> getALLMenuList(){
+		List<SysMenu> list=sysMenuDao.getAllList();
+		for(int i=0;i<list.size();i++) {
+			StringBuffer text = new StringBuffer();
+			SysMenu menu=list.get(i);			
+			for(int v=0;v<menu.getFun().size();v++) {
+				if(v+1==menu.getFun().size()) {
+					text.append(menu.getFun().get(v).getFunid()+":"+menu.getFun().get(v).getName());
+				}else {
+					text.append(menu.getFun().get(v).getFunid()+":"+menu.getFun().get(v).getName()+",");
+				}
+			}
+			 menu.setStrFun(text.toString());
+			 list.set(i, menu);
+		}
+		return list;
+	}
 }

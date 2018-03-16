@@ -3,6 +3,7 @@
  */
 package com.hy.sys.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -32,8 +33,8 @@ public class SysRole extends BaseSpuerEntity {
 	private String code; // '英文名称',
 	private String is_sys; // '是否系统数据',
 	private String usable; // '是否可用',
-
 	private String remarks; // '备注信息',
+	
 	
 
 	public SysRole() {
@@ -45,8 +46,7 @@ public class SysRole extends BaseSpuerEntity {
 		this.name = name;
 		this.code = code;
 		this.is_sys = is_sys;
-		this.usable = usable;
-		
+		this.usable = usable;		
 		this.remarks = remarks;
 		
 

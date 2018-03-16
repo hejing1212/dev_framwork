@@ -21,7 +21,7 @@
 <body>
 	<div id="mypanels" class="easyui-layout"
 		style="width: 100%; height: 620px;">
-		<div data-options="region:'center'">
+		<div data-options="region:'center',title:'菜单管理',iconCls:'icon-ok'">
 			<div id="tb" style="padding: 0 30px;">
 				<div class="conditions">
 					
@@ -40,7 +40,7 @@
 			</div>
 
 			<table id="menuTree" title="菜单管理列表" class="easyui-treegrid" style="width: 100%; height: 600px" data-options="
-url: '${basePath}/sys/menu/getMenuList.html',method: 'get',rownumbers: true,idField: 'menuid',treeField: 'name', toolbar:'#tb',iconCls:'icon-list'">
+url: '${basePath}/sys/menu/getMenuList.html',method: 'get',rownumbers: true,idField: 'menuid',treeField: 'name', toolbar:'#tb'">
 				<thead>
 					<tr>
 						<th data-options="field:'name'" width="150" align="center">名称</th>

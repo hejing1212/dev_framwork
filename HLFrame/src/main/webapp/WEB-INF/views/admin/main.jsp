@@ -30,7 +30,7 @@
                 <div class="pf-user-photo">
                     <img src="${basePath}/static/images/main/user.png" alt="">
                 </div>
-                <h4 class="pf-user-name ellipsis">admin</h4>
+                <h4 class="pf-user-name ellipsis">${user.username}</h4>
                 <i class="iconfont xiala">&#xe607;</i>
 
                 <div class="pf-user-panel">
@@ -48,7 +48,7 @@
                             </a>
                         </li>
                         <li class="pf-logout">
-                            <a href="login.html">
+                            <a href="${basePath}/admin/logout">
                                 <i class="iconfont">&#xe60e;</i>
                                 <span class="pf-opt-name">退出</span>
                             </a>

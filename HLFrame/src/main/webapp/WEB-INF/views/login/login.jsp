@@ -46,8 +46,8 @@
 								</div>
 								<div class="lg-check clearfix">
 									<div class="input-item">
-										<i class="iconfont">&#xe633;</i> <input type="text"
-											placeholder="验证码" name="rememberMe">
+										<i class="iconfont">&#xe633;</i>
+										 <input type="text" id="remember_input" placeholder="验证码" name="rememberMe">
 									</div>
 									<span class="check-code">
 <img id="img_jcaptcha"  src="${appPath}/jcaptcha.jpg" width="80" height="36" onclick="changeJcaptchaSrc();" />
@@ -59,7 +59,7 @@
 										href="javascript:;" class="forget-pwd">忘记密码？</a>
 								</div>
 								<div class="enter">
-									 <a href="javascript:;" class="purchaser" onClick="UserLogin()">管理员登录</a>
+									 <a href="javascript:void(0);" id="login_btn" class="purchaser" onClick="UserLogin()">管理员登录</a>
 									 <a 	href="javascript:;" class="supplier" onClick="javascript:window.location='main.html'">供应商登录</a>
 								</div>
 							</form>
@@ -93,4 +93,17 @@ function UserLogin(){
 function changeJcaptchaSrc(){  
     document.getElementById("img_jcaptcha").src='${appPath}/jcaptcha.jpg?_='+(new Date()).getTime();  
 }
+
+ $('#login_btn').bind('keydown',function(event){
+    if(event.keyCode == "13") {
+    	UserLogin();
+    }
+}); 
+$('#remember_input').bind('keydown',function(event){
+    if(event.keyCode == "13") {
+    	UserLogin();
+    }
+}); 
+
+
 </script>

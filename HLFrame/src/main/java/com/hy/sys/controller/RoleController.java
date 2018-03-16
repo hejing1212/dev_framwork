@@ -3,9 +3,9 @@
  */
 package com.hy.sys.controller;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,9 +22,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hy.sys.core.controller.AbstractBasicController;
+import com.hy.sys.entity.SysMenu;
 import com.hy.sys.entity.SysRole;
-import com.hy.sys.entity.SysUser;
 import com.hy.sys.entity.SysUserRole;
+import com.hy.sys.service.SysMenuService;
 import com.hy.sys.service.SysRoleService;
 import com.hy.sys.service.SysUserRoleService;
 import com.hy.sys.shiro.UserUtils;
@@ -46,6 +47,8 @@ public class RoleController extends AbstractBasicController {
 	@Autowired
 	private SysUserRoleService sysRoleUserService;
 
+	@Autowired
+	private SysMenuService sysMenuService;
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -85,6 +88,16 @@ public class RoleController extends AbstractBasicController {
 		return view;
 	}
 
+	/**
+	 * 角色授限
+	 * @return
+	 */
+	@RequestMapping("/roleAuthorize")
+	public ModelAndView roleAuthorize() {
+		ModelAndView view = new ModelAndView();
+		return view;
+	}
+	
 	/**
 	 * 显示角色选择列表
 	 * 
@@ -213,4 +226,10 @@ public class RoleController extends AbstractBasicController {
 		return map;
 	}
 
+public List<SysMenu> getMenuAllList(){
+	List<SysMenu> list=sysMenuService.getALLMenuList();
+	return list;
+}
+	
+	
 }

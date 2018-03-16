@@ -7,6 +7,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -29,12 +31,14 @@ public class SysMenu extends BaseSpuerEntity {
 	private String parent_id; // '父编号',
 	private String parent_ids; // 父编号列表',
 	private String permission; // '权限字符串',
-	private Integer isshow; // '是否显示',
+	private Integer isshow; // '是否显示',0显示 1不显示
 	private Integer sort; // '排序',
 	private String menu_icon; // '图标',
 	private String remarks; // '摘要',
-
-	private ArrayList<SysMenu> children;
+	private ArrayList<SysMenu>  children;
+	private ArrayList<SysFunction> fun;
+    private String strFun;          //记录所有功能名称及ID的拼接
+	
 	public SysMenu() {
 		
 	}
@@ -157,16 +161,36 @@ public class SysMenu extends BaseSpuerEntity {
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
-	
 
-	 
 	/**增加了一个数据库没有的字段**/
-	@Transient
 	public ArrayList<SysMenu> getChildren() {
 		return children;
 	}
 	public void setChildren(ArrayList<SysMenu> children) {
 		this.children = children;
 	}
+	
+	
+	@Transient
+	@ManyToOne
+	@JoinColumn(name = "menuid", nullable = false, updatable = false, insertable = false)
+	public ArrayList<SysFunction> getFun() {
+		return fun;
+	}
+	public void setFun(ArrayList<SysFunction> fun) {
+		this.fun = fun;
+	}
+	
+	
+	@Transient
+	public String getStrFun() {
+		return strFun;
+	}
+	public void setStrFun(String strFun) {
+		this.strFun = strFun;
+	}
+	
+	
+	
 
 }

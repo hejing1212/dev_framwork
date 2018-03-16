@@ -18,7 +18,7 @@ public class BaseSpuerEntity extends AbstractBasicEntity {
 	private Date create_date;
 	private String update_by;
 	private Date update_date;
-	private String del_flag;
+	private String del_flag="0";
 	
 
 	@Column(name = "create_by", length = 64)

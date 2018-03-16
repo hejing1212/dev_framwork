@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.shiro.dao.DataAccessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -216,4 +217,33 @@ public class UserController extends AbstractBasicController {
 		return map;
 	}
 
+	/**
+	 * 重置密码
+	 * @param userId
+	 * @param response
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/resetPassWord")
+	public Map<String,Object> resetPassWord(@RequestParam(required = true) String userId,HttpServletResponse response, HttpServletRequest request){
+		Map<String,Object> map=new HashMap<String, Object>();
+		Date now = new Date();
+		try {
+		SysUser user=sysUserService.get(userId);
+		String restPassword="@888888";
+		user.setPassword(restPassword);
+		user.setUpdate_date(now);
+		user.setUpdate_by(UserUtils.getUser().getUserid());
+		passwordService.encryptPassword(user);
+		map.put("code", "1");
+		map.put("msg", "重置密码成功");
+		}catch (DataAccessException e) {
+			map.put("code", "0");
+			map.put("msg", "重置密码失败");
+		}
+		return map;
+		
+		
+	}
 }

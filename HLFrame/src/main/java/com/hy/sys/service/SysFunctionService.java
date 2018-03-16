@@ -18,4 +18,11 @@ public interface SysFunctionService extends BasicService<SysFunction> {
 	 * @param funids
 	 */
 	public void deleteMenuFun(String[] funids);
+
+	/**
+	 * 能记录数量获取菜单对应的功
+	 * @param menuId
+	 * @return
+	 */
+	public long getMenuCountByMenuid(String menuId);
 }

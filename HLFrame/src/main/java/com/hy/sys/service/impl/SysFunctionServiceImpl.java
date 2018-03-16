@@ -47,4 +47,14 @@ public class SysFunctionServiceImpl extends BasicServiceImpl<SysFunction> implem
 	public void deleteMenuFun(String[] funids) {
 		sysFunctionDao.deleteMenuFun(funids);
 	}
+	
+	/**
+	 * 能记录数量获取菜单对应的功
+	 * @param menuId
+	 * @return
+	 */
+	@Override
+	public long getMenuCountByMenuid(String menuId) {
+		return sysFunctionDao.getMenuCountByMenuid(menuId);
+	}
 }

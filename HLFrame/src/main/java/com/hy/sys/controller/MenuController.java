@@ -57,10 +57,23 @@ public class MenuController extends AbstractBasicController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping("/addmenu")
-	public ModelAndView addMenu() {
+	@RequestMapping("/menuAdd")
+	public ModelAndView menuAdd() {
 		ModelAndView view = new ModelAndView();
-		SysMenu entity = new SysMenu();
+		return view;
+	}
+
+	/**
+	 * 打开添加菜单界面
+	 * 
+	 * @return
+	 */
+	@RequestMapping("/menuEdit")
+	public ModelAndView menuEdit(HttpServletResponse response, HttpServletRequest request) {
+		ModelAndView view = new ModelAndView();
+		String menuid = request.getParameter("menuid");
+		SysMenu entity = sysMenuService.get(menuid);
+		view.addObject("menu", entity);
 		return view;
 	}
 
@@ -72,18 +85,43 @@ public class MenuController extends AbstractBasicController {
 	public Map<String, Object> saveMenu(@ModelAttribute SysMenu entity, HttpServletResponse response,
 			HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		SysMenu memu = sysMenuService.findByName(entity.getName());
-
-		if (memu == null) {
-			Date now = new Date();
-			entity.setCreate_date(now);
-			entity.setCreate_by(UserUtils.getUser().getUserid());
-			sysMenuService.save(entity);
-			map.put("code", "1");
-			map.put("msg", "资源添加成功！");
-		} else {
-			map.put("code", "0");
-			map.put("msg", "资源名称已经存在，添加失败！");
+		Date now = new Date();
+		SysMenu menu=new SysMenu();
+		if (entity.getMenuid() == null) {  //未获取到menuid则为添加
+			 menu = sysMenuService.findByName(entity.getName());
+			if (menu == null) {
+				
+				entity.setCreate_date(now);
+				entity.setCreate_by(UserUtils.getUser().getUserid());
+				sysMenuService.save(entity);
+				map.put("code", "1");
+				map.put("msg", "资源添加成功！");
+			} else {
+				map.put("code", "0");
+				map.put("msg", "资源名称已经存在，添加失败！");
+			}
+		} else {  //menuid不为空就为修改
+		    menu=sysMenuService.get(entity.getMenuid());
+			menu.setUpdate_by(UserUtils.getUser().getUserid());
+			menu.setUpdate_date(now);
+			menu.setParent_id(entity.getParent_id());
+			menu.setMenu_icon(entity.getMenu_icon());
+			menu.setName(entity.getName());
+			menu.setUrl(entity.getUrl());
+			menu.setPermission(entity.getPermission());
+			menu.setSort(entity.getSort());
+			menu.setIsshow(entity.getIsshow());
+			menu.setType(entity.getType());
+			menu.setRemarks(entity.getRemarks());			
+			try {
+				sysMenuService.save(menu);
+				map.put("code", "1");
+				map.put("msg", "资源修改成功！");
+			}catch(DataAccessException e) {
+				map.put("code", "0");
+				map.put("msg", e.toString());
+			}
+			 
 		}
 		return map;
 	}
@@ -127,6 +165,41 @@ public class MenuController extends AbstractBasicController {
 	}
 
 	/**
+	 * 删除菜单
+	 * @param menuid
+	 * @param response
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/deleteMenu")
+	public Map<String, Object> deleteMenu(@RequestParam(required = true) String menuId, HttpServletResponse response,
+			HttpServletRequest request) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		if (StringTools.isNotBlank(menuId)) {
+			if(sysMenuService.getChildCountByMenuid(menuId)>0 || sysFunService.getMenuCountByMenuid(menuId)>0) {
+				map.put("code", "0");
+				map.put("msg", "删除失败，该菜单下存在子菜单或功能");
+			}else {
+				try {
+					sysMenuService.deleteMenu(menuId);
+					map.put("code", "1");
+					map.put("msg", "删除成功");
+				}catch(DataAccessException e) {
+					map.put("code", "0");
+					map.put("msg", e.toString());
+				}
+				
+			}
+			
+		} else {
+			map.put("code", "0");
+			map.put("msg", "参数错误");
+		}
+		return map;
+	}
+	
+	/**
 	 * 查询菜单对应的功能
 	 * 
 	 * @param response
@@ -136,20 +209,19 @@ public class MenuController extends AbstractBasicController {
 	@ResponseBody
 	@RequestMapping("/getMenuFunList")
 	public PageInfo<SysFunction> getMenuFunList(HttpServletResponse response, HttpServletRequest request) {
-		
+
 		int pageNo = (request.getParameter("page") == null) ? PAGE_NO
 				: IntegerTools.parseInt(request.getParameter("page"));
 		int pageSize = (request.getParameter("rows") == null) ? PAGE_SIZE
 				: IntegerTools.parseInt(request.getParameter("rows"));
-		
-		
+
 		String menuId = request.getParameter("menuId");
-		PageInfo<SysFunction> pages = sysFunService.getFunListByMenuid(pageNo,pageSize,menuId);
-		
+		PageInfo<SysFunction> pages = sysFunService.getFunListByMenuid(pageNo, pageSize, menuId);
+
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("total", pages.getTotalrecond());
 		map.put("rows", pages.getResultlist());
-				
+
 		String jsonStr = JSON.toJSONString(map);
 		writeResult(jsonStr, response);
 
@@ -167,14 +239,14 @@ public class MenuController extends AbstractBasicController {
 	public ModelAndView showFunction(HttpServletResponse response, HttpServletRequest request) {
 		ModelAndView view = new ModelAndView();
 		String menuid = request.getParameter("menuid");
-		if (StringTools.isBlank(menuid)) { 
-			String funid=request.getParameter("funid");
-			if (StringTools.isNotBlank(funid)) {			
+		if (StringTools.isBlank(menuid)) {
+			String funid = request.getParameter("funid");
+			if (StringTools.isNotBlank(funid)) {
 				SysFunction fun = sysFunService.get(funid);
 				view.addObject("sysFunction", fun);
 				view.setViewName("sys/menu/functionEdit");
-			}else {
-				//提示页面显示
+			} else {
+				// 提示页面显示
 			}
 		} else {
 			view.addObject("menuid", menuid);
@@ -203,7 +275,7 @@ public class MenuController extends AbstractBasicController {
 			map.put("code", "1");
 			map.put("msg", "添加成功！");
 		} else {// 修改
-			SysFunction fun=sysFunService.get(entity.getFunid());
+			SysFunction fun = sysFunService.get(entity.getFunid());
 			fun.setUpdate_by(UserUtils.getUser().getUserid());
 			fun.setCreate_date(now);
 			fun.setName(entity.getName());
@@ -212,7 +284,7 @@ public class MenuController extends AbstractBasicController {
 			fun.setPermission(entity.getPermission());
 			fun.setSort(entity.getSort());
 			fun.setRemarks(entity.getRemarks());
-			
+
 			map.put("code", "1");
 			map.put("msg", "修改成功！");
 		}
@@ -225,9 +297,13 @@ public class MenuController extends AbstractBasicController {
 		}
 		return map;
 	}
+
+	
+	
 	
 	/***
 	 * 批量删除用户权限
+	 * 
 	 * @param userId
 	 * @param roleIds
 	 * @param response
@@ -236,13 +312,14 @@ public class MenuController extends AbstractBasicController {
 	 */
 	@ResponseBody
 	@RequestMapping("/deleteMenuFun")
-	public Map<String,Object> deleteMenuFun(@RequestParam(required = true) String funid,HttpServletResponse response, HttpServletRequest request){
-		Map<String,Object> map=new HashMap<String, Object>();
-		if(StringTools.isNotBlank(funid)){
+	public Map<String, Object> deleteMenuFun(@RequestParam(required = true) String funid, HttpServletResponse response,
+			HttpServletRequest request) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		if (StringTools.isNotBlank(funid)) {
 			sysFunService.deleteMenuFun(funid.split(","));
 			map.put("code", "1");
 			map.put("msg", "删除成功");
-		}else{
+		} else {
 			map.put("code", "0");
 			map.put("msg", "参数错误");
 		}
