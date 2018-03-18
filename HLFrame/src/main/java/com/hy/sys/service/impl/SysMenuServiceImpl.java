@@ -2,8 +2,10 @@ package com.hy.sys.service.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,7 +42,7 @@ public class SysMenuServiceImpl extends BasicServiceImpl<SysMenu> implements Sys
 	@Override
 	protected BasicDao<SysMenu> getBasicDao() {
 		// TODO Auto-generated method stub
-		return sysMenuDao;
+		return  sysMenuDao;
 	}
 
 	@Override
@@ -146,9 +148,10 @@ public class SysMenuServiceImpl extends BasicServiceImpl<SysMenu> implements Sys
 		}
 		return li;
 	}
-	
+
 	/**
 	 * 查询该菜单下的子工菜单数量
+	 * 
 	 * @param menuid
 	 * @return
 	 */
@@ -166,27 +169,37 @@ public class SysMenuServiceImpl extends BasicServiceImpl<SysMenu> implements Sys
 	public void deleteMenu(String menuid) {
 		sysMenuDao.deleteMenu(menuid);
 	}
-	
+
 	/**
 	 * 查询所有可用的菜单
+	 * 
 	 * @return
 	 */
 	@Override
-	public List<SysMenu> getALLMenuList(){
-		List<SysMenu> list=sysMenuDao.getAllList();
-		for(int i=0;i<list.size();i++) {
+	public List<SysMenu> getALLMenuList() {
+		List<SysMenu> list = sysMenuDao.getAllList();
+		for (int i = 0; i < list.size(); i++) {
 			StringBuffer text = new StringBuffer();
-			SysMenu menu=list.get(i);			
-			for(int v=0;v<menu.getFun().size();v++) {
-				if(v+1==menu.getFun().size()) {
-					text.append(menu.getFun().get(v).getFunid()+":"+menu.getFun().get(v).getName());
-				}else {
-					text.append(menu.getFun().get(v).getFunid()+":"+menu.getFun().get(v).getName()+",");
+			SysMenu menu = list.get(i);
+			int v=0;
+			if (menu.getFunction() != null) {
+				for (SysFunction fun:menu.getFunction()) {
+					
+					if (v + 1 == menu.getFunction().size()) {
+						text.append(fun.getMenuId()+"-"+fun.getFunid() + ":" + fun.getName());
+					} else {
+						text.append(fun.getMenuId()+"-"+fun.getFunid() + ":" + fun.getName() + ",");
+					}
+					v=v+1;
 				}
 			}
-			 menu.setStrFun(text.toString());
-			 list.set(i, menu);
+			menu.setStrFun(text.toString());
+			list.set(i, menu);
 		}
-		return list;
+		
+		ArrayList<SysMenu> retlist = new ArrayList<SysMenu>();
+		ArrayList<SysMenu> arlist = CreateMenuList(list, "0", retlist);
+		
+		return arlist;
 	}
 }

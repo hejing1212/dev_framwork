@@ -2,13 +2,14 @@ package com.hy.sys.entity;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -36,7 +37,9 @@ public class SysMenu extends BaseSpuerEntity {
 	private String menu_icon; // '图标',
 	private String remarks; // '摘要',
 	private ArrayList<SysMenu>  children;
-	private ArrayList<SysFunction> fun;
+	private Set<SysFunction> function;
+	
+	
     private String strFun;          //记录所有功能名称及ID的拼接
 	
 	public SysMenu() {
@@ -163,6 +166,7 @@ public class SysMenu extends BaseSpuerEntity {
 	}
 
 	/**增加了一个数据库没有的字段**/
+	@Transient
 	public ArrayList<SysMenu> getChildren() {
 		return children;
 	}
@@ -171,14 +175,14 @@ public class SysMenu extends BaseSpuerEntity {
 	}
 	
 	
-	@Transient
-	@ManyToOne
-	@JoinColumn(name = "menuid", nullable = false, updatable = false, insertable = false)
-	public ArrayList<SysFunction> getFun() {
-		return fun;
+ 	
+	@OneToMany
+	@JoinColumn(name = "menu_id")	
+	public Set<SysFunction> getFunction() {
+		return function;
 	}
-	public void setFun(ArrayList<SysFunction> fun) {
-		this.fun = fun;
+	public void setFunction(Set<SysFunction> function) {
+		this.function = function;
 	}
 	
 	

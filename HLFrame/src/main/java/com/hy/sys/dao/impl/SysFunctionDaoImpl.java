@@ -32,7 +32,7 @@ public class SysFunctionDaoImpl extends BasicDaoImpl<SysFunction> implements Sys
 		sql.append(" FROM SysFunction ");
 		sql.append(" WHERE 1=1 ");
 		
-		String hqlCount="SELECT count(*) FROM SysFunction WHERE menuid = ?";
+		String hqlCount="SELECT count(*) FROM SysFunction WHERE menu_id = ?";
 		
 		if (menuId != "") {
 			sql.append(" AND (menuid = ?)");
@@ -56,13 +56,15 @@ public class SysFunctionDaoImpl extends BasicDaoImpl<SysFunction> implements Sys
 		sql.append(" WHERE 1=1 ");
 
 		if (menuId != "") {
-			sql.append(" AND (menuid = ?)");
+			sql.append(" AND (menu_id = ?)");
 			values.add(menuId);
 		}
 		sql.append(" ORDER BY create_date DESC");
 		long count= this.getTotalCount(sql.toString(), values.toArray());
 		return count;
 	}
+	
+	
 	
 	
 	@Override

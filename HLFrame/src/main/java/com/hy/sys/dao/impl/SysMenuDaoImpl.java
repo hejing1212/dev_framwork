@@ -51,7 +51,7 @@ public class SysMenuDaoImpl extends BasicDaoImpl<SysMenu> implements SysMenuDao 
 		sql.append(" WHERE 1=1 ");
 				 
 		sql.append(" AND (del_flag = ?)"); //只查询 isshow=0的
-		values.add(0);
+		values.add("0");
 		 		
 		sql.append(" ORDER BY create_date DESC");
 		List<SysMenu> list = this.findByHql(sql.toString(), values.toArray());

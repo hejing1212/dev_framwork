@@ -21,11 +21,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.alibaba.fastjson.JSON;
 import com.hy.sys.core.controller.AbstractBasicController;
 import com.hy.sys.entity.SysMenu;
 import com.hy.sys.entity.SysRole;
+import com.hy.sys.entity.SysRoleMenuFun;
 import com.hy.sys.entity.SysUserRole;
 import com.hy.sys.service.SysMenuService;
+import com.hy.sys.service.SysRoleMenuFunService;
 import com.hy.sys.service.SysRoleService;
 import com.hy.sys.service.SysUserRoleService;
 import com.hy.sys.shiro.UserUtils;
@@ -49,6 +52,9 @@ public class RoleController extends AbstractBasicController {
 
 	@Autowired
 	private SysMenuService sysMenuService;
+	
+	@Autowired
+	private SysRoleMenuFunService sysRoleMenuFunService;
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -89,12 +95,14 @@ public class RoleController extends AbstractBasicController {
 	}
 
 	/**
-	 * 角色授限
+	 * 角色授限-菜单功能列表，方便授权
 	 * @return
 	 */
 	@RequestMapping("/roleAuthorize")
-	public ModelAndView roleAuthorize() {
+	public ModelAndView roleAuthorize(HttpServletResponse response, HttpServletRequest request) {
 		ModelAndView view = new ModelAndView();
+		String roieId = request.getParameter("roieId");
+		view.addObject("roieId", roieId);
 		return view;
 	}
 	
@@ -111,6 +119,10 @@ public class RoleController extends AbstractBasicController {
 		return view;
 	}
 
+	
+	 
+	
+	
 	/****
 	 * 保存用户信息
 	 */
@@ -226,10 +238,50 @@ public class RoleController extends AbstractBasicController {
 		return map;
 	}
 
-public List<SysMenu> getMenuAllList(){
-	List<SysMenu> list=sysMenuService.getALLMenuList();
-	return list;
-}
+	/**
+	 * 获取可授权菜单列表
+	 * @param response
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/getMenuAllList")
+	public List<SysMenu> getMenuAllList(HttpServletResponse response,
+			HttpServletRequest request){
+		List<SysMenu> list=sysMenuService.getALLMenuList();
+		String jsonStr = JSON.toJSONString(list);
+		writeResult(jsonStr, response);
+		
+		return list;
+	}
 	
+	/**
+	 * 获取用户已授权的菜单功能
+	 * @param response
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/getRoleFunction")
+	public List<SysRoleMenuFun> getRoleFunction (@ModelAttribute String roleId,HttpServletResponse response, HttpServletRequest request){		
+		List<SysRoleMenuFun> list=sysRoleMenuFunService.getRoleMenuFun(roleId);
+		String jsonStr = JSON.toJSONString(list);
+		writeResult(jsonStr, response);
+		return list;
+	}
+	/**
+	 * 保存设置的角色权限
+	 * @param roleId
+	 * @param auths
+	 * @param response
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/authByRoleSave")
+	public Map<String, Object>  authByRoleSave(@ModelAttribute String roleId,String auths,HttpServletResponse response, HttpServletRequest request){
+		
+		Map<String, Object> map = sysRoleMenuFunService.authByRoleSave(roleId, auths);		
+		return map;
+	}
 	
 }

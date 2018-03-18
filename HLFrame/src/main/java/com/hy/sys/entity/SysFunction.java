@@ -1,9 +1,13 @@
 package com.hy.sys.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -23,12 +27,12 @@ public class SysFunction extends BaseSpuerEntity{
 	private String funid;
 	private String fun_action; // '请求方法名称',
 	private String name; // '功能名称',
-	private String menuid; // 对应菜单 ID',
+	private String menu_id; // 对应菜单 ID',
 	private String permission; // '权限字符串',
 	private Integer sort=0; // '排序',
 	private String menu_icon; // '按钮图标',
 	private String remarks; // '备注',
-
+    
 	public SysFunction() {
 		
 	}
@@ -68,13 +72,13 @@ public class SysFunction extends BaseSpuerEntity{
 	}
 
 	
-	@Column(name = "menuid", length = 32)
-	public String getMenuid() {
-		return menuid;
+	@Column(name = "menu_id", length = 32)
+	public String getMenuId() {
+		return menu_id;
 	}
 
-	public void setMenuid(String menuid) {
-		this.menuid = menuid;
+	public void setMenuId(String menu_id) {
+		this.menu_id = menu_id;
 	}
 
 	
@@ -116,6 +120,8 @@ public class SysFunction extends BaseSpuerEntity{
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
+
+
 
 	
 	

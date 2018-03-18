@@ -94,7 +94,7 @@ function changeJcaptchaSrc(){
     document.getElementById("img_jcaptcha").src='${appPath}/jcaptcha.jpg?_='+(new Date()).getTime();  
 }
 
- $('#login_btn').bind('keydown',function(event){
+ /*$('#login_btn').bind('keydown',function(event){
     if(event.keyCode == "13") {
     	UserLogin();
     }
@@ -104,6 +104,6 @@ $('#remember_input').bind('keydown',function(event){
     	UserLogin();
     }
 }); 
-
+*/
 
 </script>
