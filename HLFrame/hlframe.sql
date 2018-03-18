@@ -10,10 +10,47 @@ Target Server Type    : MYSQL
 Target Server Version : 50559
 File Encoding         : 65001
 
-Date: 2018-03-04 23:47:35
+Date: 2018-03-18 18:26:00
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for sys_function
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_function`;
+CREATE TABLE `sys_function` (
+  `funid` varchar(32) NOT NULL,
+  `fun_action` varchar(255) DEFAULT NULL COMMENT '请求方法名称',
+  `name` varchar(255) DEFAULT NULL COMMENT '功能名称',
+  `menu_id` varchar(32) DEFAULT NULL COMMENT '对应菜单 ID',
+  `permission` varchar(255) DEFAULT NULL COMMENT '权限字符串',
+  `sort` int(11) DEFAULT NULL COMMENT '排序',
+  `menu_icon` varchar(255) DEFAULT NULL COMMENT '按钮图标',
+  `remarks` text COMMENT '备注',
+  `create_by` varchar(255) DEFAULT NULL,
+  `create_date` datetime DEFAULT NULL,
+  `update_by` varchar(255) DEFAULT NULL,
+  `update_date` datetime DEFAULT NULL,
+  `del_flag` char(2) DEFAULT NULL,
+  PRIMARY KEY (`funid`),
+  KEY `menu_id` (`menu_id`),
+  CONSTRAINT `FK_amfku6p8jqo81eim1ine28otu` FOREIGN KEY (`menu_id`) REFERENCES `sys_menu` (`menuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of sys_function
+-- ----------------------------
+INSERT INTO `sys_function` VALUES ('402881e76228ef8d0162290506650000', 'adduser', '添加用户', '4028817261ec86300161ec87e7070000', 'sys:user:adduser', '1', '', '添加用户', 'c48e5e7c03f34d1d97f1915b22428c21', '2018-03-15 17:36:57', null, null, null);
+INSERT INTO `sys_function` VALUES ('402881e76228ef8d01622905c2d40001', 'updatepasswrod', '设置密码', '4028817261ec86300161ec87e7070000', 'sys:user:password', '1', '', '添加用户说明', 'c48e5e7c03f34d1d97f1915b22428c21', '2018-03-15 17:37:46', null, null, null);
+INSERT INTO `sys_function` VALUES ('402881e7622c5b7501622c61ee390000', 'addRole', '角色添加', '4028817261ec86300161ec8b18d90001', 'sys:role:addRole', '0', '', '角色管理下添加角色', 'c48e5e7c03f34d1d97f1915b22428c21', '2018-03-16 09:17:18', null, null, null);
+INSERT INTO `sys_function` VALUES ('402881e7622c5b7501622c627c040001', 'editRole', '角色修改', '4028817261ec86300161ec8b18d90001', 'sys:role:editRole', '1', '', '角色管理中修改角色信息', 'c48e5e7c03f34d1d97f1915b22428c21', '2018-03-16 09:17:54', null, null, null);
+INSERT INTO `sys_function` VALUES ('402881e7622c5b7501622c6424c10002', 'roleAuthorize', '角色授权', '4028817261ec86300161ec87e7070000', 'sys:role:Authorize', '1', '', '角色管理下授权 ', 'c48e5e7c03f34d1d97f1915b22428c21', '2018-03-16 09:19:43', null, null, null);
+INSERT INTO `sys_function` VALUES ('402881e7622d827301622d852e720000', 'menuAdd', '新增', '4028817261ee84fb0161ee86b8d30000', 'sys:menu;menuAdd', '1', '', '菜单新增', 'c48e5e7c03f34d1d97f1915b22428c21', '2018-03-16 14:35:25', null, null, null);
+INSERT INTO `sys_function` VALUES ('402881e7622d827301622d85b54f0001', 'menuEdit', '修改', '4028817261ee84fb0161ee86b8d30000', 'sys:menu:menuEdit', '1', '', '菜单 修改', 'c48e5e7c03f34d1d97f1915b22428c21', '2018-03-16 14:36:00', null, null, null);
+INSERT INTO `sys_function` VALUES ('402881e7622d827301622d865c760002', 'deleteMenu', '删除', '4028817261ee84fb0161ee86b8d30000', 'sys:menu:deleteMenu', '1', '', '菜单删除', 'c48e5e7c03f34d1d97f1915b22428c21', '2018-03-16 14:36:42', null, null, null);
+INSERT INTO `sys_function` VALUES ('402881e7622d827301622d87dd290003', 'showFunction', '功能编辑', '4028817261ee84fb0161ee86b8d30000', 'sys:menu:fun:showFunction', '1', '', '功能编辑', 'c48e5e7c03f34d1d97f1915b22428c21', '2018-03-16 14:38:21', null, null, null);
+INSERT INTO `sys_function` VALUES ('402881e7622d827301622d887b410004', 'deleteMenuFun', '功能删除', '4028817261ee84fb0161ee86b8d30000', 'sys:menu:fun:deleteMenuFun', '1', '', '菜单功能删除', 'c48e5e7c03f34d1d97f1915b22428c21', '2018-03-16 14:39:01', null, null, null);
 
 -- ----------------------------
 -- Table structure for sys_log
@@ -65,7 +102,7 @@ CREATE TABLE `sys_menu` (
   `create_date` datetime DEFAULT NULL,
   `update_by` varchar(32) DEFAULT NULL,
   `update_date` datetime DEFAULT NULL,
-  `del_flag` char(1) DEFAULT NULL,
+  `del_flag` char(1) DEFAULT '0',
   PRIMARY KEY (`menuid`),
   KEY `idx_sys_resource_parent_id` (`parent_id`),
   KEY `idx_sys_resource_parent_ids` (`parent_ids`(255)),
@@ -78,10 +115,12 @@ CREATE TABLE `sys_menu` (
 -- ----------------------------
 -- Records of sys_menu
 -- ----------------------------
-INSERT INTO `sys_menu` VALUES ('4028817261ec86300161ec87e7070000', '用户管理', '1', 'sys/user/userlist.html', '0', null, 'sys:user', '1', '1', '2av', '用户管理', 'c48e5e7c03f34d1d97f1915b22428c21', '2018-03-03 23:42:58', null, null, null);
-INSERT INTO `sys_menu` VALUES ('4028817261ec86300161ec8b18d90001', '角色管理', '1', 'sys/role/rolelist.html', '4028817261ec86300161ec87e7070000', null, 'sys:role', '1', '1', '2av', '角色管理', 'c48e5e7c03f34d1d97f1915b22428c21', '2018-03-03 23:46:33', null, null, null);
-INSERT INTO `sys_menu` VALUES ('4028817261ee84fb0161ee86b8d30000', '菜单管理', '1', '/sys/menu', '4028817261ec86300161ec87e7070000', null, 'sys:menu', '1', '1', null, '菜单管理', 'c48e5e7c03f34d1d97f1915b22428c21', '2018-03-04 09:01:02', null, null, null);
-INSERT INTO `sys_menu` VALUES ('4028817261f0a66a0161f0b6ea960000', '菜单添加', '1', 'sys/menu/add.html', '4028817261ee84fb0161ee86b8d30000', null, 'sys:menu:add', '1', '0', null, '菜单添加', 'c48e5e7c03f34d1d97f1915b22428c21', '2018-03-04 19:12:52', null, null, null);
+INSERT INTO `sys_menu` VALUES ('4028817261ec86300161ec87e7070000', '用户管理', '1', '/sys/user/userlist.html', '402881e7622c909201622c93f0ad0000', null, 'sys:user:userlist', '1', '1', '', '用户管理', 'c48e5e7c03f34d1d97f1915b22428c21', '2018-03-03 23:42:58', 'c48e5e7c03f34d1d97f1915b22428c21', '2018-03-16 10:14:26', '0');
+INSERT INTO `sys_menu` VALUES ('4028817261ec86300161ec8b18d90001', '角色管理', '1', '/sys/role/roleList.html', '402881e7622c909201622c93f0ad0000', null, 'sys:role', '1', '1', '', '角色管理', 'c48e5e7c03f34d1d97f1915b22428c21', '2018-03-03 23:46:33', 'c48e5e7c03f34d1d97f1915b22428c21', '2018-03-16 10:14:39', '0');
+INSERT INTO `sys_menu` VALUES ('4028817261ee84fb0161ee86b8d30000', '菜单管理', '1', '/sys/menu/menulist.html', '402881e7622c909201622c93f0ad0000', null, 'sys:menu', '1', '1', '', '菜单管理', 'c48e5e7c03f34d1d97f1915b22428c21', '2018-03-04 09:01:02', 'c48e5e7c03f34d1d97f1915b22428c21', '2018-03-16 10:13:33', '0');
+INSERT INTO `sys_menu` VALUES ('402881e7622c909201622c93f0ad0000', '系统管理', '1', '#', '0', null, 'system', '1', '1', null, '系统管理模块', 'c48e5e7c03f34d1d97f1915b22428c21', '2018-03-16 10:11:55', null, null, '0');
+INSERT INTO `sys_menu` VALUES ('402881e7622d548701622d580b290000', '订单管理', '1', '/order/manage', '0', null, 'order:manage', '1', '0', null, '发货单管理', '629e91dabee14a5cb1dab230dba11e00', '2018-03-16 13:46:07', null, null, '0');
+INSERT INTO `sys_menu` VALUES ('402881e7622d548701622d58d8300001', '会员管理', '1', '/member/memlist', '0', null, 'order:manage', '1', '0', null, '用户会员管理', '629e91dabee14a5cb1dab230dba11e00', '2018-03-16 13:47:00', null, null, '0');
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -107,6 +146,9 @@ CREATE TABLE `sys_role` (
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
+INSERT INTO `sys_role` VALUES ('402881e761f40d3e0161f4c0ef890000', ' 系统管理员', 'system', '1', '1', null, '2018-03-05 14:02:20', null, null, ' 系统管理员', '0');
+INSERT INTO `sys_role` VALUES ('402881e761f91b320161f92729ca0000', '超级管理员', 'basemg', '1', '1', null, '2018-03-06 10:32:28', null, null, '超级管理员', '0');
+INSERT INTO `sys_role` VALUES ('402881f262223b59016222467ff90000', '测试人员', 'tester', '1', '1', 'c48e5e7c03f34d1d97f1915b22428c21', '2018-03-14 10:11:08', null, null, '备注', '0');
 
 -- ----------------------------
 -- Table structure for sys_role_menu
@@ -118,12 +160,38 @@ CREATE TABLE `sys_role_menu` (
   `role_id` varchar(32) NOT NULL COMMENT '角色编号',
   PRIMARY KEY (`id`),
   KEY `sys_role_menu_menuid` (`menu_id`),
-  KEY `sys_role_menu_roleid` (`role_id`)
+  KEY `sys_role_menu_roleid` (`role_id`),
+  CONSTRAINT `sys_role_menu_ibfk_1` FOREIGN KEY (`menu_id`) REFERENCES `sys_menu` (`menuid`),
+  CONSTRAINT `sys_role_menu_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `sys_role` (`roleid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色-菜单';
 
 -- ----------------------------
 -- Records of sys_role_menu
 -- ----------------------------
+
+-- ----------------------------
+-- Table structure for sys_role_menu_fun
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_role_menu_fun`;
+CREATE TABLE `sys_role_menu_fun` (
+  `id` varchar(32) NOT NULL,
+  `role_id` varchar(32) DEFAULT NULL COMMENT '角色ID',
+  `menu_id` varchar(32) DEFAULT NULL COMMENT '菜单ID',
+  `fun_id` varchar(32) DEFAULT NULL COMMENT '功能ID',
+  PRIMARY KEY (`id`),
+  KEY `tes` (`fun_id`),
+  CONSTRAINT `tes` FOREIGN KEY (`fun_id`) REFERENCES `sys_function` (`funid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of sys_role_menu_fun
+-- ----------------------------
+INSERT INTO `sys_role_menu_fun` VALUES ('40288172623804240162380662f20000', '402881e761f40d3e0161f4c0ef890000', '4028817261ee84fb0161ee86b8d30000', '402881e7622d827301622d85b54f0001');
+INSERT INTO `sys_role_menu_fun` VALUES ('402881726238042401623806882b0001', '402881e761f40d3e0161f4c0ef890000', '4028817261ec86300161ec8b18d90001', '402881e7622c5b7501622c61ee390000');
+INSERT INTO `sys_role_menu_fun` VALUES ('402881726238042401623806959b0002', '402881e761f40d3e0161f4c0ef890000', '4028817261ec86300161ec87e7070000', '402881e76228ef8d01622905c2d40001');
+INSERT INTO `sys_role_menu_fun` VALUES ('402881726238a385016238a41e1f0000', '402881f262223b59016222467ff90000', '4028817261ee84fb0161ee86b8d30000', '402881e7622d827301622d852e720000');
+INSERT INTO `sys_role_menu_fun` VALUES ('402881726238a385016238a41e520001', '402881f262223b59016222467ff90000', '4028817261ec86300161ec8b18d90001', '402881e7622c5b7501622c627c040001');
+INSERT INTO `sys_role_menu_fun` VALUES ('402881726238a385016238a41e5b0002', '402881f262223b59016222467ff90000', '4028817261ec86300161ec87e7070000', '402881e7622c5b7501622c6424c10002');
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -154,7 +222,10 @@ CREATE TABLE `sys_user` (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('c48e5e7c03f34d1d97f1915b22428c21', '??', 'admin', null, '91936ebdba1fd07fa6947d5f1ffcfdae', 'f247b291e710e44096e7405e024cb78b', '3042415452@qq.com', '13595029936', '1', null, '2018-02-11 22:40:46', null, null, null, null);
+INSERT INTO `sys_user` VALUES ('629e91dabee14a5cb1dab230dba11e00', '系统管理员', 'system', null, 'e7a195df078e8f63e700582895fa1e85', '98699e28892f5e681a393b4b072ad61e', '3242@qq.com', '13656545546', '1', 'c48e5e7c03f34d1d97f1915b22428c21', '2018-03-08 23:02:27', null, null, '系统管理员', null);
+INSERT INTO `sys_user` VALUES ('a85c1caa86a242369ef8b735bed0b504', '何靖', 'hejing', null, 'e77e9f590d0c5332fedb77b409fe9c7f', '9c8dc7af3ed501f34ec972d4b2a4cddb', '304241452@qq.com', '13595029935', '0', null, '2018-03-06 10:33:19', null, null, '何靖', null);
+INSERT INTO `sys_user` VALUES ('c48e5e7c03f34d1d97f1915b22428c21', '超级管理员', 'admin', null, '6e801742ff3b0af6df28eaa3849cc6a1', '3328b8f452cfdda10d3ad82dd58f3b10', '3042415452@qq.com', '13595029936', '1', null, '2018-02-11 22:40:46', '629e91dabee14a5cb1dab230dba11e00', '2018-03-17 11:48:49', null, null);
+INSERT INTO `sys_user` VALUES ('f1e1911191094e21bb53ec61156dbede', '测试人员', 'tester', null, 'f53766dd0ba464e4f374ef488a3ecbee', '74aa1132001290895df66c6fd21eee49', '46454452@qq.com', '13595659989', '1', null, '2018-03-08 11:57:24', 'c48e5e7c03f34d1d97f1915b22428c21', '2018-03-09 11:18:59', '   fwer=备注扩展信息cvvser    ', null);
 
 -- ----------------------------
 -- Table structure for sys_user_role
@@ -174,3 +245,10 @@ CREATE TABLE `sys_user_role` (
 -- ----------------------------
 -- Records of sys_user_role
 -- ----------------------------
+INSERT INTO `sys_user_role` VALUES ('402881f2621dfaa901621e0037d4000e', 'c48e5e7c03f34d1d97f1915b22428c21', '402881e761f91b320161f92729ca0000');
+INSERT INTO `sys_user_role` VALUES ('402881f2621dfaa901621e0037f8000f', 'c48e5e7c03f34d1d97f1915b22428c21', '402881e761f40d3e0161f4c0ef890000');
+INSERT INTO `sys_user_role` VALUES ('402881f2621dfaa901621e005c770010', 'a85c1caa86a242369ef8b735bed0b504', '402881e761f91b320161f92729ca0000');
+INSERT INTO `sys_user_role` VALUES ('402881f2621dfaa901621e005cd20011', 'a85c1caa86a242369ef8b735bed0b504', '402881e761f40d3e0161f4c0ef890000');
+INSERT INTO `sys_user_role` VALUES ('402881f2621dfaa901621e01fd0d0014', 'f1e1911191094e21bb53ec61156dbede', '402881e761f40d3e0161f4c0ef890000');
+INSERT INTO `sys_user_role` VALUES ('402881f2621dfaa901621e02b00c0016', '629e91dabee14a5cb1dab230dba11e00', '402881e761f91b320161f92729ca0000');
+INSERT INTO `sys_user_role` VALUES ('402881f2621dfaa901621e02b02d0017', '629e91dabee14a5cb1dab230dba11e00', '402881e761f40d3e0161f4c0ef890000');

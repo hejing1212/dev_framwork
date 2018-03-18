@@ -1,13 +1,10 @@
 package com.hy.sys.dao.impl;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.stereotype.Repository;
 
 import com.hy.sys.core.dao.impl.BasicDaoImpl;
@@ -43,7 +40,6 @@ public class SysRoleMenuFunDaoImpl extends BasicDaoImpl<SysRoleMenuFun> implemen
 			sql.append(" AND (role_id = ?)");
 			values.add(roleId);
 		}
-		sql.append(" ORDER BY create_date DESC");
 		return this.findByHql(sql.toString(), values.toArray());
 	}
 

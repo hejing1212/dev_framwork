@@ -1,14 +1,10 @@
 package com.hy.sys.entity;
 
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -62,8 +58,8 @@ public class SysRoleMenuFun extends AbstractBasicEntity{
 		this.fun_id = fun_id;
 	}
 	
-	@OneToOne
-	@JoinColumn(name = "funid")
+	@OneToOne()
+	@JoinColumn(name = "fun_id",insertable = false, updatable = false, nullable=true)
 	public  SysFunction  getFun() {
 		return fun;
 	}
@@ -72,7 +68,6 @@ public class SysRoleMenuFun extends AbstractBasicEntity{
 		this.fun = fun;
 	}
  
-	
 	@Column(name = "role_id", length = 32)
 	public String getRole_id() {
 		return role_id;
@@ -80,7 +75,5 @@ public class SysRoleMenuFun extends AbstractBasicEntity{
 	public void setRole_id(String role_id) {
 		this.role_id = role_id;
 	}
-
-	
 	
 }

@@ -1,6 +1,7 @@
 package com.hy.sys.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -181,7 +182,7 @@ public class SysMenuServiceImpl extends BasicServiceImpl<SysMenu> implements Sys
 		for (int i = 0; i < list.size(); i++) {
 			StringBuffer text = new StringBuffer();
 			SysMenu menu = list.get(i);
-			int v=0;
+			int v=0;			 
 			if (menu.getFunction() != null) {
 				for (SysFunction fun:menu.getFunction()) {
 					

@@ -109,7 +109,7 @@
 			 
 			 var index = $('#dg').datagrid('getRowIndex', row);
 			 window.parent.mainPlatform._createWindows("角色授权",
-						"${basePath}/sys/role/roleAuthorize.html?roieId="
+						"${basePath}/sys/role/roleAuthorize.html?roleId="
 								+ row.roleid + "&index=" + index, "icon-set",
 						'setRoleAuthorize');
 		}

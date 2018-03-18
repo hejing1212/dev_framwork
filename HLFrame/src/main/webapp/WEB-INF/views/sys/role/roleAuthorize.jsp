@@ -27,18 +27,15 @@
 
 					<input type="checkbox" onclick="checkAll();" name="checkall">
 					全选 <input type="checkbox" onclick="uncheckAll();" name="checkall">
-					取消全选 <a href="javascript:void(0)" onclick="editRole();"
-						class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a>
+					取消全选 <a href="javascript:void(0)" onclick="saveAuths();"
+						class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-save'">保存</a>
 
 				</div>
-			</div>
-
-			<input type="hidden" name="roleId" value="${roleId}">
-
+			</div>                                                      
+			<input type="hidden" id="roleId" name="roleId" value="${roleId}">
 			<table id="menuTree" title="菜单管理列表" class="easyui-treegrid"
 				style="width: 100%; height: 600px"
-				data-options="
-url: '${basePath}/sys/role/getMenuAllList.html',method: 'get',rownumbers: true,idField: 'menuid',treeField:'name', toolbar:'#tb',iconCls:'icon-ok'">
+				data-options="method: 'get',idField: 'menuid',treeField:'name', toolbar:'#tb',iconCls:'icon-ok'">
 				<thead>
 					<tr>
 						<th data-options="field:'name'" width="180" align="center">名称</th>
@@ -67,10 +64,16 @@ url: '${basePath}/sys/role/getMenuAllList.html',method: 'get',rownumbers: true,i
 		src="${basePath}/static/easyui/easyui-lang-zh_CN.js"></script>
 
 	<script type="text/javascript">
-		$(function() {
-			empowerment();
-		});
-
+		 
+	
+	   $('#menuTree').treegrid({
+				 url :"${basePath}/sys/role/getMenuAllList.html",
+				 rownumbers : true,
+				 onLoadSuccess: function(data){	//加载数据成功后执行事件
+					empowerment();
+		         }
+       });
+	
 		//菜单权限格式化
 		function formatAuth(value, text) {
 			if (value) {
@@ -120,7 +123,7 @@ url: '${basePath}/sys/role/getMenuAllList.html',method: 'get',rownumbers: true,i
 
 		//保存权限
 		function saveAuths() {
-			var roleId = $("#roleId").val();
+			var set_roleId = $("#roleId").val();
 			var arrChk = "";
 			$($("input[name='funName'][checked]")).each(function() {
 				arrChk += this.value + ",";
@@ -129,12 +132,11 @@ url: '${basePath}/sys/role/getMenuAllList.html',method: 'get',rownumbers: true,i
 			if (chkFunIds == null || chkFunIds == "" || chkFunIds == undefined) {
 				$.messager.alert("操作提示", "请勾选权限后再继续操作", "info");
 			} else {
-				$
-						.ajax({
+				$.ajax({
 							url : "${basePath}/sys/role/authByRoleSave.html",
 							type : "post",
 							data : {
-								roleId : roleId,
+								roleId : set_roleId,
 								auths : chkFunIds
 							},
 							dataType : "json",
@@ -167,15 +169,9 @@ url: '${basePath}/sys/role/getMenuAllList.html',method: 'get',rownumbers: true,i
 					if (data) {
 						for (var i = 0; i < data.length; i++) {
 							var funId = data[i].menu_id + "-" + data[i].fun_id;
-							$($("input[name='funName']")).each(
-									function() {
+							$($("input[name='funName']")).each(function() {
 										if (funId == this.value) {
-											$(this).attr("checked",
-													data[i].checked);
-											if (data[i].checked) {
-												$(this).next("span").addClass(
-														"spanStyle");
-											}
+											$(this).attr('checked', true); 
 										}
 									});
 						}

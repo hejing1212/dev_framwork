@@ -101,8 +101,8 @@ public class RoleController extends AbstractBasicController {
 	@RequestMapping("/roleAuthorize")
 	public ModelAndView roleAuthorize(HttpServletResponse response, HttpServletRequest request) {
 		ModelAndView view = new ModelAndView();
-		String roieId = request.getParameter("roieId");
-		view.addObject("roieId", roieId);
+		String roleId = request.getParameter("roleId");
+		view.addObject("roleId", roleId);
 		return view;
 	}
 	
@@ -263,7 +263,7 @@ public class RoleController extends AbstractBasicController {
 	 */
 	@ResponseBody
 	@RequestMapping("/getRoleFunction")
-	public List<SysRoleMenuFun> getRoleFunction (@ModelAttribute String roleId,HttpServletResponse response, HttpServletRequest request){		
+	public List<SysRoleMenuFun> getRoleFunction (String roleId,HttpServletResponse response, HttpServletRequest request){		
 		List<SysRoleMenuFun> list=sysRoleMenuFunService.getRoleMenuFun(roleId);
 		String jsonStr = JSON.toJSONString(list);
 		writeResult(jsonStr, response);
@@ -277,8 +277,9 @@ public class RoleController extends AbstractBasicController {
 	 * @param request
 	 * @return
 	 */
+	@ResponseBody
 	@RequestMapping("/authByRoleSave")
-	public Map<String, Object>  authByRoleSave(@ModelAttribute String roleId,String auths,HttpServletResponse response, HttpServletRequest request){
+	public Map<String, Object>  authByRoleSave(String roleId,String auths,HttpServletResponse response, HttpServletRequest request){
 		
 		Map<String, Object> map = sysRoleMenuFunService.authByRoleSave(roleId, auths);		
 		return map;

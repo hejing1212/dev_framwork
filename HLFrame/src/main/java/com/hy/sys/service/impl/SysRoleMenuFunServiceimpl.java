@@ -61,7 +61,7 @@ public class SysRoleMenuFunServiceimpl extends BasicServiceImpl<SysRoleMenuFun> 
 	public Map<String, Object> authByRoleSave(String roleId, String auths) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
-			if (roleId != null && auths != null) {
+			if (roleId != "" && auths != "") {
 				sysRoleMenuFunDao.deleteRoleAuthFun(roleId);
 				String[] menuId_funId = auths.split(",");
 

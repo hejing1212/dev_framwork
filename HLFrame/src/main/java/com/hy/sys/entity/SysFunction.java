@@ -1,5 +1,7 @@
 package com.hy.sys.entity;
 
+import java.util.Comparator;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -120,10 +122,11 @@ public class SysFunction extends BaseSpuerEntity{
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
 	}
-
-
-
-	
-	
-
 }
+
+class FunComparator implements Comparator<SysFunction>{  
+    @Override  
+    public int compare(SysFunction funa, SysFunction funb) {      
+        return funa.getSort()-funb.getSort();  //o1.score - o2.score;  
+    }      
+}  

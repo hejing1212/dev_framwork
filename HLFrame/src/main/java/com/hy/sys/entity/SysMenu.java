@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -177,6 +178,7 @@ public class SysMenu extends BaseSpuerEntity {
 	
  	
 	@OneToMany
+	@OrderBy("sort ASC")
 	@JoinColumn(name = "menu_id")	
 	public Set<SysFunction> getFunction() {
 		return function;
