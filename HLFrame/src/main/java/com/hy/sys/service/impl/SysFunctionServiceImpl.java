@@ -1,6 +1,6 @@
 package com.hy.sys.service.impl;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,4 +57,15 @@ public class SysFunctionServiceImpl extends BasicServiceImpl<SysFunction> implem
 	public long getMenuCountByMenuid(String menuId) {
 		return sysFunctionDao.getMenuCountByMenuid(menuId);
 	}
+	
+	/**
+	 * 根据用户ID查询当前用户具体的操作功能列表
+	 * @param userId
+	 * @return
+	 */
+	@Override
+	public List<SysFunction> findFunctionByUserId(String userId){
+		return sysFunctionDao.findFunctionByUserId(userId);
+	}
+	
 }

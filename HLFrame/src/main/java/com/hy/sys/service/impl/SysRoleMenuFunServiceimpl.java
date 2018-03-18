@@ -51,14 +51,14 @@ public class SysRoleMenuFunServiceimpl extends BasicServiceImpl<SysRoleMenuFun> 
 	}
 
 	/**
-	 * 保存用户权限
+	 * 保存用户菜单权限
 	 * 
 	 * @param roleId
 	 * @param auths
 	 * @return
 	 */
 	@Override
-	public Map<String, Object> authByRoleSave(String roleId, String auths) {
+	public Map<String, Object> roleAuthSave(String roleId, String auths) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
 			if (roleId != "" && auths != "") {
@@ -90,5 +90,7 @@ public class SysRoleMenuFunServiceimpl extends BasicServiceImpl<SysRoleMenuFun> 
 		}
 		return map;
 	}
+	
+	
 
 }

@@ -42,21 +42,7 @@ public class SysRoleServiceImpl extends BasicServiceImpl<SysRole> implements Sys
 	@SuppressWarnings("unchecked")
 	@Override
 	public PageInfo<SysRole> getList(Map<String, Object> params, SysRole entity, int pageNo, int pageSize) {
-		StringBuffer sql = new StringBuffer();
-		List<Object> values = new ArrayList<Object>();
-		sql.append(" SELECT  * ");
-		sql.append(" FROM sys_role   ");
-		sql.append(" WHERE 1=1 ");
-
-		if (params.containsKey("queryKey") && params.get("queryKey") != null && !"".equals(params.get("queryKey"))) {
-			sql.append(" AND ( name like ?)");
-			String key = params.get("queryKey").toString().trim();
-			values.add("%" + key + "%");			
-		}
-
-		sql.append(" ORDER BY create_date DESC");
-		return (PageInfo<SysRole>) getBasicDao().findPageInfoByQueryJdbc(pageNo, pageSize, sql.toString(),
-				values.toArray(), SysRole.class);
+		 return sysRoleDao.getList(params, entity, pageNo, pageSize);
 	}
 
 	 
@@ -66,29 +52,14 @@ public class SysRoleServiceImpl extends BasicServiceImpl<SysRole> implements Sys
 	 * @see  
 	 */
 	@Override
-	public List<SysRole> findListByUserId(String userid) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<SysRole> findListByUserId(String userId) {
+		List<SysRole> list=sysRoleDao.getRoleListByUserid(userId);
+		return list;
 	}
 
 	@Override
 	public SysRole getRoleName(String rolename) {
-		StringBuffer sql = new StringBuffer();
-		List<Object> values = new ArrayList<Object>();
-		sql.append(" FROM SysRole ");
-		sql.append(" WHERE 1=1 ");
-
-		if (rolename != "") {
-			sql.append(" AND ( name = ?)");
-			values.add(rolename);
-		}
-		sql.append(" ORDER BY create_date DESC");
-		List<SysRole> list = getBasicDao().findByHql(sql.toString(), values.toArray());
-		if (list.size() > 0) {
-			return (SysRole) list.get(0);
-		} else {
-			return null;
-		}
+		return  sysRoleDao.getRoleName(rolename);
 	}
 
 	/* (non-Javadoc)
@@ -105,21 +76,8 @@ public class SysRoleServiceImpl extends BasicServiceImpl<SysRole> implements Sys
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public PageInfo<SysRole> getPageListByUser(String userId, int pageNo, int pageSize) {
-		StringBuffer hql = new StringBuffer();
-		List<Object> values = new ArrayList<Object>();
-		hql.append("SELECT a ");
-		hql.append(" FROM SysRole a, SysUserRole b ");
-		hql.append(" WHERE a.roleid=b.role_id ");
-		
-		String hqlCount ="select count(*)  FROM SysUserRole WHERE  user_id = ? ";
-				
-		if (userId != "") {
-			hql.append(" AND ( b.user_id = ?)");
-			values.add(userId);
-		}
-		hql.append(" ORDER BY create_date DESC");
-		return getBasicDao().findPageInfoByQuery(pageNo, pageSize, hql.toString(),hqlCount, values.toArray());
+	public PageInfo<SysRole> getPageListByUser(String userId, int pageNo, int pageSize) {	
+		return sysRoleDao.getPageListByUser(userId, pageNo, pageSize);
 	}
 	
 /*
@@ -128,21 +86,6 @@ public class SysRoleServiceImpl extends BasicServiceImpl<SysRole> implements Sys
  */
 	@Override
 	public void deleteUserRole(String userId, String[] roleIds) {
-		String sql = "DELETE FROM sys_user_role WHERE user_id = ? AND role_id = ? ";		
-		if ((roleIds != null) && (roleIds.length > 0)) {
-			sysRoleDao.getJdbcTemplate().batchUpdate(sql, new BatchPreparedStatementSetter() {  
-	            public int getBatchSize() {  
-	                return roleIds.length; 
-	            }  
-	            public void setValues(PreparedStatement ps, int i)throws SQLException { 
-	                ps.setString(1, userId);  
-	                ps.setString(2, roleIds[i]);  	               
-	            }  
-	        });  
-			SysUser user = UserUtils.getUser();
-			for(String role:roleIds){
-				LogUtil.info("角色删除：被删除人, "+userId+",删除角色ID,"+role+"删除人："+user.getUserid());	               
-			}
-		}
+		sysRoleDao.deleteUserRole(userId, roleIds);
 	}
 }

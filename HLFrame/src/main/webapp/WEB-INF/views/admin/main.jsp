@@ -97,6 +97,27 @@
     
     <script type="text/javascript">
     
+    $(function(){  
+    	loadMenu();
+    }); 
+    
+    function loadMenu(){
+    	$.ajax({
+			url : "${basePath}/admin/getMenuList.html",
+			type : "get",
+			dataType : "json",
+			async : false,
+			//提交成功后回调的函数
+			success : function(data) {
+				if (data) {
+					var menudata=data; 
+				}
+			}
+		});
+    }
+    
+    
+    
     $(window).resize(function(){
           $('.tabs-panels').height($("#pf-page").height()-46);
           $('.panel-body').height($("#pf-page").height()-76)

@@ -3,6 +3,7 @@ package com.hy.sys.dao;
 import java.util.List;
 
 import com.hy.sys.core.dao.BasicDao;
+import com.hy.sys.entity.SysFunction;
 import com.hy.sys.entity.SysRoleMenuFun;
 
 public interface SysRoleMenuFunDao extends BasicDao<SysRoleMenuFun>{
@@ -19,5 +20,7 @@ public interface SysRoleMenuFunDao extends BasicDao<SysRoleMenuFun>{
 	 * @param roleId
 	 */
 	public void deleteRoleAuthFun(String roleId);
+
+	
 
 }

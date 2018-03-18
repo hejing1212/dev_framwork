@@ -2,26 +2,29 @@ package com.hy.sys.shiro;
 
 import java.util.List;
 import java.util.Set;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.UnavailableSecurityManagerException;
 import org.apache.shiro.session.InvalidSessionException;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Sets;
-import com.hy.sys.utils.CacheUtils;
-
-import com.hy.sys.utils.ServletUtils;
-import com.hy.sys.utils.SpringContextHolder;
-import com.hy.sys.utils.StringUtils;
+import com.hy.sys.entity.SysFunction;
 import com.hy.sys.entity.SysMenu;
 import com.hy.sys.entity.SysRole;
 import com.hy.sys.entity.SysUser;
-import com.hy.sys.shiro.UserRealm.Principal;
+import com.hy.sys.service.SysFunctionService;
 import com.hy.sys.service.SysMenuService;
 import com.hy.sys.service.SysRoleService;
 import com.hy.sys.service.SysUserService;
+import com.hy.sys.shiro.UserRealm.Principal;
+import com.hy.sys.utils.CacheUtils;
+import com.hy.sys.utils.ServletUtils;
+import com.hy.sys.utils.SpringContextHolder;
+import com.hy.sys.utils.StringUtils;
 
 /**
  * 
@@ -42,6 +45,7 @@ public class UserUtils {
 	private static SysUserService userService = SpringContextHolder.getBean(SysUserService.class);
 	private static SysRoleService roleService = SpringContextHolder.getBean(SysRoleService.class);
 	private static SysMenuService menuService = SpringContextHolder.getBean(SysMenuService.class);
+	private static SysFunctionService sysFunService = SpringContextHolder.getBean(SysFunctionService.class);
 	public static final String USER_CACHE = "userCache";
 	public static final String USER_CACHE_ID_ = "id_";
 	public static final String USER_CACHE_USER_NAME_ = "username_";
@@ -219,9 +223,24 @@ public class UserUtils {
 		return null;
 	}
 
+	/**
+	 * 获取当前用户授权的功能
+	 * @return
+	 */
 	public static Set<String> getPermissionsList() {
-		List<SysMenu> list = UserUtils.getMenuList();
+		SysUser user = getUser();
+		Set<SysFunction> funlist = Sets.newConcurrentHashSet(sysFunService.findFunctionByUserId(user.getUserid()));
+		
 		Set<String> permissionsList = Sets.newConcurrentHashSet();
+		for(SysFunction fun:funlist) {
+			if (StringUtils.isNotBlank(fun.getPermission())) {
+				permissionsList.add(fun.getPermission());
+			}
+		}
+		
+		
+		/*List<SysMenu> list = UserUtils.getMenuList();
+		Set<String> permissionsList = Sets.newConcurrentHashSet();		
 		for (SysMenu menu : list) {
 			if (StringUtils.isNotBlank(menu.getPermission())) {
 				// 添加基于Permission的权限信息
@@ -231,7 +250,7 @@ public class UserUtils {
 					}
 				}
 			}
-		}
+		}*/
 		return permissionsList;
 	}
 

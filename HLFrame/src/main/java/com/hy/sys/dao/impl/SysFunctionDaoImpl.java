@@ -97,4 +97,26 @@ public class SysFunctionDaoImpl extends BasicDaoImpl<SysFunction> implements Sys
 			}
 		}
 	}
+	
+	/**
+	 * 根据用户ID查询当前用户具体的操作功能列表
+	 * @param userId
+	 * @return
+	 */
+	@Override
+	public List<SysFunction> findFunctionByUserId(String userId){
+		StringBuffer sql = new StringBuffer();
+		List<Object> values = new ArrayList<Object>();
+		sql.append("SELECT a ");
+		sql.append(" FROM SysFunction a, SysUserRole b,SysRoleMenuFun c ");
+		sql.append(" WHERE a.funid=c.fun_id and b.role_id=c.role_id ");
+				 
+		sql.append(" AND (b.user_id = ?)");  
+		values.add(userId);
+		 		
+		sql.append(" ORDER BY a.sort DESC");
+		List<SysFunction> list = this.findByHql(sql.toString(), values.toArray());
+
+		return list;		
+	}
 }

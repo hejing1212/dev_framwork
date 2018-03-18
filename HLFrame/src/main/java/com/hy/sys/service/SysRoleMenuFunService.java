@@ -16,11 +16,16 @@ public interface SysRoleMenuFunService extends BasicService<SysRoleMenuFun> {
 	public List<SysRoleMenuFun> getRoleMenuFun(String roleId);
 
 	/**
-	 * 保存用户权限
+	 * 保存用户菜单权限
 	 * @param roleId
 	 * @param auths
 	 * @return
 	 */
-	public Map<String, Object> authByRoleSave(String roleId, String auths);
+	public Map<String, Object> roleAuthSave(String roleId, String auths);
+
+	
+	
+
+	 
 
 }

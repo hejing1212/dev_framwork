@@ -37,6 +37,13 @@ public interface SysMenuDao extends BasicDao<SysMenu> {
      */
 	public List<SysMenu> getAllList();
 
+	/**
+	 * 根据用户ID获取用户拥有权限 的功能菜单
+	 * @param userId
+	 * @return
+	 */
+	public List<SysMenu> findMenuByUserId(String userId);
+
 	
 
 }

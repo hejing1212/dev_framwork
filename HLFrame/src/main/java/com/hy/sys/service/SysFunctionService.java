@@ -1,7 +1,10 @@
 package com.hy.sys.service;
 
+import java.util.List;
+
 import com.hy.sys.core.service.BasicService;
 import com.hy.sys.entity.SysFunction;
+import com.hy.sys.entity.SysRoleMenuFun;
 import com.hy.sys.utils.PageInfo;
 
 public interface SysFunctionService extends BasicService<SysFunction> {
@@ -25,4 +28,11 @@ public interface SysFunctionService extends BasicService<SysFunction> {
 	 * @return
 	 */
 	public long getMenuCountByMenuid(String menuId);
+	
+	/**
+	 * 根据用户ID查询当前用户具体的操作功能列表
+	 * @param userId
+	 * @return
+	 */
+	public List<SysFunction> findFunctionByUserId(String userId);
 }

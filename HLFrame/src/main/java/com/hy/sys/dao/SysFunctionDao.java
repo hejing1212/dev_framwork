@@ -1,5 +1,7 @@
 package com.hy.sys.dao;
 
+import java.util.List;
+
 import com.hy.sys.core.dao.BasicDao;
 import com.hy.sys.entity.SysFunction;
 import com.hy.sys.utils.PageInfo;
@@ -25,4 +27,11 @@ public interface SysFunctionDao extends BasicDao<SysFunction>{
 	 * @return
 	 */
 	public long getMenuCountByMenuid(String menuId);
+	
+	/**
+	 * 根据用户ID查询当前用户具体的操作功能列表
+	 * @param userId
+	 * @return
+	 */
+	public List<SysFunction> findFunctionByUserId(String userId);
 }

@@ -1,13 +1,11 @@
 package com.hy.sys.service.impl;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
+import org.apache.shiro.dao.DataAccessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +14,10 @@ import com.hy.sys.core.service.impl.BasicServiceImpl;
 import com.hy.sys.dao.SysMenuDao;
 import com.hy.sys.entity.SysFunction;
 import com.hy.sys.entity.SysMenu;
+import com.hy.sys.entity.SysRoleMenu;
 import com.hy.sys.entity.TreeNode;
 import com.hy.sys.service.SysMenuService;
+import com.hy.sys.service.SysRoleMenuService;
 import com.hy.sys.utils.PageInfo;
 import com.hy.sys.utils.logs.DeleteLog;
 import com.hy.sys.utils.logs.SaveLog;
@@ -32,6 +32,9 @@ public class SysMenuServiceImpl extends BasicServiceImpl<SysMenu> implements Sys
 	@Autowired
 	private SysMenuDao sysMenuDao;
 
+	@Autowired
+	private SysRoleMenuService sysRoleMenuService;
+	
 	/*
 	 * @see 查询菜单是否添加过，避免重复添加
 	 */
@@ -53,13 +56,13 @@ public class SysMenuServiceImpl extends BasicServiceImpl<SysMenu> implements Sys
 	}
 
 	/**
-	 * 获取当前用户授权菜单-方法未实现
+	 * 获取当前用户授权菜单
 	 * 
 	 * @param userid
 	 * @return
 	 */
-	public List<SysMenu> findMenuByUserId(String userid) {
-		List<SysMenu> list = new ArrayList<SysMenu>();
+	public List<SysMenu> findMenuByUserId(String userId) {
+		List<SysMenu> list = sysMenuDao.findMenuByUserId(userId);
 		return list;
 	}
 
@@ -202,5 +205,40 @@ public class SysMenuServiceImpl extends BasicServiceImpl<SysMenu> implements Sys
 		ArrayList<SysMenu> arlist = CreateMenuList(list, "0", retlist);
 		
 		return arlist;
+	}
+	
+	/**
+	 * 保存用户菜单权限
+	 * 
+	 * @param roleId
+	 * @param auths
+	 * @return
+	 */
+	@Override
+	public Map<String, Object> roleMenuAuthSave(String roleId, String auths) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		try {
+			if (roleId != "" && auths != "") {
+				sysRoleMenuService.deleteRoleMenu(roleId); //更新前，册掉之前的
+				String[] menuId_funId = auths.split(",");
+				for (int i = 0; i < menuId_funId.length; i++) {
+					SysRoleMenu entity=new SysRoleMenu();
+					String menuid = menuId_funId[i].split("-")[0];
+					entity.setMenu_id(menuid);
+					entity.setRole_id(roleId);
+					sysRoleMenuService.save(entity);
+				}
+				map.put("code", 1);
+				map.put("msg", "设置成功！");
+			}else {
+				map.put("code", 0);
+				map.put("msg", "设置失败！");
+			}
+			
+		} catch (DataAccessException e) {
+			map.put("code", 0);
+			map.put("msg", e.toString());
+		}
+		return map;
 	}
 }

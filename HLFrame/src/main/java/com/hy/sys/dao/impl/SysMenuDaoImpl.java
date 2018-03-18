@@ -94,5 +94,30 @@ public class SysMenuDaoImpl extends BasicDaoImpl<SysMenu> implements SysMenuDao 
 		LogUtil.info("菜单删除：被删除菜单ID," + menuid + "删除人：" + user.getUserid());
 
 	}
+	
+	
+	
+	
+	/**
+	 * 根据用户ID获取用户拥有的功能菜单
+	 * @param userId
+	 * @return
+	 */
+	@Override
+	public List<SysMenu> findMenuByUserId(String userId){
+		StringBuffer sql = new StringBuffer();
+		List<Object> values = new ArrayList<Object>();
+		sql.append("SELECT a ");
+		sql.append(" FROM SysMenu a, SysUserRole b,SysRoleMenu c ");
+		sql.append(" WHERE a.menuid=c.menu_id and b.role_id=c.role_id ");
+				 
+		sql.append(" AND (b.user_id = ?)");  
+		values.add(userId);
+		 		
+		sql.append(" ORDER BY a.sort DESC");
+		List<SysMenu> list = this.findByHql(sql.toString(), values.toArray());
+
+		return list;		
+	}
 
 }

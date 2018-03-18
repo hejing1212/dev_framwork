@@ -68,7 +68,7 @@ public class UserRealm extends AuthorizingRealm {
 		SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
 				new Principal(user, authcToken.isMobileLogin()), // 用户名
 				user.getPassword(), // 密码
-				ByteSource.Util.bytes(user.getCredentialsSalt()), // salt=username+salt
+				ByteSource.Util.bytes(user.getCredentialsSalt()), 
 				getName() // realm name
 		);
 		// 记录登录日志
