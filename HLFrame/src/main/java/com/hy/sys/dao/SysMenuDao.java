@@ -44,6 +44,12 @@ public interface SysMenuDao extends BasicDao<SysMenu> {
 	 */
 	public List<SysMenu> findMenuByUserId(String userId);
 
+	/**
+	 * 设置同一个父菜单下的所有菜单只能有一个是默认展开的
+	 * @param parentId
+	 */
+	public void updataMenuCurrent(String parentId);
+
 	
 
 }

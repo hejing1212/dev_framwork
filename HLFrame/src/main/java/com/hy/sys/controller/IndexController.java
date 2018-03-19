@@ -91,7 +91,7 @@ public class IndexController extends AbstractBasicController{
 				tree.setHref(menu.getUrl());
 				tree.setIconCls(menu.getMenu_icon());
 				tree.setMenuid(menu.getMenuid());
-				//tree.setIsCurrent("true");
+				tree.setIsCurrent(menu.getCurrent());
 				ArrayList<TreeNode> retli = new ArrayList<TreeNode>();
 				ArrayList<TreeNode> childenList = CreateMenuFormat(list, menu.getMenuid(), retli);
 				if (childenList.size() > 0) {

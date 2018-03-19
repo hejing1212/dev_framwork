@@ -71,4 +71,9 @@ public interface SysMenuService extends BasicService<SysMenu> {
 	 * @return
 	 */
 	public Map<String, Object> roleMenuAuthSave(String roleId, String auths);
+	/**
+	 * 设置同一个父菜单下的所有菜单只能有一个是默认展开的
+	 * @param parentId
+	 */
+	public void updataMenuCurrent(String parentId);
 }

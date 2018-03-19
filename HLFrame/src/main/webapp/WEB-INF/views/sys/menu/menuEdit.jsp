@@ -73,7 +73,15 @@
 								class="easyui-radiobox"> 菜单</td>
 						</tr>
 						<tr>
-							<td class="kv-label" colspan="3">排序</td>
+						
+						<td class="kv-label">设置默认展开</td>
+							<td class="kv-content"  >
+							<input type="radio" name="current" value="0" <c:if test="${menu.current eq 0 }">checked="checked" </c:if>
+								class="easyui-radiobox">否 
+								<input type="radio" name="current" value="1" <c:if test="${menu.current eq 1 }">checked="checked" </c:if> class="easyui-radiobox">是
+							 </td>
+							 
+							<td class="kv-label" >排序</td>
 							<td class="kv-content"><input class="easyui-textbox"
 								type="text" name="sort" data-options="required:true"
 								value="${menu.sort}" style="height: 35px;" /></td>

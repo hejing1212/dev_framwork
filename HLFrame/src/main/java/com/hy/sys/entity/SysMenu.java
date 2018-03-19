@@ -34,6 +34,7 @@ public class SysMenu extends BaseSpuerEntity {
 	private String parent_ids; // 父编号列表',
 	private Integer level; // '权限字符串',
 	private Integer isshow; // '是否显示',0显示 1不显示
+	private Integer current;  //默认显示项，一个交菜单下只有一个
 	private Integer sort; // '排序',
 	private String menu_icon; // '图标',
 	private String remarks; // '摘要',
@@ -47,7 +48,7 @@ public class SysMenu extends BaseSpuerEntity {
 		
 	}
 	public SysMenu(String menuid, String name, Integer type, String url, String parent_id, String parent_ids,
-			Integer level, Integer isshow, Integer sort, String menu_icon, String remarks, SysUser create_by,
+			Integer level, Integer isshow, Integer sort, Integer current,String menu_icon, String remarks, SysUser create_by,
 			Date create_date,SysUser update_by,Date update_date,String del_flag) {
 		this.menuid=menuid;                            // '菜单ID',
 		this.name=name;                                // '资源路径',
@@ -58,6 +59,7 @@ public class SysMenu extends BaseSpuerEntity {
 		this.level=level;                     // '权限字符串',
 		this.isshow=isshow;                             // '是否显示',
 		this.sort=sort;                                 // '排序',
+		this.current=current;
 		this.menu_icon=menu_icon;                       // '图标',
 		this.remarks=remarks;                            // '摘要',
 		
@@ -194,6 +196,14 @@ public class SysMenu extends BaseSpuerEntity {
 	}
 	public void setStrFun(String strFun) {
 		this.strFun = strFun;
+	}
+	
+	@Column(name = "current", length = 11)	
+	public Integer getCurrent() {
+		return current;
+	}
+	public void setCurrent(Integer current) {
+		this.current = current;
 	}
 	
 	

@@ -85,8 +85,7 @@ public class MenuController extends AbstractBasicController {
 	public Map<String, Object> saveMenu(@ModelAttribute SysMenu entity, HttpServletResponse response,
 			HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		Date now = new Date();
-		 
+		Date now = new Date();		 
 		SysMenu menu = new SysMenu();
 		if (entity.getMenuid() == null) { // 未获取到menuid则为添加
 			menu = sysMenuService.findByName(entity.getName());
@@ -111,12 +110,13 @@ public class MenuController extends AbstractBasicController {
 		} else { // menuid不为空就为修改
 			menu = sysMenuService.get(entity.getMenuid());
 			
-			if (entity.getParent_id() == SysFunctions.TopMenuNO()) { // 顶级
+			if (StringTools.equals(entity.getParent_id(), SysFunctions.TopMenuNO())) { // 顶级
 				menu.setParentIds(SysFunctions.TopMenuNO());
 				menu.setLevel(1);
 			} else {
-				SysMenu parentMenu = sysMenuService.get(entity.getParent_id());
-				menu.setParentIds(parentMenu.getParentIds() + "," + entity.getParent_id());
+				
+				SysMenu parentMenu = sysMenuService.get(menu.getParent_id());
+				menu.setParentIds(parentMenu.getParentIds() + "," + menu.getParent_id());
 				menu.setLevel(parentMenu.getLevel() + 1);
 			}
 						
@@ -129,10 +129,16 @@ public class MenuController extends AbstractBasicController {
 			
 			menu.setSort(entity.getSort());
 			menu.setIsshow(entity.getIsshow());
+			menu.setCurrent(entity.getCurrent());
 			menu.setType(entity.getType());
 			menu.setRemarks(entity.getRemarks());
+			menu.setMenuid(entity.getMenuid());
 			try {
+				if(menu.getCurrent()==1) {
+					sysMenuService.updataMenuCurrent(menu.getParent_id());
+				}
 				sysMenuService.save(menu);
+				UserUtils.removeCache(UserUtils.CACHE_MENU_LIST); //清缓存
 				map.put("code", "1");
 				map.put("msg", "资源修改成功！");
 			} catch (DataAccessException e) {

@@ -10,7 +10,7 @@ public class TreeNode implements Serializable {
 	private String iconCls;
 	private String state;// open
 	private String menuid;
-	private String isCurrent;
+	private Integer isCurrent;
 	private String href;
 	private List<TreeNode> children;
 
@@ -66,12 +66,11 @@ public class TreeNode implements Serializable {
 		this.menuid = menuid;
 	}
 
-	public String getIsCurrent() {
-		  isCurrent=this.state;
+	public Integer getIsCurrent() {
 		return isCurrent;
 	}
 
-	public void setIsCurrent(String isCurrent) {
+	public void setIsCurrent(Integer isCurrent) {
 		this.isCurrent = isCurrent;
 	}
 

@@ -248,4 +248,15 @@ public class SysMenuServiceImpl extends BasicServiceImpl<SysMenu> implements Sys
 		}
 		return map;
 	}
+	
+	
+	/**
+	 * 设置同一个父菜单下的所有菜单只能有一个是默认展开的
+	 * @param parentId
+	 * @return
+	 */
+	@Override
+	public void updataMenuCurrent(String parentId) {
+		sysMenuDao.updataMenuCurrent(parentId);
+	}
 }

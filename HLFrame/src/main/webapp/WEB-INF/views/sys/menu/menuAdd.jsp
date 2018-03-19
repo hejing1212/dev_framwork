@@ -61,9 +61,16 @@
 								name="type" value="0" class="easyui-radiobox"> 菜单</td>
 						</tr>
 						<tr>
-						
-								 <td class="kv-label">排序</td>
-							<td class="kv-content" colspan="3" ><input class="easyui-textbox"
+						   <td class="kv-label">设置默认展开</td>
+							<td class="kv-content"  >
+							<input type="radio"
+								name="current" value="0" checked="checked"
+								class="easyui-radiobox">否 <input type="radio"
+								name="current" value="1" class="easyui-radiobox">是
+							 </td>
+							<td class="kv-label">排序</td>	 
+							<td class="kv-content"  >
+							<input class="easyui-textbox"
 								type="text" name="sort" data-options="required:true"  style="height:35px;"/></td>
 								
 						</tr>

@@ -120,4 +120,23 @@ public class SysMenuDaoImpl extends BasicDaoImpl<SysMenu> implements SysMenuDao 
 		return list;		
 	}
 
+	/**
+	 * 设置同一个父菜单下的所有菜单只能有一个是默认展开的
+	 * @param parentId
+	 * @return
+	 */
+	@Override
+	public void updataMenuCurrent(String parentId) {
+		StringBuffer sql = new StringBuffer();
+		List<Object> values = new ArrayList<Object>();
+		sql.append("UPDATE  SysMenu SET current=0");
+		sql.append(" WHERE 1=1 ");
+		if (parentId != "") {
+			sql.append(" AND (parent_id = ?)");
+			values.add(parentId);
+		}
+		sql.append(" ORDER BY create_date DESC");
+		this.update(sql.toString(), values.toArray());
+
+	}
 }
