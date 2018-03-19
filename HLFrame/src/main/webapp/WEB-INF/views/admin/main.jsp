@@ -10,6 +10,9 @@
 <link href="${basePath}/static/css/base.css" rel="stylesheet">
 <link href="${basePath}/static/css/platform.css" rel="stylesheet">
 <link rel="stylesheet" href="${basePath}/static/easyui/darkblue/easyui.css">
+<script type="text/javascript" src="${basePath}/static/easyui/jquery.min.js"></script>
+<script type="text/javascript">
+</script>
 </head> 
 <body>
     <div class="container">
@@ -81,9 +84,9 @@
          <div id="mm-tabcloseother">关闭其他</div> 
     </div>
 
-    <script type="text/javascript" src="${basePath}/static/easyui/jquery.min.js"></script>
+  
     <script type="text/javascript" src="${basePath}/static/easyui/jquery.easyui.min.js"></script>
-    <script type="text/javascript" src="${basePath}/static/js/menu.js"></script>
+     
     <script type="text/javascript" src="${basePath}/static/js/main.js"></script>
     <!--[if IE 7]>
       <script type="text/javascript">
@@ -96,26 +99,6 @@
 
     
     <script type="text/javascript">
-    
-    $(function(){  
-    	loadMenu();
-    }); 
-    
-    function loadMenu(){
-    	$.ajax({
-			url : "${basePath}/admin/getMenuList.html",
-			type : "get",
-			dataType : "json",
-			async : false,
-			//提交成功后回调的函数
-			success : function(data) {
-				if (data) {
-					var menudata=data; 
-				}
-			}
-		});
-    }
-    
     
     
     $(window).resize(function(){
@@ -156,7 +139,6 @@
       }
     })
 
- 
     </script>
 </body> 
 </html>

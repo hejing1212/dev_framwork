@@ -8,7 +8,7 @@ public class TreeNode implements Serializable {
 	private String id;
 	private String text;
 	private String iconCls;
-	private String state = "open";// open
+	private String state;// open
 	private String menuid;
 	private String isCurrent;
 	private String href;
@@ -67,6 +67,7 @@ public class TreeNode implements Serializable {
 	}
 
 	public String getIsCurrent() {
+		  isCurrent=this.state;
 		return isCurrent;
 	}
 

@@ -36,6 +36,7 @@ $.extend($.fn.tabs.methods, {
 var mainPlatform = {
 	init: function(){
 		this.bindEvent();
+		loadMenu();
 		this._createTopMenu();
 	},
 	bindEvent: function(){
@@ -140,8 +141,8 @@ var mainPlatform = {
 		for(var i = 0, len = SystemMenu.length; i < len; i++) {
 			menuStr += '<li class="pf-nav-item project" data-sort="'+ i +'" arrmenuid="'+SystemMenu[i].menuid+'" data-menu="system_menu_" + i>'+
                       '<a href="javascript:;">'+
-                          '<span class="iconfont">'+ SystemMenu[i].icon +'</span>'+
-                          '<span class="pf-nav-title">'+ SystemMenu[i].title +'</span>'+
+                          '<span class="iconfont">'+ SystemMenu[i].iconCls +'</span>'+
+                          '<span class="pf-nav-title">'+ SystemMenu[i].text +'</span>'+
                       '</a>'+
                   '</li>';
             // 渲染当前
@@ -156,7 +157,6 @@ var mainPlatform = {
 	},
 
 	_createSiderMenu: function(menu, index){
-		var basePath="/HLFrame";
 		$('.pf-sider').hide();
 		this._createPageContainer(index);
 		if($('.pf-sider[arrindex='+ index +']').size() > 0) {
@@ -165,13 +165,13 @@ var mainPlatform = {
 			return false;
 		};
 		var menuStr = '<h2 class="pf-model-name">'+
-                    '<span class="iconfont">'+ menu.icon+'</span>'+
-                    '<span class="pf-name">'+ menu.title +'</span>'+
+                    '<span class="iconfont">'+ menu.iconCls+'</span>'+
+                    '<span class="pf-name">'+ menu.text +'</span>'+
                     '<span class="toggle-icon"></span>'+
                 '</h2><ul class="sider-nav">';
 
-        for(var i = 0, len = menu.menu.length; i < len; i++){
-        	var m = menu.menu[i],
+        for(var i = 0, len = menu.children.length; i < len; i++){
+        	var m = menu.children[i],
         		mstr = '';
         	var str = '';
 
@@ -191,8 +191,8 @@ var mainPlatform = {
         	//str = m.isCurrent ? '<li class="current">' : '<li>';
 
            str += '<a href="javascript:;" class="pf-menu-title">'+
-                '<span class="iconfont sider-nav-icon">'+ m.icon +'</span>'+
-                '<span class="sider-nav-title">'+ m.title +'</span>'+
+                '<span class="iconfont sider-nav-icon">'+ m.iconCls +'</span>'+
+                '<span class="sider-nav-title">'+ m.text +'</span>'+
                 '<i class="iconfont">&#xe642;</i>'+
             '</a>'+
             '<ul class="sider-nav-s">';
@@ -200,15 +200,15 @@ var mainPlatform = {
             for(var j = 0, jlen = m.children.length; j < jlen; j++){
             	var child = m.children[j];
             	if(child.isCurrent){
-            		childStr += '<li class="active" text="'+ child.title +'" arrmenuid="'+child.menuid+'" data-href="' +basePath+ child.href + '"><a href="#">'+ child.title +'</a></li>';
+            		childStr += '<li class="active" text="'+ child.text +'" arrmenuid="'+child.menuid+'" data-href="' +basePath+ child.href + '"><a href="#">'+ child.text +'</a></li>';
             		$('.easyui-tabs1[arrindex='+ index +']').tabs('add',{
-						title: child.title,
+						title: child.text,
 						id:child.menuid,
 						content: '<iframe class="page-iframe" src="'+basePath+ child.href +'" frameborder="no" border="no" height="100%" width="100%" scrolling="auto"></iframe>',
 						closable: true
 					});
             	}else {
-            		childStr += '<li text="'+ child.title +'" arrmenuid="'+child.menuid+'" data-href="' +basePath+ child.href + '"><a href="#">'+ child.title +'</a></li>';
+            		childStr += '<li text="'+ child.text +'" arrmenuid="'+child.menuid+'" data-href="' +basePath+ child.href + '"><a href="#">'+ child.text +'</a></li>';
             	}
             }
             mstr = str + childStr + '</ul></li>';
@@ -291,4 +291,21 @@ var mainPlatform = {
 
 };
 
+var SystemMenu="";
+var basePath="/HLFrame";
+
+function loadMenu(){
+	$.ajax({
+		url : basePath+"/admin/getMenuList.html",
+		type : "get",
+		dataType : "json",
+		async : false,
+		//提交成功后回调的函数
+		success : function(data) {
+			if (data) {
+				  SystemMenu=data; 
+			}
+		}
+	});
+}
 mainPlatform.init();
