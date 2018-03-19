@@ -1,5 +1,8 @@
 package com.hy.sys.dao.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.stereotype.Repository;
 
 import com.hy.sys.core.dao.impl.BasicDaoImpl;
@@ -20,8 +23,11 @@ public class SysRoleMenuDaoImpl extends BasicDaoImpl<SysRoleMenu> implements Sys
 	@Override
 	public void deleteRoleMenu(String roleId) {
 		if (roleId != null && roleId != "") {
-			String sql = " DELETE FROM sys_role_menu WHERE role_id = '" + roleId + "' ";
-			this.getJdbcTemplate().execute(sql.toString());
+			String sql = " DELETE FROM sys_role_menu WHERE role_id =:role_id";
+			Map<String, Object> paramMap = new HashMap<String, Object>();
+			paramMap.put("role_id", roleId);
+			this.getNameJdbcTemplate().update(sql, paramMap);
+
 		}
 		SysUser user = UserUtils.getUser();
 		LogUtil.info("删除角色对应的菜单权限：角色ID," + roleId + "删除人：" + user.getUserid());

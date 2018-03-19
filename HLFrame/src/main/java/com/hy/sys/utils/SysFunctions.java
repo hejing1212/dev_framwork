@@ -8,9 +8,9 @@ import javax.servlet.http.Cookie;
  * All rights Reserved, Designed By www.jeeweb.cn
  * 
  * @title: SysFunctions.java
- * @package cn.jeeweb.modules.sys.tags
+ * @package  
  * @description: 提供一些公用的函数
- * @author: 王存见
+ * @author:  
  * @date: 2017年3月28日 下午10:04:07
  * @version V1.0
  * @copyright: 2017 www.jeeweb.cn Inc. All rights reserved.
@@ -30,6 +30,9 @@ public class SysFunctions {
 		return adminUrlPrefix;
 	}
 
+	public static String TopMenuNO() {
+		return "mogami2018hejingdev";
+	}
 	/**
 	 * 获得后台地址
 	 * 

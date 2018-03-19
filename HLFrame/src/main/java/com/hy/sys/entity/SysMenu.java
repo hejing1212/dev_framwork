@@ -32,7 +32,7 @@ public class SysMenu extends BaseSpuerEntity {
 	private String url; // 点击后前往的地址',
 	private String parent_id; // '父编号',
 	private String parent_ids; // 父编号列表',
-	private String permission; // '权限字符串',
+	private Integer level; // '权限字符串',
 	private Integer isshow; // '是否显示',0显示 1不显示
 	private Integer sort; // '排序',
 	private String menu_icon; // '图标',
@@ -47,7 +47,7 @@ public class SysMenu extends BaseSpuerEntity {
 		
 	}
 	public SysMenu(String menuid, String name, Integer type, String url, String parent_id, String parent_ids,
-			String permission, Integer isshow, Integer sort, String menu_icon, String remarks, SysUser create_by,
+			Integer level, Integer isshow, Integer sort, String menu_icon, String remarks, SysUser create_by,
 			Date create_date,SysUser update_by,Date update_date,String del_flag) {
 		this.menuid=menuid;                            // '菜单ID',
 		this.name=name;                                // '资源路径',
@@ -55,7 +55,7 @@ public class SysMenu extends BaseSpuerEntity {
 		this.url=url;                                  // 点击后前往的地址',
 		this.parent_id=parent_id;                       // '父编号',
 		this.parent_ids=parent_ids;                     // 父编号列表',
-		this.permission=permission;                     // '权限字符串',
+		this.level=level;                     // '权限字符串',
 		this.isshow=isshow;                             // '是否显示',
 		this.sort=sort;                                 // '排序',
 		this.menu_icon=menu_icon;                       // '图标',
@@ -121,13 +121,13 @@ public class SysMenu extends BaseSpuerEntity {
 		this.parent_ids = parent_ids;
 	}
 
-	@Column(name = "permission", length = 100)
-	public String getPermission() {
-		return permission;
+	@Column(name = "level", length = 10)
+	public Integer getLevel() {
+		return level;
 	}
 
-	public void setPermission(String permission) {
-		this.permission = permission;
+	public void setLevel(Integer level) {
+		this.level = level;
 	}
 
 	@Column(name = "isshow", length = 64)

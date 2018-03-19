@@ -15,6 +15,7 @@ import com.hy.sys.utils.Exceptions;
 import com.hy.sys.utils.IpUtils;
 import com.hy.sys.utils.SpringContextHolder;
 import com.hy.sys.utils.StringUtils;
+import com.hy.sys.entity.SysFunction;
 import com.hy.sys.entity.SysLog;
 import com.hy.sys.entity.SysMenu;
 import com.hy.sys.entity.SysRole;
@@ -139,11 +140,16 @@ public class LogUtils {
 				// 设置菜单名称路径
 				if (StringUtils.isNotBlank(menu.getUrl())) {
 					menuMap.put(menu.getUrl(), namePath);
-				} else if (StringUtils.isNotBlank(menu.getPermission())) {
+				}else if(menu.getFunction()!=null){
+					for (SysFunction fun:menu.getFunction()) {
+						menuMap.put(fun.getPermission(), namePath);
+					}
+				}
+				/*} else if (StringUtils.isNotBlank(menu.getPermission())) {
 					for (String p : StringUtils.split(menu.getPermission())) {
 						menuMap.put(p, namePath);
 					}
-				}
+				}*/
 
 			}
 			CacheUtils.put(CACHE_MENU_NAME_PATH_MAP, menuMap);

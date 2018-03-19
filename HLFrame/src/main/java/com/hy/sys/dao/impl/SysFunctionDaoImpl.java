@@ -35,7 +35,7 @@ public class SysFunctionDaoImpl extends BasicDaoImpl<SysFunction> implements Sys
 		String hqlCount="SELECT count(*) FROM SysFunction WHERE menu_id = ?";
 		
 		if (menuId != "") {
-			sql.append(" AND (menuid = ?)");
+			sql.append(" AND (menu_id = ?)");
 			values.add(menuId);
 		}
 		sql.append(" ORDER BY create_date DESC");

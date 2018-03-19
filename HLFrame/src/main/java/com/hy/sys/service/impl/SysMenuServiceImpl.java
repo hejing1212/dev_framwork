@@ -19,6 +19,7 @@ import com.hy.sys.entity.TreeNode;
 import com.hy.sys.service.SysMenuService;
 import com.hy.sys.service.SysRoleMenuService;
 import com.hy.sys.utils.PageInfo;
+import com.hy.sys.utils.SysFunctions;
 import com.hy.sys.utils.logs.DeleteLog;
 import com.hy.sys.utils.logs.SaveLog;
 import com.hy.sys.utils.logs.SysLogOperationType;
@@ -34,7 +35,7 @@ public class SysMenuServiceImpl extends BasicServiceImpl<SysMenu> implements Sys
 
 	@Autowired
 	private SysRoleMenuService sysRoleMenuService;
-	
+
 	/*
 	 * @see 查询菜单是否添加过，避免重复添加
 	 */
@@ -46,7 +47,7 @@ public class SysMenuServiceImpl extends BasicServiceImpl<SysMenu> implements Sys
 	@Override
 	protected BasicDao<SysMenu> getBasicDao() {
 		// TODO Auto-generated method stub
-		return  sysMenuDao;
+		return sysMenuDao;
 	}
 
 	@Override
@@ -76,9 +77,9 @@ public class SysMenuServiceImpl extends BasicServiceImpl<SysMenu> implements Sys
 		ArrayList<TreeNode> retlist = new ArrayList<TreeNode>();
 		if (list.size() > 0) {
 			TreeNode tree = new TreeNode();
-			tree.setId("0");
+			tree.setId(SysFunctions.TopMenuNO());
 			tree.setText("顶级菜单");
-			ArrayList<TreeNode> arlist = CreateMenuTree(list, "0", retlist);
+			ArrayList<TreeNode> arlist = CreateMenuTree(list, SysFunctions.TopMenuNO(), retlist);
 			if (arlist.size() > 0) {
 				tree.setChildren(arlist);
 			}
@@ -121,8 +122,9 @@ public class SysMenuServiceImpl extends BasicServiceImpl<SysMenu> implements Sys
 	public ArrayList<SysMenu> getMenuList() {
 		List<SysMenu> list = getBasicDao().findAll(SysMenu.class);
 		ArrayList<SysMenu> retlist = new ArrayList<SysMenu>();
+
 		if (list.size() > 0) {
-			ArrayList<SysMenu> arlist = CreateMenuList(list, "0", retlist);
+			ArrayList<SysMenu> arlist = CreateMenuList(list, SysFunctions.TopMenuNO(), retlist);
 			return arlist;
 		} else {
 			return null;
@@ -185,28 +187,28 @@ public class SysMenuServiceImpl extends BasicServiceImpl<SysMenu> implements Sys
 		for (int i = 0; i < list.size(); i++) {
 			StringBuffer text = new StringBuffer();
 			SysMenu menu = list.get(i);
-			int v=0;			 
+			int v = 0;
 			if (menu.getFunction() != null) {
-				for (SysFunction fun:menu.getFunction()) {
-					
+				for (SysFunction fun : menu.getFunction()) {
+
 					if (v + 1 == menu.getFunction().size()) {
-						text.append(fun.getMenuId()+"-"+fun.getFunid() + ":" + fun.getName());
+						text.append(fun.getMenu_id() + "-" + fun.getFunid() + ":" + fun.getName());
 					} else {
-						text.append(fun.getMenuId()+"-"+fun.getFunid() + ":" + fun.getName() + ",");
+						text.append(fun.getMenu_id() + "-" + fun.getFunid() + ":" + fun.getName() + ",");
 					}
-					v=v+1;
+					v = v + 1;
 				}
 			}
 			menu.setStrFun(text.toString());
 			list.set(i, menu);
 		}
-		
+
 		ArrayList<SysMenu> retlist = new ArrayList<SysMenu>();
-		ArrayList<SysMenu> arlist = CreateMenuList(list, "0", retlist);
-		
+		ArrayList<SysMenu> arlist = CreateMenuList(list, SysFunctions.TopMenuNO(), retlist);
+
 		return arlist;
 	}
-	
+
 	/**
 	 * 保存用户菜单权限
 	 * 
@@ -219,22 +221,27 @@ public class SysMenuServiceImpl extends BasicServiceImpl<SysMenu> implements Sys
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
 			if (roleId != "" && auths != "") {
-				sysRoleMenuService.deleteRoleMenu(roleId); //更新前，册掉之前的
+				sysRoleMenuService.deleteRoleMenu(roleId); // 更新前，册掉之前的
+				List<String> list = new ArrayList<String>();
 				String[] menuId_funId = auths.split(",");
 				for (int i = 0; i < menuId_funId.length; i++) {
-					SysRoleMenu entity=new SysRoleMenu();
+
+					SysRoleMenu entity = new SysRoleMenu();
 					String menuid = menuId_funId[i].split("-")[0];
-					entity.setMenu_id(menuid);
-					entity.setRole_id(roleId);
-					sysRoleMenuService.save(entity);
+					if (!list.contains(menuid)) {
+						entity.setMenu_id(menuid);
+						entity.setRole_id(roleId);
+						sysRoleMenuService.save(entity);
+						list.add(menuid);
+					}
 				}
 				map.put("code", 1);
 				map.put("msg", "设置成功！");
-			}else {
+			} else {
 				map.put("code", 0);
 				map.put("msg", "设置失败！");
 			}
-			
+
 		} catch (DataAccessException e) {
 			map.put("code", 0);
 			map.put("msg", e.toString());

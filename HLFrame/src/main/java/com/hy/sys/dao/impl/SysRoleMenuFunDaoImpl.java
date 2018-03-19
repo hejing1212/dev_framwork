@@ -51,19 +51,16 @@ public class SysRoleMenuFunDaoImpl extends BasicDaoImpl<SysRoleMenuFun> implemen
 	 */
 	@Override
 	public void deleteRoleAuthFun(String roleId) {
-		String sql = "DELETE FROM sys_role_menu_fun WHERE role_id = :roleId";
+		if (roleId != null && roleId != "") {
+			String sql = "DELETE FROM sys_role_menu_fun WHERE role_id = :roleId";
 
-		Map<String, Object> paramMap = new HashMap<String, Object>();
-		paramMap.put("roleId", roleId);
-		this.getNameJdbcTemplate().update(sql, paramMap);
+			Map<String, Object> paramMap = new HashMap<String, Object>();
+			paramMap.put("roleId", roleId);
+			this.getNameJdbcTemplate().update(sql, paramMap);
+		}
 		SysUser user = UserUtils.getUser();
-
 		LogUtil.info("角色权限被重置，角色ID：," + roleId + "操作人：" + user.getUserid());
 
 	}
-	
-	
-	
-	
 
 }

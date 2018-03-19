@@ -50,8 +50,8 @@
 								</td>
 						</tr>
 						<tr>
-							<td class="kv-label">排序</td>
-							<td class="kv-content" colspan="3"><input
+							<td class="kv-label" colspan="3">排序</td>
+							<td class="kv-content" ><input
 								class="easyui-textbox" type="text" value="${sysFunction.sort}" name="sort"
 								data-options="required:true" style="height: 35px;" /></td>
 						</tr>

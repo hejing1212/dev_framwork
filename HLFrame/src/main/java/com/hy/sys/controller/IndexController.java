@@ -3,9 +3,10 @@
  */
 package com.hy.sys.controller;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,9 +21,10 @@ import com.alibaba.fastjson.JSON;
 import com.hy.sys.core.controller.AbstractBasicController;
 import com.hy.sys.entity.SysMenu;
 import com.hy.sys.entity.SysUser;
+import com.hy.sys.entity.TreeNode;
 import com.hy.sys.service.SysUserService;
 import com.hy.sys.shiro.UserUtils;
-import com.hy.sys.utils.ConvertJson;
+import com.hy.sys.utils.SysFunctions;
 
 /**
  * @author hlin
@@ -65,9 +67,40 @@ public class IndexController extends AbstractBasicController{
 	public List<SysMenu> getMenuList(HttpServletResponse response,
 			HttpServletRequest request) {
 		List<SysMenu> list=UserUtils.getMenuList();
-		String jsonStr = JSON.toJSONString(list);
+		ArrayList<TreeNode> retlist = new ArrayList<TreeNode>();
+		ArrayList<TreeNode> arlist = CreateMenuFormat(list, SysFunctions.TopMenuNO(), retlist);
+		String jsonStr = JSON.toJSONString(arlist);
 		writeResult(jsonStr, response);
 		return null;
+	}
+	
+	/**
+	 * 根据菜单的子父级关系生成上下级关系的数据
+	 * 
+	 * @param menu
+	 * @return
+	 */
+	public ArrayList<TreeNode> CreateMenuFormat(List<SysMenu> list, String menuid, ArrayList<TreeNode> li) {
+
+		for (int i = 0; i < list.size(); i++) {
+			SysMenu menu = list.get(i);
+			if (menu.getParent_id().equals(menuid)) {
+				TreeNode tree = new TreeNode();
+				tree.setId(menu.getMenuid());
+				tree.setText(menu.getName());
+				tree.setHref(menu.getUrl());
+				tree.setIconCls(menu.getMenu_icon());
+				tree.setMenuid(menu.getMenuid());
+				
+				ArrayList<TreeNode> retli = new ArrayList<TreeNode>();
+				ArrayList<TreeNode> childenList = CreateMenuFormat(list, menu.getMenuid(), retli);
+				if (childenList.size() > 0) {
+					tree.setChildren(childenList);
+				}
+				li.add(tree);
+			}
+		}
+		return li;
 	}
 	
 }

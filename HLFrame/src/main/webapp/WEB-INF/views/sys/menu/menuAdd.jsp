@@ -39,25 +39,15 @@
 						</tr>
 						 
 						<tr>
-							<td class="kv-label">权限字符</td>
-							<td class="kv-content"><input class="easyui-textbox"
-								type="text" name="permission" data-options="required:true"  style="height:35px;"/></td>
-								
 								<td class="kv-label">地址</td>
 							<td class="kv-content"><input class="easyui-textbox"
 								type="text" name="url" data-options="required:true"  style="height:35px;"/></td>
-						 
-						</tr>
-						<tr>
-						<td class="kv-label">图标</td>
+						 <td class="kv-label">图标</td>
 							<td class="kv-content"> 
 							<input class="easyui-filebox" name="file1" data-options="prompt:'请选择文件...', buttonText:' 选 择 '"   style="width:80%;height:35px;">
 							</td>
-								 <td class="kv-label">排序</td>
-							<td class="kv-content"  ><input class="easyui-textbox"
-								type="text" name="sort" data-options="required:true"  style="height:35px;"/></td>
-								
 						</tr>
+						
 						<tr>
 						<td class="kv-label">就否显示</td>
 							<td class="kv-content"  ><input type="radio"
@@ -69,6 +59,13 @@
 								name="type" value="1" checked="checked"
 								class="easyui-radiobox"> 模块 <input type="radio"
 								name="type" value="0" class="easyui-radiobox"> 菜单</td>
+						</tr>
+						<tr>
+						
+								 <td class="kv-label">排序</td>
+							<td class="kv-content" colspan="3" ><input class="easyui-textbox"
+								type="text" name="sort" data-options="required:true"  style="height:35px;"/></td>
+								
 						</tr>
 						 <tr>
 							<td class="kv-label">摘要</td>

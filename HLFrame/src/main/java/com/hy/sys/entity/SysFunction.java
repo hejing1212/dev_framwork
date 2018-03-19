@@ -39,8 +39,17 @@ public class SysFunction extends BaseSpuerEntity{
 		
 	}
 	
+    public SysFunction(String funid,String fun_action,String name,String menu_id,String permission,Integer sort,String menu_icon,String remarks) {
+		this.funid=funid;
+		this.fun_action=fun_action;
+		this.name=name;
+		this.menu_id=menu_id;
+		this.permission=permission;
+		this.sort=sort;
+		this.menu_icon=menu_icon;
+		this.remarks=remarks;
+	}
 	
-
 	@Id
 	@GeneratedValue(generator = "paymentableGenerator")
 	@GenericGenerator(name = "paymentableGenerator", strategy = "uuid")
@@ -74,12 +83,12 @@ public class SysFunction extends BaseSpuerEntity{
 	}
 
 	
-	@Column(name = "menu_id", length = 32)
-	public String getMenuId() {
+	@Column(name = "menu_id", length = 64)
+	public String getMenu_id() {
 		return menu_id;
 	}
 
-	public void setMenuId(String menu_id) {
+	public void setMenu_id(String menu_id) {
 		this.menu_id = menu_id;
 	}
 
@@ -127,6 +136,6 @@ public class SysFunction extends BaseSpuerEntity{
 class FunComparator implements Comparator<SysFunction>{  
     @Override  
     public int compare(SysFunction funa, SysFunction funb) {      
-        return funa.getSort()-funb.getSort();  //o1.score - o2.score;  
+        return funa.getSort()-funb.getSort();    
     }      
 }  

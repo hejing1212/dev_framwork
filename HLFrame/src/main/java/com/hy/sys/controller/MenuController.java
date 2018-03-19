@@ -26,10 +26,10 @@ import com.hy.sys.entity.TreeNode;
 import com.hy.sys.service.SysFunctionService;
 import com.hy.sys.service.SysMenuService;
 import com.hy.sys.shiro.UserUtils;
-import com.hy.sys.utils.ConvertJson;
 import com.hy.sys.utils.IntegerTools;
 import com.hy.sys.utils.PageInfo;
 import com.hy.sys.utils.StringTools;
+import com.hy.sys.utils.SysFunctions;
 
 /***
  * 菜单管理类
@@ -86,42 +86,60 @@ public class MenuController extends AbstractBasicController {
 			HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Date now = new Date();
-		SysMenu menu=new SysMenu();
-		if (entity.getMenuid() == null) {  //未获取到menuid则为添加
-			 menu = sysMenuService.findByName(entity.getName());
+		 
+		SysMenu menu = new SysMenu();
+		if (entity.getMenuid() == null) { // 未获取到menuid则为添加
+			menu = sysMenuService.findByName(entity.getName());
 			if (menu == null) {
-				
 				entity.setCreate_date(now);
 				entity.setCreate_by(UserUtils.getUser().getUserid());
+				if (entity.getParent_id() == SysFunctions.TopMenuNO()) { // 顶级
+					entity.setParentIds(SysFunctions.TopMenuNO());
+					entity.setLevel(1);
+				} else {
+					SysMenu parentMenu = sysMenuService.get(entity.getParent_id());
+					entity.setParentIds(parentMenu.getParentIds() + "," + entity.getParent_id());
+					entity.setLevel(parentMenu.getLevel() + 1);
+				}
 				sysMenuService.save(entity);
-				map.put("code", "1");
+				map.put("code", SysFunctions.TopMenuNO());
 				map.put("msg", "资源添加成功！");
 			} else {
-				map.put("code", "0");
+				map.put("code", SysFunctions.TopMenuNO());
 				map.put("msg", "资源名称已经存在，添加失败！");
 			}
-		} else {  //menuid不为空就为修改
-		    menu=sysMenuService.get(entity.getMenuid());
+		} else { // menuid不为空就为修改
+			menu = sysMenuService.get(entity.getMenuid());
+			
+			if (entity.getParent_id() == SysFunctions.TopMenuNO()) { // 顶级
+				menu.setParentIds(SysFunctions.TopMenuNO());
+				menu.setLevel(1);
+			} else {
+				SysMenu parentMenu = sysMenuService.get(entity.getParent_id());
+				menu.setParentIds(parentMenu.getParentIds() + "," + entity.getParent_id());
+				menu.setLevel(parentMenu.getLevel() + 1);
+			}
+						
 			menu.setUpdate_by(UserUtils.getUser().getUserid());
 			menu.setUpdate_date(now);
 			menu.setParent_id(entity.getParent_id());
 			menu.setMenu_icon(entity.getMenu_icon());
 			menu.setName(entity.getName());
 			menu.setUrl(entity.getUrl());
-			menu.setPermission(entity.getPermission());
+			
 			menu.setSort(entity.getSort());
 			menu.setIsshow(entity.getIsshow());
 			menu.setType(entity.getType());
-			menu.setRemarks(entity.getRemarks());			
+			menu.setRemarks(entity.getRemarks());
 			try {
 				sysMenuService.save(menu);
 				map.put("code", "1");
 				map.put("msg", "资源修改成功！");
-			}catch(DataAccessException e) {
+			} catch (DataAccessException e) {
 				map.put("code", "0");
 				map.put("msg", e.toString());
 			}
-			 
+
 		}
 		return map;
 	}
@@ -166,6 +184,7 @@ public class MenuController extends AbstractBasicController {
 
 	/**
 	 * 删除菜单
+	 * 
 	 * @param menuid
 	 * @param response
 	 * @param request
@@ -177,28 +196,28 @@ public class MenuController extends AbstractBasicController {
 			HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		if (StringTools.isNotBlank(menuId)) {
-			if(sysMenuService.getChildCountByMenuid(menuId)>0 || sysFunService.getMenuCountByMenuid(menuId)>0) {
+			if (sysMenuService.getChildCountByMenuid(menuId) > 0 || sysFunService.getMenuCountByMenuid(menuId) > 0) {
 				map.put("code", "0");
 				map.put("msg", "删除失败，该菜单下存在子菜单或功能");
-			}else {
+			} else {
 				try {
 					sysMenuService.deleteMenu(menuId);
 					map.put("code", "1");
 					map.put("msg", "删除成功");
-				}catch(DataAccessException e) {
+				} catch (DataAccessException e) {
 					map.put("code", "0");
 					map.put("msg", e.toString());
 				}
-				
+
 			}
-			
+
 		} else {
 			map.put("code", "0");
 			map.put("msg", "参数错误");
 		}
 		return map;
 	}
-	
+
 	/**
 	 * 查询菜单对应的功能
 	 * 
@@ -265,32 +284,32 @@ public class MenuController extends AbstractBasicController {
 	 */
 	@ResponseBody
 	@RequestMapping("/editFunction")
-	public Map<String, Object> editFunction(@ModelAttribute SysFunction entity, HttpServletResponse response,
+	public Map<String, Object> editFunction(@ModelAttribute("funEntity") SysFunction funEntity, HttpServletResponse response,
 			HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		Date now = new Date();
-		if (entity.getFunid() == null) { // 添加
-			entity.setCreate_date(now);
-			entity.setCreate_by(UserUtils.getUser().getUserid());
+		if (funEntity.getFunid() == null) { // 添加
+			funEntity.setCreate_date(now);
+			funEntity.setCreate_by(UserUtils.getUser().getUserid());
 			map.put("code", "1");
 			map.put("msg", "添加成功！");
 		} else {// 修改
-			SysFunction fun = sysFunService.get(entity.getFunid());
+			SysFunction fun = sysFunService.get(funEntity.getFunid());
 			fun.setUpdate_by(UserUtils.getUser().getUserid());
 			fun.setCreate_date(now);
-			fun.setName(entity.getName());
-			fun.setFun_action(entity.getFun_action());
-			fun.setMenu_icon(entity.getMenu_icon());
-			fun.setPermission(entity.getPermission());
-			fun.setSort(entity.getSort());
-			fun.setRemarks(entity.getRemarks());
-
+			fun.setName(funEntity.getName());
+			fun.setFun_action(funEntity.getFun_action());
+			fun.setMenu_icon(funEntity.getMenu_icon());
+			fun.setPermission(funEntity.getPermission());
+			fun.setSort(funEntity.getSort());
+			fun.setRemarks(funEntity.getRemarks());
+			funEntity=fun;
 			map.put("code", "1");
 			map.put("msg", "修改成功！");
 		}
 
 		try {
-			sysFunService.save(entity); // 数据操作
+			sysFunService.save(funEntity); // 数据操作
 		} catch (DataAccessException e) {
 			map.put("code", "0");
 			map.put("msg", e.toString());
@@ -298,9 +317,6 @@ public class MenuController extends AbstractBasicController {
 		return map;
 	}
 
-	
-	
-	
 	/***
 	 * 批量删除用户权限
 	 * 

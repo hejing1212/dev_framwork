@@ -9,6 +9,9 @@ public class TreeNode implements Serializable {
 	private String text;
 	private String iconCls;
 	private String state = "open";// open
+	private String menuid;
+	private String isCurrent;
+	private String href;
 	private List<TreeNode> children;
 
 	public TreeNode() {
@@ -54,4 +57,30 @@ public class TreeNode implements Serializable {
 	public void setChildren(List<TreeNode> children) {
 		this.children = children;
 	}
+
+	public String getMenuid() {
+		return menuid;
+	}
+
+	public void setMenuid(String menuid) {
+		this.menuid = menuid;
+	}
+
+	public String getIsCurrent() {
+		return isCurrent;
+	}
+
+	public void setIsCurrent(String isCurrent) {
+		this.isCurrent = isCurrent;
+	}
+
+	public String getHref() {
+		return href;
+	}
+
+	public void setHref(String href) {
+		this.href = href;
+	}
+	
+	
 }

@@ -17,18 +17,19 @@
 </head>
 <body>
 	<div class="container">
-		<form id="form_add_fun" method="post">
+		<form id="form_add_fun" method="post" >
 			<div class="content">
 				<div class="column">
 					<span class="current">功能信息</span>
-					<input type="hidden" name="menuid" value="${menuid}"> 
+					
 				</div>
 				<table class="kv-table">
 					<tbody>
 						<tr>
 							<td class="kv-label">功能名称</td>
-							<td class="kv-content"><input class="easyui-textbox"
-								type="text" name="name" data-options="required:true,missingMessage:'请输入功能名称！'"
+							<td class="kv-content">
+							<input type="hidden" name="menu_id" value="${menuid}" > 
+							<input class="easyui-textbox" type="text" name="name" data-options="required:true,missingMessage:'请输入功能名称！'"
 								style="height: 35px;" /></td>
 
 							<td class="kv-label">方法名称</td>
