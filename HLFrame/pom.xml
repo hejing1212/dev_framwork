@@ -18,6 +18,7 @@
 		
 		<guava.version>17.0</guava.version>		
 		<commons-lang3.version>3.3.2</commons-lang3.version>
+		<fileupload.verison>1.2</fileupload.verison>
 		
 	</properties>
 
@@ -224,6 +225,7 @@
 			<artifactId>jcaptcha-api</artifactId>
 			<version>${jcaptcha.version}</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>com.octo.captcha</groupId>
 			<artifactId>jcaptcha</artifactId>
@@ -240,6 +242,13 @@
 			<artifactId>commons-dbcp</artifactId>
 			<version>1.4</version>
 		</dependency>
+		
+		<!-- 上传文件插件 -->
+		<dependency>
+		    <groupId>commons-fileupload</groupId>
+		    <artifactId>commons-fileupload</artifactId>
+		    <version>${fileupload.verison}</version>
+        </dependency>
 		
 	</dependencies>
 

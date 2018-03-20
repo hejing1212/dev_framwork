@@ -45,8 +45,8 @@ url: '${basePath}/sys/menu/getMenuList.html',method: 'get',rownumbers: true,idFi
 					<tr>
 						<th data-options="field:'name'" width="150" align="center">名称</th>
 						<th data-options="field:'url'" width="220" align="center">菜单路径</th>
-						
 						<th data-options="field:'isshow'" width="80" align="center">是否显示</th>
+						<th data-options="field:'current'" width="80" align="center">默认展开</th>
 						<th data-options="field:'type'" width="80" align="center">资源类型</th>
 						<th data-options="field:'create_date'" width="150" align="center">添加日期</th>
 						<th data-options="field:'remarks'" width="150" align="center">摘要</th>

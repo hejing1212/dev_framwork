@@ -8,7 +8,11 @@ import com.hy.sys.core.dao.BasicDao;
 import com.hy.sys.entity.SysMenu;
 
 
-
+/**
+ * 
+ * @author hejing
+ *
+ */
 public interface SysMenuDao extends BasicDao<SysMenu> {
 
 	/**

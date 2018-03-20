@@ -17,7 +17,7 @@
 </head>
 <body>
 	<div class="container">
-		<form id="save_user_form" method="post">
+		<form id="save_user_form" method="post" enctype="multipart/form-data">
 			<div class="content">
 				<div class="column">
 					<span class="current">基础信息</span>
@@ -52,8 +52,14 @@
 								data-options="required:true,validType:'email',missingMessage:'请输入邮箱！'" /></td>
 						</tr>
 						<tr>
+						
+						<td class="kv-label">邮箱</td>
+							<td class="kv-content"><input class="easyui-textbox"
+								type="file" name="portrait" value="${user.portrait}"
+								data-options="required:true,missingMessage:'请输入邮箱！'" /></td>
+								
 							<td class="kv-label">状态</td>
-							<td class="kv-content" colspan="3"><input type="radio"
+							<td class="kv-content"><input type="radio"
 								name="status" value="1" checked="checked"
 								class="easyui-radiobox"> 正常 <input type="radio"
 								name="status" value="0" class="easyui-radiobox"> 锁定</td>

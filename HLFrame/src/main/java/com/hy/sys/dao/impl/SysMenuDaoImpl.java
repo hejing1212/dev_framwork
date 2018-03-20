@@ -1,8 +1,11 @@
 package com.hy.sys.dao.impl;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.stereotype.Repository;
 
 import com.hy.sys.core.dao.impl.BasicDaoImpl;
@@ -10,6 +13,7 @@ import com.hy.sys.dao.SysMenuDao;
 import com.hy.sys.entity.SysMenu;
 import com.hy.sys.entity.SysUser;
 import com.hy.sys.shiro.UserUtils;
+import com.hy.sys.utils.StringTools;
 import com.hy.sys.utils.logs.LogUtil;
 
 @Repository("sysMenuDao")
@@ -129,14 +133,25 @@ public class SysMenuDaoImpl extends BasicDaoImpl<SysMenu> implements SysMenuDao 
 	public void updataMenuCurrent(String parentId) {
 		StringBuffer sql = new StringBuffer();
 		List<Object> values = new ArrayList<Object>();
-		sql.append("UPDATE  SysMenu SET current=0");
+		sql.append("UPDATE  sys_menu SET current=0");
 		sql.append(" WHERE 1=1 ");
-		if (parentId != "") {
+		if (parentId != ""&&!StringTools.isEmpty(parentId)) {
 			sql.append(" AND (parent_id = ?)");
 			values.add(parentId);
+			this.getJdbcTemplate().batchUpdate(sql.toString(), new BatchPreparedStatementSetter() {
+				@Override
+				public void setValues(PreparedStatement ps, int i) throws SQLException {
+					ps.setString(1, parentId);
+				}
+
+				@Override
+				public int getBatchSize() {
+					return 1;
+				}
+				
+			});
 		}
-		sql.append(" ORDER BY create_date DESC");
-		this.update(sql.toString(), values.toArray());
+		
 
 	}
 }

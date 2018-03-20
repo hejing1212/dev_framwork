@@ -42,9 +42,11 @@
 								<td class="kv-label">地址</td>
 							<td class="kv-content"><input class="easyui-textbox"
 								type="text" name="url" data-options="required:true"  style="height:35px;"/></td>
-						 <td class="kv-label">图标</td>
+						 <td class="kv-label">图标样式</td>
 							<td class="kv-content"> 
-							<input class="easyui-filebox" name="file1" data-options="prompt:'请选择文件...', buttonText:' 选 择 '"   style="width:80%;height:35px;">
+							<input class="easyui-textbox"
+								type="text" name="menu_icon" data-options="required:true,missingMessage:'请输入图标样式名称！'"
+								value="${menu.menu_icon}" style="height: 35px;" />
 							</td>
 						</tr>
 						

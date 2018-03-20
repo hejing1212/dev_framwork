@@ -101,10 +101,10 @@ public class MenuController extends AbstractBasicController {
 					entity.setLevel(parentMenu.getLevel() + 1);
 				}
 				sysMenuService.save(entity);
-				map.put("code", SysFunctions.TopMenuNO());
+				map.put("code","1");
 				map.put("msg", "资源添加成功！");
 			} else {
-				map.put("code", SysFunctions.TopMenuNO());
+				map.put("code", "0");
 				map.put("msg", "资源名称已经存在，添加失败！");
 			}
 		} else { // menuid不为空就为修改
@@ -132,7 +132,7 @@ public class MenuController extends AbstractBasicController {
 			menu.setCurrent(entity.getCurrent());
 			menu.setType(entity.getType());
 			menu.setRemarks(entity.getRemarks());
-			menu.setMenuid(entity.getMenuid());
+
 			try {
 				if(menu.getCurrent()==1) {
 					sysMenuService.updataMenuCurrent(menu.getParent_id());

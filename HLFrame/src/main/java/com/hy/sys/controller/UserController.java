@@ -1,9 +1,14 @@
 package com.hy.sys.controller;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,6 +20,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.ContextLoader;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hy.sys.core.controller.AbstractBasicController;
@@ -25,6 +34,7 @@ import com.hy.sys.service.SysUserService;
 import com.hy.sys.service.impl.PasswordServiceImpl;
 import com.hy.sys.shiro.UserUtils;
 import com.hy.sys.utils.ConvertJson;
+import com.hy.sys.utils.FileUploads;
 import com.hy.sys.utils.IntegerTools;
 import com.hy.sys.utils.PageInfo;
 import com.hy.sys.utils.StringTools;
@@ -108,7 +118,7 @@ public class UserController extends AbstractBasicController {
 				dbuser.setUpdate_date(now);
 				dbuser.setUpdate_by(UserUtils.getUser().getUserid());
 				sysUserService.save(dbuser);
-				
+				 
 				map.put("code", "1");
 				map.put("msg", "修改用户信息成功！");
 			}else {
@@ -242,8 +252,35 @@ public class UserController extends AbstractBasicController {
 			map.put("code", "0");
 			map.put("msg", "重置密码失败");
 		}
-		return map;
+		return map;		
+	}
+	
+	/**
+	 * 图片上传
+	 * @param response
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	@ResponseBody
+	@RequestMapping("/fileUpload")
+	public Map<String,Object> fileUpload(HttpServletResponse response, HttpServletRequest request) throws Exception{
 		
+		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+        CommonsMultipartFile file = (CommonsMultipartFile) multipartRequest.getFile("file");  
+        
+		//上传多文件存储路径
+        WebApplicationContext webApplicationContext = ContextLoader
+                .getCurrentWebApplicationContext();
+        ServletContext servletContext = webApplicationContext
+                .getServletContext();
+        // 得到文件绝对路径
+        String path = servletContext.getRealPath("/upload");
+       List<String> list= FileUploads.uploadService( path, response, request);
+       
+       Map<String,Object> map= FileUploads.upload(path, request);
+	
+       return map;
 		
 	}
 }

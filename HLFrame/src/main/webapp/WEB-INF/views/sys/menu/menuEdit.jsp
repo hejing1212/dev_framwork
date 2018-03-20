@@ -48,10 +48,11 @@
 								value="${menu.url}" style="height: 35px;" /></td>
 
 							<td class="kv-label">图标</td>
-							<td class="kv-content"><input class="easyui-filebox"
-								name=menu_icon value="${menu.menu_icon}"
-								data-options="prompt:'请选择文件...', buttonText:' 选 择 '"
-								style="width: 80%; height: 35px;"></td>
+							<td class="kv-content">
+							<input class="easyui-textbox"
+								type="text" name="menu_icon" data-options="required:true,missingMessage:'请输入图标样式名称！'"
+								value="${menu.menu_icon}" style="height: 35px;" /></td>
+							 
 
 						</tr>
 						<tr>

@@ -292,6 +292,7 @@ public class RoleController extends AbstractBasicController {
 
 		if (StringTools.equals(map.get("code").toString(), "1")) {
 			map = sysRoleMenuFunService.roleAuthSave(roleId, auths);
+			UserUtils.removeCache(UserUtils.CACHE_MENU_LIST); //清缓存
 		}
 		return map;
 	}
