@@ -38,26 +38,25 @@ public class FileUploads {
 	public static Map<String, Object> upload(String rootDir,HttpServletRequest request) throws Exception {
 		
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-        CommonsMultipartFile file = (CommonsMultipartFile) multipartRequest.getFile("file");        
-        String relatDir = File.separator+"resources"+File.separator+"bussiness"
-                +File.separator+"uploadPath"+File.separator+"houseKeeping_imgs";
-
+        CommonsMultipartFile file = (CommonsMultipartFile) multipartRequest.getFile("uploadFile");        
         //文件夹不存在则创建
-        File fdir = new File(rootDir+relatDir);
-        if (!fdir.exists()) { fdir.mkdirs(); }
-
+        File fdir=getChildDirectory(rootDir);
         String oriName = file.getOriginalFilename();
         String extName=oriName.substring(oriName.lastIndexOf("."),oriName.length());
         String newName = UUID.randomUUID()+extName;
         File tempFile = new File(fdir.getPath()+File.separator+newName);
         file.transferTo(tempFile);
 
+        String relatDir=tempFile.getPath().substring(rootDir.length(), tempFile.getPath().length());
         Map<String, Object> result = new HashMap<>();
         result.put("oriName", oriName);
         result.put("realName", tempFile.getName());
-        result.put("relatPath", relatDir+File.separator+newName);
+        result.put("relatPath", relatDir);
+        result.put("code", "1");
+        result.put("msg", "文件上传成功");
         return result;
     }
+	
 	
 	public static List<String> uploadService(String path,HttpServletResponse response,
 			HttpServletRequest request)throws ServletException, IOException {
@@ -72,7 +71,6 @@ public class FileUploads {
         //创建上传所需要的两个对象
         DiskFileItemFactory factory = new DiskFileItemFactory();
         ServletFileUpload sfu = new ServletFileUpload(factory); //解析器依赖于工厂
-
         //创建容器来接受解析的内容
         List<FileItem> items = new ArrayList<FileItem>();
         //将上传的文件信息放入容器中

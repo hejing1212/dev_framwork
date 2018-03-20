@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -264,11 +265,7 @@ public class UserController extends AbstractBasicController {
 	 */
 	@ResponseBody
 	@RequestMapping("/fileUpload")
-	public Map<String,Object> fileUpload(HttpServletResponse response, HttpServletRequest request) throws Exception{
-		
-		MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-        CommonsMultipartFile file = (CommonsMultipartFile) multipartRequest.getFile("file");  
-        
+	public Map<String,Object> fileUpload(@RequestParam(value="uploadFile") MultipartFile multipart,HttpServletResponse response, HttpServletRequest request) throws Exception{     
 		//上传多文件存储路径
         WebApplicationContext webApplicationContext = ContextLoader
                 .getCurrentWebApplicationContext();
@@ -276,11 +273,16 @@ public class UserController extends AbstractBasicController {
                 .getServletContext();
         // 得到文件绝对路径
         String path = servletContext.getRealPath("/upload");
-       List<String> list= FileUploads.uploadService( path, response, request);
-       
        Map<String,Object> map= FileUploads.upload(path, request);
 	
        return map;
 		
+	}
+	
+	@RequestMapping("/test")
+	public ModelAndView test(HttpServletResponse response, HttpServletRequest request) {
+		ModelAndView view = new ModelAndView();
+		 
+		return view;
 	}
 }

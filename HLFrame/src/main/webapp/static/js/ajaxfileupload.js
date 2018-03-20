@@ -2,6 +2,19 @@
 jQuery.extend({
 
 
+	//HEJING-ADD
+    handleError: function( s, xhr, status, e )      {
+        // If a local callback was specified, fire it
+        if ( s.error ) {
+            s.error.call( s.context || s, xhr, status, e );
+        }
+
+        // Fire the global callback
+        if ( s.global ) {
+            (s.context ? jQuery(s.context) : jQuery.event).trigger( "ajaxError", [xhr, s, e] );
+        }
+    },
+    
     createUploadIframe: function(id, uri)
     {
         //create frame
@@ -195,7 +208,8 @@ jQuery.extend({
         return {abort: function () {}};
 
     },
-
+  
+    
     uploadHttpData: function( r, type ) {
         var data = !type;
         data = type == "xml" || data ? r.responseXML : r.responseText;
@@ -211,8 +225,10 @@ jQuery.extend({
             var data = r.responseText;
             var rx = new RegExp("<pre.*?>(.*?)</pre>","i");
             var am = rx.exec(data);
+            
+            
             //this is the desired data extracted
-            var data = (am) ? am[1] : "";    //the only submatch or empty
+            //var data = (am) ? am[1] : "";    //the only submatch or empty
             eval( "data = " + data );
         }
         // evaluate scripts within html

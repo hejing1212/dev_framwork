@@ -1,12 +1,13 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>HLFrame</groupId>
-  <artifactId>HLFrame</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>war</packaging>
-  
-  
-  <properties>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>HLFrame</groupId>
+	<artifactId>HLFrame</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+
+
+	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring.version>4.1.4.RELEASE</spring.version>
 		<hibernate.version>4.3.8.Final</hibernate.version>
@@ -15,11 +16,12 @@
 		<!-- 验证码 -->
 		<jcaptcha.version>2.0-alpha-1</jcaptcha.version>
 		<jhlabs.verison>2.0.235</jhlabs.verison>
-		
-		<guava.version>17.0</guava.version>		
+
+		<guava.version>17.0</guava.version>
 		<commons-lang3.version>3.3.2</commons-lang3.version>
-		<fileupload.verison>1.2</fileupload.verison>
-		
+		<commons-io.version>2.5</commons-io.version>
+		<fileupload.verison>1.3</fileupload.verison>
+
 	</properties>
 
 	<dependencies>
@@ -29,9 +31,9 @@
 			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
-		
-		
-		
+
+
+
 		<!-- spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -77,13 +79,13 @@
 			<version>${spring.version}</version>
 		</dependency>
 
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context-support</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        
-        
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+
+
 		<!-- 关系型数据库整合时需配置 如hibernate jpa等 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -117,7 +119,7 @@
 			<artifactId>log4j</artifactId>
 			<version>1.2.17</version>
 		</dependency>
-        <dependency>
+		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>1.7.2</version>
@@ -181,34 +183,34 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
-		
-		   <!-- Shiro -->  
-        <dependency>  
-            <groupId>org.apache.shiro</groupId>  
-            <artifactId>shiro-core</artifactId>  
-            <version>${shiro.version}</version>  
-        </dependency>  
-        <dependency>  
-            <groupId>org.apache.shiro</groupId>  
-            <artifactId>shiro-web</artifactId>  
-            <version>${shiro.version}</version>  
-        </dependency>  
-        <dependency>  
-            <groupId>org.apache.shiro</groupId>  
-            <artifactId>shiro-spring</artifactId>  
-            <version>${shiro.version}</version>  
-        </dependency>  
-        <dependency>  
-            <groupId>org.apache.shiro</groupId>  
-            <artifactId>shiro-ehcache</artifactId>  
-            <version>${shiro.version}</version>  
-        </dependency> 
-        
-        <!-- shiro end -->
-        
-        <!-- 工具包 -->
-        <!-- google java lib -->
-		 <dependency>
+
+		<!-- Shiro -->
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-core</artifactId>
+			<version>${shiro.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-web</artifactId>
+			<version>${shiro.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-spring</artifactId>
+			<version>${shiro.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-ehcache</artifactId>
+			<version>${shiro.version}</version>
+		</dependency>
+
+		<!-- shiro end -->
+
+		<!-- 工具包 -->
+		<!-- google java lib -->
+		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>${guava.version}</version>
@@ -218,14 +220,14 @@
 			<artifactId>commons-lang3</artifactId>
 			<version>${commons-lang3.version}</version>
 		</dependency>
-		 
+
 		<!-- jcaptcha 验证码 -->
 		<dependency>
 			<groupId>com.octo.captcha</groupId>
 			<artifactId>jcaptcha-api</artifactId>
 			<version>${jcaptcha.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.octo.captcha</groupId>
 			<artifactId>jcaptcha</artifactId>
@@ -235,27 +237,33 @@
 			<groupId>com.jhlabs</groupId>
 			<artifactId>filters</artifactId>
 			<version>${jhlabs.verison}</version>
-		</dependency>	
-		
+		</dependency>
+
 		<dependency>
 			<groupId>commons-dbcp</groupId>
 			<artifactId>commons-dbcp</artifactId>
 			<version>1.4</version>
 		</dependency>
-		
+
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>${commons-io.version}</version>
+		</dependency>
+
 		<!-- 上传文件插件 -->
 		<dependency>
-		    <groupId>commons-fileupload</groupId>
-		    <artifactId>commons-fileupload</artifactId>
-		    <version>${fileupload.verison}</version>
-        </dependency>
-		
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>${fileupload.verison}</version>
+		</dependency>
+
 	</dependencies>
 
 
 	<build>
 		<finalName>HLFrame</finalName>
-		
+
 		<plugins>
 			<!-- Run the JUnit unit tests in an isolated classloader -->
 			<plugin>
@@ -292,5 +300,5 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		</build>
+	</build>
 </project>

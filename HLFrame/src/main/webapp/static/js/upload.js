@@ -2,17 +2,20 @@
  * AJAX图片文件上传
  * @author hejing
  */
-
+var basePath="/HLFrame";
 function upload_cover(obj,url) {
         ajax_upload(obj.id,url, function(data) {               //function(data)是上传图片的成功后的回调方法
             var isrc = data.relatPath.replace(/\/\//g, '/'); //获取的图片的绝对路径
-            $('#image').attr('src', basePath+isrc).data('img-src', isrc); //给<input>的src赋值去显示图片
+            $('#image').attr('src', basePath+isrc).data('img-src', 'upload/'+isrc); //给<input>的src赋值去显示图片
+            $('#uerhadpic').val(isrc);
         });
     }
+
     function ajax_upload(feid, url,callback) {                 //具体的上传图片方法
+    	var image=$("input[name='uploadFile']").attr("id");
         if (image_check(feid)) {                           //自己添加的文件后缀名的验证
             $.ajaxFileUpload({
-                fileElementId: feid,                        //需要上传的文件域的ID，即<input type="file">的ID。
+                fileElementId:image,   //需要上传的文件域的ID，即<input type="file">的ID。
                 url: url,                                   //后台方法的路径
                 type: 'post',                               //当要提交自定义参数时，这个参数要设置成post
                 dataType: 'json',                           //服务器返回的数据类型。可以为xml,script,json,html。如果不填写，jQuery会自动判断。

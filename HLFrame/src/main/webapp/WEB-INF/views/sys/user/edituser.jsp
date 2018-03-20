@@ -52,7 +52,7 @@
 						<tr>
 							<td class="kv-label">头像</td>
 							<td class="kv-content"><input id="picture_upload"
-								name="portrait" class="easyui-filebox"
+								name="uploadFile" class="easyui-filebox"
 								data-options="buttonText:'选择图片',accept:'image/*',onChange:function(){upload_cover(this,'${basePath}/sys/user/fileUpload.html')}"
 								style="width: 50%" /></td>
 
@@ -80,9 +80,11 @@
 									name="remarks"> ${user.remarks} </textarea></td>
 							<td class="kv-label">头像预览</td>
 							<td class="kv-content">
-								<!-- 图片预览区 --> <img id="image" class="cover-radius"
-								src="${basePath}/static/images/main/user.png" width="100"
-								height="100" style="cursor: pointer;" />
+								<!-- 图片预览区 --> 
+								<img id="image" class="cover-radius"<c:choose><c:when test="${user.portrait ne ''}">src="${basePath}/static/images/main/user.png"</c:when>
+								<c:otherwise>src="${basePath}/upload/${user.portrait}"</c:otherwise></c:choose>
+								 width="100" height="100" style="cursor: pointer;" />
+								 <input type="hidden" id="uerhadpic" name="portrait" value="${user.portrait}"/>
 							</td>
 						</tr>
 					</tbody>
