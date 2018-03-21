@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %> 
 <c:set var="basePath"
 	value='<%=request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
 					+ request.getContextPath()%>' />
@@ -50,10 +51,16 @@
 						data-options="selected:true">查询</a>  
 				</div>
 				<div class="opt-buttons">
+				<shiro:hasPermission name="sys:user:adduser">
 					<a href="javascript:void(0)" onclick="window.parent.mainPlatform._createWindows('添加用户','${basePath}/sys/user/adduser.html','icon-add','addusere');"
 						class="easyui-linkbutton" data-options="iconCls:'icon-add'"> 新增</a>
+				 </shiro:hasPermission>
+				 <shiro:hasPermission name="sys:user:edituser">
 						 <a href="javascript:void(0)" onclick="editUser();" class="easyui-linkbutton" data-options="iconCls:'icon-edit'">编辑用户</a>
+				 </shiro:hasPermission>
+				 <shiro:hasPermission name="sys:user:password">
 					<a href="javascript:void(0)" class="easyui-linkbutton" onclick="resetPassword()" data-options="iconCls:'icon-reload'">重置密码</a>
+					</shiro:hasPermission>
 				</div>
 			</div>
 
@@ -62,11 +69,14 @@
 		<div  data-options="region:'east',split:true,collapsed:true,"
 			title="角色设置" style="width: 300px;">
 			<div style="padding: 5px 0; text-align: right;">
+			<shiro:hasPermission name="sys:role:addAuthorize">
 				<a href="#" onclick="getRoleList();" class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon-add'">分配</a> 
+			 </shiro:hasPermission>
+			 <shiro:hasPermission name="sys:user:userRoleRm">
 					<a href="#" onclick="delUserRole();" class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon-remove'">移除</a>
-
+            </shiro:hasPermission>
 			</div>
 			<table id="role_dg" class="easyui-datagrid"
 				data-options="method:'get',border:false,singleSelect:true,fit:true,fitColumns:true">

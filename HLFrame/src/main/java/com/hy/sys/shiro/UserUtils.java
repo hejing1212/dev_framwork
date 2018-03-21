@@ -12,6 +12,7 @@ import org.apache.shiro.subject.Subject;
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Sets;
+import com.hy.sys.core.utils.HlFramePropertiesUtil;
 import com.hy.sys.entity.SysFunction;
 import com.hy.sys.entity.SysMenu;
 import com.hy.sys.entity.SysRole;
@@ -178,8 +179,7 @@ public class UserUtils {
 		if (url.endsWith(".html")) {   //
 			return null;
 		}
-		//String adminUrlPrefix = JeewebPropertiesUtil.getConfig("admin.url.prefix");
-		String adminUrlPrefix ="/admin";    //目前写死，后期需要优化
+		String adminUrlPrefix = HlFramePropertiesUtil.getConfig("admin.url.prefix");
 		url = url.substring(adminUrlPrefix.length() + 1, url.length());
 		url = StringUtils.trimFirstAndLastChar(url, '/');
 		if (StringUtils.isEmpty(url)) {

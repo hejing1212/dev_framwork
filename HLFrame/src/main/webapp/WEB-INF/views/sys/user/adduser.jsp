@@ -53,10 +53,11 @@
 						</tr>
 						<tr>
 						
-						<td class="kv-label">邮箱</td>
-							<td class="kv-content"><input class="easyui-textbox"
-								type="file" name="portrait" value="${user.portrait}"
-								data-options="required:true,missingMessage:'请输入邮箱！'" /></td>
+						<td class="kv-label">头像</td>
+							<td class="kv-content"><input id="picture_upload"
+								name="uploadFile" class="easyui-filebox"
+								data-options="buttonText:'选择图片',accept:'image/*',onChange:function(){upload_cover(this,'${basePath}/sys/user/fileUpload.html')}"
+								style="width: 70%" /></td>
 								
 							<td class="kv-label">状态</td>
 							<td class="kv-content"><input type="radio"
@@ -75,9 +76,16 @@
 						
 						<tr>
 							<td class="kv-label">备注</td>
-							<td class="kv-content" colspan="5">
+							<td class="kv-content"  >
 							<textarea rows="5" cols="50" name="remarks"></textarea></td>
-
+                            <td class="kv-label">头像预览</td>
+							<td class="kv-content">
+								<!-- 图片预览区 --> 
+								<img id="image" class="cover-radius"<c:choose><c:when test="${user.portrait ne ''}">src="${basePath}/static/images/main/user.png"</c:when>
+								<c:otherwise>src="${basePath}/${user.portrait}"</c:otherwise></c:choose>
+								 width="100" height="100" style="cursor: pointer;" />
+								 <input type="hidden" id="uerhadpic" name="portrait" value="${user.portrait}"/>
+							</td>
 						</tr>
 					</tbody>
 				</table>
@@ -101,13 +109,14 @@
 	src="${basePath}/static/easyui/jquery.easyui.min.js"></script>
 <script type="text/javascript"
 		src="${basePath}/static/easyui/easyui-lang-zh_CN.js"></script>
-		
+<script type="text/javascript" src="${basePath}/static/js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="${basePath}/static/js/upload.js"></script>		
 <script type="text/javascript">
 	/**
 	 * 提交表单
 	 */
 	function submitFormData() {
-		$('#save_user').form('submit', {
+		$('#save_user_form').form('submit', {
 			url : "${basePath}/sys/user/saveuser.html",
 			onSubmit : function() {
                 return $(this).form('validate');

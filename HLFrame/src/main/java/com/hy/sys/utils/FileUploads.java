@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,8 +20,12 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.springframework.web.context.ContextLoader;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
+import com.hy.sys.core.utils.HlFramePropertiesUtil;
 
 /**
  * fileUpload文件上传处理类2018-03-20
@@ -35,19 +40,25 @@ public class FileUploads {
 	 * @return
 	 * @throws Exception
 	 */
-	public static Map<String, Object> upload(String rootDir,HttpServletRequest request) throws Exception {
+	public static Map<String, Object> upload(HttpServletRequest request) throws Exception {
 		
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         CommonsMultipartFile file = (CommonsMultipartFile) multipartRequest.getFile("uploadFile");        
         //文件夹不存在则创建
-        File fdir=getChildDirectory(rootDir);
+        //上传多文件存储路径
+        WebApplicationContext webApplicationContext = ContextLoader.getCurrentWebApplicationContext();
+        ServletContext servletContext = webApplicationContext.getServletContext();
+        // 得到文件绝对路径
+        String rootDir=servletContext.getRealPath("/");
+        String savePath = servletContext.getRealPath("/")+HlFramePropertiesUtil.getConfig("upload.address");  //获取设置的文件上传根目录
+        File fdir=getChildDirectory(savePath);
         String oriName = file.getOriginalFilename();
         String extName=oriName.substring(oriName.lastIndexOf("."),oriName.length());
         String newName = UUID.randomUUID()+extName;
         File tempFile = new File(fdir.getPath()+File.separator+newName);
         file.transferTo(tempFile);
 
-        String relatDir=tempFile.getPath().substring(rootDir.length(), tempFile.getPath().length());
+        String relatDir=tempFile.getPath().substring(rootDir.length()-1, tempFile.getPath().length()).replaceAll("\\\\", "/");
         Map<String, Object> result = new HashMap<>();
         result.put("oriName", oriName);
         result.put("realName", tempFile.getName());

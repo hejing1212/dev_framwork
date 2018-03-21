@@ -28,6 +28,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hy.sys.core.controller.AbstractBasicController;
+import com.hy.sys.core.utils.HlFramePropertiesUtil;
 import com.hy.sys.entity.SysRole;
 import com.hy.sys.entity.SysUser;
 import com.hy.sys.service.SysRoleService;
@@ -116,6 +117,7 @@ public class UserController extends AbstractBasicController {
 				dbuser.setStatus(user.getStatus());
 				dbuser.setRealname(user.getRealname());
 				dbuser.setRemarks(user.getRemarks());
+				dbuser.setPortrait(user.getPortrait());
 				dbuser.setUpdate_date(now);
 				dbuser.setUpdate_by(UserUtils.getUser().getUserid());
 				sysUserService.save(dbuser);
@@ -266,17 +268,8 @@ public class UserController extends AbstractBasicController {
 	@ResponseBody
 	@RequestMapping("/fileUpload")
 	public Map<String,Object> fileUpload(@RequestParam(value="uploadFile") MultipartFile multipart,HttpServletResponse response, HttpServletRequest request) throws Exception{     
-		//上传多文件存储路径
-        WebApplicationContext webApplicationContext = ContextLoader
-                .getCurrentWebApplicationContext();
-        ServletContext servletContext = webApplicationContext
-                .getServletContext();
-        // 得到文件绝对路径
-        String path = servletContext.getRealPath("/upload");
-       Map<String,Object> map= FileUploads.upload(path, request);
-	
+       Map<String,Object> map= FileUploads.upload(request);
        return map;
-		
 	}
 	
 	@RequestMapping("/test")

@@ -54,7 +54,7 @@
 							<td class="kv-content"><input id="picture_upload"
 								name="uploadFile" class="easyui-filebox"
 								data-options="buttonText:'选择图片',accept:'image/*',onChange:function(){upload_cover(this,'${basePath}/sys/user/fileUpload.html')}"
-								style="width: 50%" /></td>
+								style="width: 70%" /></td>
 
 							<td class="kv-label">状态</td>
 							<td class="kv-content"><input type="radio" name="status"
@@ -81,8 +81,8 @@
 							<td class="kv-label">头像预览</td>
 							<td class="kv-content">
 								<!-- 图片预览区 --> 
-								<img id="image" class="cover-radius"<c:choose><c:when test="${user.portrait ne ''}">src="${basePath}/static/images/main/user.png"</c:when>
-								<c:otherwise>src="${basePath}/upload/${user.portrait}"</c:otherwise></c:choose>
+								<img id="image" class="cover-radius"<c:choose><c:when test="${user.portrait eq ''}">src="${basePath}/static/images/main/user.png"</c:when>
+								<c:otherwise>src="${basePath}/${user.portrait}"</c:otherwise></c:choose>
 								 width="100" height="100" style="cursor: pointer;" />
 								 <input type="hidden" id="uerhadpic" name="portrait" value="${user.portrait}"/>
 							</td>
