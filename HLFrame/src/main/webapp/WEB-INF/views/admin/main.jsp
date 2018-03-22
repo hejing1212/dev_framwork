@@ -31,7 +31,10 @@
             </div>
             <div class="pf-user">
                 <div class="pf-user-photo">
-                    <img src="${basePath}/static/images/main/user.png" alt="">
+                <img id="image" class="cover-radius"<c:choose><c:when test="${empty user.portrait}">src="${basePath}/static/images/main/user.png"</c:when>
+								<c:otherwise>src="${basePath}/${user.portrait}"</c:otherwise></c:choose>
+								 width="40" height="40" />
+
                 </div>
                 <h4 class="pf-user-name ellipsis">${user.username}</h4>
                 <i class="iconfont xiala">&#xe607;</i>

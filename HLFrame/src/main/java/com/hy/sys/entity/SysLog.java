@@ -20,6 +20,7 @@ import org.hibernate.annotations.Type;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hy.sys.core.entity.AbstractBasicEntity;
+import com.hy.sys.core.entity.BaseSpuerEntity;
 import com.hy.sys.utils.Comment;
 
 /**
@@ -29,51 +30,29 @@ import com.hy.sys.utils.Comment;
 @Entity
 @Table(name = "sys_log")
 @Comment(value = "操作日志管理表")
-public class SysLog extends AbstractBasicEntity {
+public class SysLog extends   BaseSpuerEntity {
 
 	private static final long serialVersionUID = 1L;
 
 	// 日志类型（1：接入日志；2：错误日志）
-	public static final String TYPE_ACCESS = "1";
-	public static final String TYPE_EXCEPTION = "2";
-	private String id;
-	private String type; // '日志类型',
-	private String title; // '日志标题',
-	private String content; // 日志内容',
-	private String logtype; // '操作方式',
-	private SysUser create_by;
-	private Date   create_date;
-	private String remote_addr; // '操作IP地址',
-	private String user_agent; // '用户代理',
-	private String request_uri; // '请求URI',
-	private String method; // '操作方式',
-	private Map<String, String[]> params; // '操作提交的数据',
-	private String exception; // '异常信息',
-
-	public SysLog() {
-
-	}
-
-	public SysLog(String type, String title, String content, String logtype, SysUser create_by, Date create_date,
-			String remote_addr, String user_agent, String request_uri, String method, Map<String, String[]> params,
-			String exception) {
-		this.type = type;
-		this.title = title;
-		this.content = content;
-		this.logtype = logtype;
-		this.create_by = create_by;
-		this.create_date = create_date;
-		this.remote_addr = remote_addr;
-		this.user_agent = user_agent;
-		this.request_uri = request_uri;
-
-		this.method = method;
-		this.params = params;
-		this.exception = exception;
-
-	}
-
+	public static final Integer TYPE_ACCESS = 1;
+	public static final Integer TYPE_EXCEPTION = 2;
+	 
 	
+	
+	private String  id;   
+	private String  opt_data_id;                   //'操作数据id',
+	private String  opt_table_name;               //'操作表名',
+	private String  opt_table_comment;           //'操作表的注释名',
+	private String  opt_user_id;                //'操作人id',
+	private String  opt_user_name;              //'操作人姓名',
+	private Integer  opt_type;                  //'操作类型： 1.新增  2.更新  3.状态删除  4.物理删除',
+	private String  opt_content;                 //'操作内容',
+	
+	  
+	public  SysLog(){
+		
+	}
 	@Id
 	@GeneratedValue(generator = "paymentableGenerator")
 	@GenericGenerator(name = "paymentableGenerator", strategy = "uuid")
@@ -85,127 +64,71 @@ public class SysLog extends AbstractBasicEntity {
 	public void setId(String id) {
 		this.id = id;
 	}
-
-	/** 日志类型 */
-	@Column(name = "type", nullable = true, length = 1)
-	public String getType() {
-		return type;
+	
+	@Column(name = "opt_data_id", nullable = true, length = 128,columnDefinition=("varchar(64)  default null comment '操作数据id'"))
+	public String getOpt_data_id() {
+		return opt_data_id;
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public void setOpt_data_id(String opt_data_id) {
+		this.opt_data_id = opt_data_id;
 	}
 
-	/** 日志标题 */
-	@Column(name = "title", nullable = true, length = 255)
-	public String getTitle() {
-		return title;
+	@Column(name = "opt_table_name", nullable = true, length = 64,columnDefinition=("varchar(64)  default  null comment '操作表名'"))
+	public String getOpt_table_name() {
+		return opt_table_name;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setOpt_table_name(String opt_table_name) {
+		this.opt_table_name = opt_table_name;
 	}
 
-	/** 日志内容 */
-	@Column(name = "content", nullable = true, length = 1000)
-	public String getContent() {
-		return content;
+	@Column(name = "opt_table_comment", nullable = true, length = 64,columnDefinition=("varchar(64)  default  null comment '操作表的注释名'"))
+	public String getOpt_table_comment() {
+		return opt_table_comment;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	public void setOpt_table_comment(String opt_table_comment) {
+		this.opt_table_comment = opt_table_comment;
 	}
 
-	/** 操作方式 */
-	@Column(name = "logtype", nullable = true, length = 4)
-	public String getLogtype() {
-		return logtype;
+	@Column(name = "opt_user_id", nullable = true, length = 64,columnDefinition=("varchar(64)  default  null comment '操作人id'"))
+	public String getOpt_user_id() {
+		return opt_user_id;
 	}
 
-	public void setLogtype(String logtype) {
-		this.logtype = logtype;
+	public void setOpt_user_id(String opt_user_id) {
+		this.opt_user_id = opt_user_id;
 	}
 
-	/** 创建者 */
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "create_by")
-	@JsonIgnore
-	public SysUser getCreateBy() {
-		return create_by;
+	@Column(name = "opt_user_name", nullable = true, length = 64,columnDefinition=("varchar(64)  default  null comment '操作人姓名'"))
+	public String getOpt_user_name() {
+		return opt_user_name;
 	}
 
-	public void setCreateBy(SysUser create_by) {
-		this.create_by = create_by;
+	public void setOpt_user_name(String opt_user_name) {
+		this.opt_user_name = opt_user_name;
 	}
 
-	/** 创建时间 */
-	@Column(name = "create_date", nullable = true, length = 19)
-	public Date getCreateDate() {
-		return create_date;
+	@Column(name = "opt_type", nullable = true, length = 11,columnDefinition=("int(11)  default  null comment '操作类型： 1.新增  2.更新  3.状态删除  4.物理删除'"))
+	public Integer getOpt_type() {
+		return opt_type;
 	}
 
-	public void setCreateDate(Date create_date) {
-		this.create_date = create_date;
+	public void setOpt_type(Integer opt_type) {
+		this.opt_type = opt_type;
 	}
 
-	/** 操作IP地址 */
-	@Column(name = "remote_addr", nullable = true, length = 255)
-	public String getRemoteAddr() {
-		return remote_addr;
+	@Type(type="text")  
+	@Column(name = "opt_content",columnDefinition=(" default  null comment '操作内容'"))
+	public String getOpt_content() {
+		return opt_content;
 	}
 
-	public void setRemoteAddr(String remote_addr) {
-		this.remote_addr = remote_addr;
+	public void setOpt_content(String opt_content) {
+		this.opt_content = opt_content;
 	}
 
-	/** 用户代理 */
-	@Column(name = "user_agent", nullable = true, length = 255)
-	public String getUserAgent() {
-		return user_agent;
-	}
-
-	public void setUserAgent(String user_agent) {
-		this.user_agent = user_agent;
-	}
-
-	/** 请求URI */
-	@Column(name = "request_uri", nullable = true, length = 255)
-	public String getRequestUri() {
-		return request_uri;
-	}
-
-	public void setRequestUri(String request_uri) {
-		this.request_uri = request_uri;
-	}
-
-	/** 操作方式 */
-	@Column(name = "method", nullable = true, length = 5)
-	public String getMethod() {
-		return method;
-	}
-
-	public void setMethod(String method) {
-		this.method = method;
-	}
-
-	@Column(name = "params", nullable = true, length = 65535)
-	@Type(type = "com.hy.sys.core.hibernate.type.ObjectSerializeUserType")
-	public Map<String, String[]> getParams() {
-		return params;
-	}
-
-	public void setParams(Map<String, String[]> params) {
-		this.params = params;
-	}
-
-	/** 异常信息 */
-	@Column(name = "exception", nullable = true, length = 65535)
-	public String getException() {
-		return exception;
-	}
-
-	public void setException(String exception) {
-		this.exception = exception;
-	}
-
+ 
+	
 }

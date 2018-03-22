@@ -89,6 +89,7 @@
 		</property>
 		<!-- 扫描hibernate注解配置的entity -->
 		<property name="packagesToScan" value="com.hy.sys.entity" />
+		<property name="entityInterceptor" ref="entityInterceptor" />
 	</bean>
 
 	<!-- 配置事务管理器 -->

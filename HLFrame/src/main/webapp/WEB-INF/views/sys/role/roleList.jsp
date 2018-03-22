@@ -44,7 +44,7 @@
 					 
 				<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="window.parent.mainPlatform._createWindows('添加角色','${basePath}/sys/role/addRole.html','icon-add','addRole');"> 新增</a>
 				<a href="javascript:void(0)" onclick="editRole();" class="easyui-linkbutton" data-options="iconCls:'icon-edit'">修改</a>
-				<a href="javascript:void(0)" onclick="setRole();" class="easyui-linkbutton" data-options="iconCls:'icon-set'">授限</a>  
+				<a href="javascript:void(0)" onclick="setRole();" class="easyui-linkbutton" data-options="iconCls:'icon-set'">授权</a>  
 			 
 			</div>
 			

@@ -1,6 +1,7 @@
 package com.hy.sys.shiro;
 
 import java.io.Serializable;
+
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -12,15 +13,10 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
-
-import com.hy.sys.utils.ServletUtils;
-import com.hy.sys.entity.SysUser;
-import com.hy.sys.shiro.UsernamePasswordToken;
-import com.hy.sys.service.SysUserService;
-import com.hy.sys.shiro.LogUtils;
-import com.hy.sys.shiro.UserUtils;
-
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.hy.sys.entity.SysUser;
+import com.hy.sys.service.SysUserService;
 
 /**
  * 
@@ -72,7 +68,7 @@ public class UserRealm extends AuthorizingRealm {
 				getName() // realm name
 		);
 		// 记录登录日志
-		LogUtils.saveLog(ServletUtils.getRequest(), "系统登录");
+	//	LogUtilsDEL.saveLog(ServletUtils.getRequest(), "系统登录");
 		return authenticationInfo;
 	}
 
