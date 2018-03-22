@@ -51,9 +51,9 @@
 							<td class="kv-content">
 							<input class="easyui-textbox"
 								type="text" name="menu_icon" data-options="required:true,missingMessage:'请输入图标样式名称！'"
-								value="${menu.menu_icon}" style="height: 35px;" /></td>
-							 
-
+								value="${menu.menu_icon}" style="height: 35px;" />
+								<a href="javascript:void(0)" onclick="showIcon();">选择图标</a>				
+								</td>
 						</tr>
 						<tr>
 							<td class="kv-label">是否显示</td>
@@ -108,7 +108,8 @@
 			</div>
 		</form>
 	</div>
-
+<!-- 打开选择ICON界面 -->
+	<div id="dialog" class="easyui-dialog" closed="true"></div>
 </body>
 </html>
 <script type="text/javascript"
@@ -154,4 +155,18 @@
 			}
 		});
 	})
+	
+	//打开选择ICON界面
+		function showIcon() {
+			$("#dialog")
+					.dialog({
+								title : '选择图标',
+								width : 800,
+								height : 400,
+								modal : true,
+								top:$(document).scrollTop()+($(window).height()-250)*0.3,
+							    left:$(document).scrollLeft()+($(window).width()-800)*0.5,
+								content : "<iframe scrolling='auto' frameborder='0' src='${basePath}/static/fonts/demo.html' style='width:100%; height:100%; display:block;'></iframe>"
+							}).dialog('open');
+		}
 </script>

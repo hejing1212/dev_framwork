@@ -12,7 +12,7 @@
 
 	<!-- 自动扫描@Controller注入为bean -->
 	<context:component-scan base-package="com.hy.sys.controller,com.hy.sys.core,com.hy.sys.jcaptcha.*" />
-     
+     <bean class="com.hy.sys.utils.SpringContextHolder" />
 	<!-- 兼容到静态文件和Controller的配统一 -->
 	<mvc:annotation-driven>
 		<!-- 返回json数据，@response使用 -->
@@ -48,6 +48,9 @@
 			</bean>
 
 		</mvc:message-converters>
+		
+	
+		
 	</mvc:annotation-driven>
 	<!-- 允许访问静态 -->
 	<mvc:default-servlet-handler />
