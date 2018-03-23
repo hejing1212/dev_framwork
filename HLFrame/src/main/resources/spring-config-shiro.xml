@@ -54,14 +54,7 @@
     </bean>
 
 
-    <!-- 会话验证调度  -->
-    <bean id="sessionValidationScheduler" class="com.hy.sys.shiro.session.SpringSessionValidationScheduler">
-        <property name="sessionValidationInterval" value="${shiro.session.validation.interval}"/>
-        <!--<property name="sessionManager" ref="sessionManager"/>-->
-        <!-- see spring-config-task.xml-->
-        <!-- <property name="scheduler" ref="scheduler"/>-->
-    </bean>
- 
+    
 
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <!-- Single realm app.  If you have multiple realms, use the 'realms' property instead. -->
@@ -81,6 +74,7 @@
         <property name="usernameParam" value="username"/>
         <property name="passwordParam" value="password"/>
         <property name="rememberMeParam" value="rememberMe"/>
+        <property name="captchaParam" value="jcaptchaCode"/>
     </bean>
     
     <!-- 退出登录过滤器 -->
@@ -95,14 +89,14 @@
     </bean>
    
 
-    <bean id="jCaptchaValidateFilter" class="com.hy.sys.shiro.JCaptchaValidateFilter">
+    <bean id="jCaptchaValidateFilter" class="com.hy.sys.shiro.authen.JCaptchaValidateFilter">
         <property name="jcaptchaEbabled" value="${shiro.jcaptcha.enable}"/>
         <property name="jcaptchaParam" value="jcaptchaCode"/>
         <property name="jcapatchaErrorUrl" value="${shiro.jcaptcha.error.url}"/>
     </bean>
-
-    
-
+ 
+  <bean id="HeJing" class="com.hy.sys.utils.TestFer"/>
+  
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
         <!-- override these for application-specific URLs if you like:-->
@@ -116,9 +110,8 @@
                 <entry key="authc" value-ref="formAuthenticationFilter"/>
                 <entry key="logout" value-ref="logoutFilter"/>
                 <entry key="sysUser" value-ref="sysUserFilter"/>
-                <!--<entry key="onlineSession" value-ref="onlineSessionFilter"/>-->
-                <!--<entry key="syncOnlineSession" value-ref="syncOnlineSessionFilter"/>-->
                 <entry key="jCaptchaValidate" value-ref="jCaptchaValidateFilter"/>
+                <entry key="ing" value-ref="HeJing"/>
             </util:map>
         </property>
         <property name="filterChainDefinitions">
@@ -126,7 +119,7 @@
                 /static/** = anon
                 /jcaptcha* = anon
                 ${admin.url.prefix}/logout = logout
-                ${admin.url.prefix}/login  = jCaptchaValidate,authc
+                ${admin.url.prefix}/login  = ing,jCaptchaValidate,authc
                 /** = sysUser,user,perms,roles,authc
             </value>
         </property>

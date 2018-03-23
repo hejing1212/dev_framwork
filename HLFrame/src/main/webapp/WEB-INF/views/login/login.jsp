@@ -47,14 +47,14 @@
 								<div class="lg-check clearfix">
 									<div class="input-item">
 										<i class="iconfont">&#xe633;</i>
-										 <input type="text" id="remember_input" placeholder="验证码" name="rememberMe">
+										 <input type="text" id="remember_input" placeholder="验证码"  name="jcaptchaCode">
 									</div>
 									<span class="check-code">
 <img id="img_jcaptcha"  src="${appPath}/jcaptcha.jpg" width="80" height="36" onclick="changeJcaptchaSrc();" />
                                    </span>
 								</div>
 								<div class="tips clearfix">
-									<label><input type="checkbox" checked="checked">记住用户名</label>
+									<label><input type="checkbox" name="rememberMe" checked="checked">记住用户名</label>
 									<a href="javascript:;" class="register">立即注册</a> <a
 										href="javascript:;" class="forget-pwd">忘记密码？</a>
 								</div>
