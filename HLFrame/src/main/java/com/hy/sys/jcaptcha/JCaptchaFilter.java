@@ -19,7 +19,7 @@ import com.sun.image.codec.jpeg.JPEGImageEncoder;
 /**
  * 生成验证码
  * 
- * @author 王存见
+ * @author 
  *
  */
 public class JCaptchaFilter extends OncePerRequestFilter {

@@ -13,15 +13,15 @@ import java.io.IOException;
 
 /**
  * 
- * All rights Reserved, Designed By www.jeeweb.cn
+ * All rights Reserved 
  * 
  * @title: SysUserFilter.java
- * @package cn.jeeweb.modules.sys.security.shiro.web.filter.user
+ * @package 
  * @description: 验证用户过滤器 1、用户是否删除 2、用户是否锁定
  * @author: 
- * @date: 2017年6月26日 下午5:55:03
+ * @date: 
  * @version V1.0
- * @copyright: 2017 www.jeeweb.cn Inc. All rights reserved.
+ * @copyright:
  *
  */
 public class SysUserFilter extends AccessControlFilter {

@@ -60,7 +60,7 @@ public class UserRealm extends AuthorizingRealm {
 		if (SysUser.STATUS_LOCKED.equals(user.getStatus())) {
 			throw new LockedAccountException(); // 帐号锁定，有错误，后期一定要处理干净
 		}
-		// 交给AuthenticatingRealm使用CredentialsMatcher进行密码匹配，如果觉得人家的不好可以自定义实现
+		// 交给AuthenticatingRealm使用CredentialsMatcher进行密码匹配
 		SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
 				new Principal(user, authcToken.isMobileLogin()), // 用户名
 				user.getPassword(), // 密码

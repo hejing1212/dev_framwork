@@ -9,7 +9,6 @@ import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheManager;
 
-import com.hy.sys.shiro.JCaptchaValidateFilter;
 import com.hy.sys.shiro.UsernamePasswordToken;
 import com.hy.sys.utils.SpringContextHolder;
 /**

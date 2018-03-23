@@ -1,4 +1,4 @@
-package com.hy.sys.shiro;
+package com.hy.sys.shiro.authen;
 
 import java.io.IOException;
 
@@ -10,6 +10,7 @@ import org.apache.shiro.web.filter.AccessControlFilter;
 import org.apache.shiro.web.util.WebUtils;
 
 import com.hy.sys.jcaptcha.JCaptcha;
+import com.hy.sys.shiro.FormAuthenticationFilter;
 import com.hy.sys.shiro.authen.RetryLimitHashedCredentialsMatcher;
 import com.hy.sys.utils.ServletUtils;
 import com.hy.sys.utils.SpringContextHolder;
@@ -19,10 +20,10 @@ import com.hy.sys.utils.StringUtils;
  * 验证码验证
  * 
  * @author 
- * @date 2017-02-23
+ * @date  
  *
  */
-public class JCaptchaValidateFilter extends AccessControlFilter {
+public  class JCaptchaValidateFilter extends AccessControlFilter {
 
 	private boolean jcaptchaEbabled = true;
 
@@ -70,6 +71,9 @@ public class JCaptchaValidateFilter extends AccessControlFilter {
 		return super.onPreHandle(request, response, mappedValue);
 	}
 
+	/**
+	 * 判断验证码是否正确
+	 */
 	@Override
 	protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue)
 			throws Exception {

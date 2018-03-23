@@ -11,6 +11,12 @@ public class JCaptcha {
             = new EsManageableImageCaptchaService(new FastHashMapCaptchaStore(), new GMailEngine(), 180, 100000, 75000);
 
 
+    /**
+     * 判断验证码 
+     * @param request
+     * @param userCaptchaResponse
+     * @return
+     */
     public static boolean validateResponse(HttpServletRequest request, String userCaptchaResponse) {
         if (request.getSession(false) == null) return false;
 

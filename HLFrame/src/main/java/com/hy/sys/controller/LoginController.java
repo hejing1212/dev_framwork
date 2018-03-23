@@ -17,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.hy.sys.core.controller.AbstractBasicController;
 import com.hy.sys.shiro.FormAuthenticationFilter;
-import com.hy.sys.shiro.RepeatAuthenticationException;
+import com.hy.sys.shiro.authen.RepeatAuthenticationException;
 import com.hy.sys.shiro.UserRealm.Principal;
 import com.hy.sys.shiro.UserUtils;
 import com.hy.sys.shiro.authen.RetryLimitHashedCredentialsMatcher;
@@ -47,10 +47,16 @@ public class LoginController extends AbstractBasicController{
 		return "/login/login";
 	}
 	
-	
+	/**
+	 * 登录失败后的处理
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 * @throws Exception
+	 */
     @RequestMapping(method=RequestMethod.POST,produces = "text/html; charset=utf-8")
 	public ModelAndView login(HttpServletRequest request, HttpServletRequest response, Model model) throws Exception {
-		System.out.println("开始登录===============ok==============a");
 		Principal principal = UserUtils.getPrincipal(); // 如果已经登录，则跳转到管理首页
 		if (principal != null && !principal.isMobileLogin()) {
 			return new ModelAndView("redirect:/admin/main.html");

@@ -14,23 +14,24 @@ import org.apache.shiro.web.util.WebUtils;
 
 import com.hy.sys.core.entity.AjaxJson;
 import com.hy.sys.shiro.UserRealm.Principal;
+import com.hy.sys.shiro.authen.RepeatAuthenticationException;
 import com.hy.sys.utils.IpUtils;
 import com.hy.sys.utils.StringUtils;
 /**
  * 
- * All rights Reserved, Designed By www.jeeweb.cn
+ * All rights Reserved,  
  * @title:  FormAuthenticationFilter.java   
- * @package cn.jeeweb.modules.sys.security.shiro.web.filter.authc   
+ * @package  shiro.web.filter.authc   
  * @description:   表单验证  
  * @author:    
  * @date:   2017年6月26日 下午5:56:03   
  * @version V1.0 
- * @copyright: 2017 www.jeeweb.cn Inc. All rights reserved. 
+ * @copyright: 2017  All rights reserved. 
  *
  */
 public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.FormAuthenticationFilter {
 
-	public static final String DEFAULT_CAPTCHA_PARAM = "captcha";
+	public static final String DEFAULT_CAPTCHA_PARAM ="captcha";
 	public static final String DEFAULT_MOBILE_PARAM = "mobileLogin";
 	public static final String DEFAULT_MESSAGE_ERROR_PARAM = "error";
 	public static final String DEFAULT_MESSAGE_SUCCESS_PARAM = "success";
@@ -48,9 +49,9 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 		if (password == null) {
 			password = "";
 		}
-		boolean rememberMe = isRememberMe(request);
-		String host = IpUtils.getIpAddr((HttpServletRequest) request);
-		String captcha = getCaptcha(request);
+		boolean rememberMe = isRememberMe(request);   //就否希望记住身份
+		String host = IpUtils.getIpAddr((HttpServletRequest) request);   //请求IP
+		String captcha = getCaptcha(request);                            //验证码
 		boolean mobile = isMobileLogin(request);
 		return new UsernamePasswordToken(username, password.toCharArray(), rememberMe, host, captcha, mobile);
 	}
@@ -165,5 +166,6 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 			return false;
 		}
 	}
-
+	
+	 
 }
