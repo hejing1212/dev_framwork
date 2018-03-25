@@ -2,16 +2,17 @@ package com.hy.sys.shiro.authen;
 
 import java.io.IOException;
 
+import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.web.filter.AccessControlFilter;
 import org.apache.shiro.web.util.WebUtils;
 
 import com.hy.sys.jcaptcha.JCaptcha;
 import com.hy.sys.shiro.FormAuthenticationFilter;
-import com.hy.sys.shiro.authen.RetryLimitHashedCredentialsMatcher;
 import com.hy.sys.utils.ServletUtils;
 import com.hy.sys.utils.SpringContextHolder;
 import com.hy.sys.utils.StringUtils;
@@ -88,17 +89,30 @@ public  class JCaptchaValidateFilter extends AccessControlFilter {
 		if (jcaptchaEbabled == false || !"post".equals(httpServletRequest.getMethod().toLowerCase())) {
 			return true;
 		}
-		return JCaptcha.validateResponse(httpServletRequest, httpServletRequest.getParameter(jcaptchaParam));
+		return  JCaptcha.validateResponse(httpServletRequest, httpServletRequest.getParameter(jcaptchaParam));
 	}
 
+	/**
+	 * 验证失败处理方法
+	 */
 	@Override
 	protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
-		redirectToLogin(request, response);
-		return true;
+		this.redirectToLogin(request, response);
+		return false;
 	}
 
+	/**
+	 * 跳到登录失败处理界面
+	 */
 	protected void redirectToLogin(ServletRequest request, ServletResponse response) throws IOException {
-		WebUtils.issueRedirect(request, response, getJcapatchaErrorUrl());
+		request.setAttribute("error", "验证码错误！");
+		//WebUtils.issueRedirect(request, response, req.getContextPath()+getJcapatchaErrorUrl());
+		try {
+			request.getRequestDispatcher(getJcapatchaErrorUrl()).forward(request, response);
+		} catch (ServletException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**

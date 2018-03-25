@@ -3,16 +3,15 @@ package com.hy.sys.shiro;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.web.util.WebUtils;
 
-import com.hy.sys.core.entity.AjaxJson;
 import com.hy.sys.shiro.UserRealm.Principal;
 import com.hy.sys.shiro.authen.RepeatAuthenticationException;
 import com.hy.sys.utils.IpUtils;
@@ -42,14 +41,18 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 	private String messageErrorParam = DEFAULT_MESSAGE_ERROR_PARAM;
 	private String messageSuccessParam = DEFAULT_MESSAGE_SUCCESS_PARAM;
 	private String messageNormallParam = DEFAULT_MESSAGE_NORMAL_PARAM;
+ 
 
+	/**
+	 * 验证码验证通过后运行该方法
+	 */
 	protected AuthenticationToken createToken(ServletRequest request, ServletResponse response) {
 		String username = getUsername(request);
 		String password = getPassword(request);
 		if (password == null) {
 			password = "";
-		}
-		boolean rememberMe = isRememberMe(request);   //就否希望记住身份
+		}		 
+		boolean rememberMe = isRememberMe(request);   //是否希望记住身份
 		String host = IpUtils.getIpAddr((HttpServletRequest) request);   //请求IP
 		String captcha = getCaptcha(request);                            //验证码
 		boolean mobile = isMobileLogin(request);
@@ -111,22 +114,14 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 		return super.getSuccessUrl();
 	}
 
+	/**
+	 * 登录成功//
+	 */
 	@Override
 	protected void issueSuccessRedirect(ServletRequest request, ServletResponse response) throws Exception {
 		Principal p = UserUtils.getPrincipal();
 		UserUtils.clearCache();
-		if (p != null && !p.isMobileLogin()) {
-			WebUtils.issueRedirect(request, response, getSuccessUrl(), null, true);
-		} else {
-			AjaxJson ajaxJson = new AjaxJson();
-			ajaxJson.setRet(AjaxJson.RET_SUCCESS);
-			ajaxJson.setMsg("登录成功!");
-			ajaxJson.put("username", p.getUsername());
-			ajaxJson.put("realname", p.getRealname());
-			ajaxJson.put("mobileLogin", p.isMobileLogin());
-			ajaxJson.put("JSESSIONID", p.getSessionid());
-			StringUtils.printJson((HttpServletResponse) response, ajaxJson);
-		}
+		WebUtils.issueRedirect(request, response, getSuccessUrl(), null, true);
 	}
 
 	/**
@@ -136,18 +131,18 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 	protected boolean onLoginFailure(AuthenticationToken token, AuthenticationException e, ServletRequest request,
 			ServletResponse response) {
 		super.onLoginFailure(token, e, request, response);
-		UsernamePasswordToken authcToken = (UsernamePasswordToken) token;
-		if (!authcToken.isMobileLogin()) {
 			String className = e.getClass().getName(), message = "";
 			if (IncorrectCredentialsException.class.getName().equals(className)
 					|| UnknownAccountException.class.getName().equals(className)) {
-				message = "用户或密码错误, 请重试.";
+				message = "用户或密码错误, 请重试！";
 			} else if (RepeatAuthenticationException.class.getName().equals(className)) {
-				message = "请勿重复提交认证.";
+				message = "请勿重复提交认证！";
 			} else if (ExcessiveAttemptsException.class.getName().equals(className)) {
 				message = "请勿重复提交认证,请半小时之后登录";
 			} else if (StringUtils.isNoneBlank(e.getMessage())) {
 				message = e.getMessage();
+			} else if(LockedAccountException.class.getName().equals(className)) {
+				message = "用户被锁定，无法登录！";
 			} else {
 				message = "系统出现点问题，请稍后再试！";
 				e.printStackTrace(); // 输出到控制台
@@ -155,16 +150,6 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 			request.setAttribute(getFailureKeyAttribute(), className);
 			request.setAttribute(getMessageErrorParam(), message);
 			return true;
-		} else {
-			// 登录失败返回false
-			AjaxJson ajaxJson = new AjaxJson();
-			ajaxJson.setRet(AjaxJson.RET_FAIL);
-			ajaxJson.setMsg("登录失败!");
-			ajaxJson.put("mobileLogin", authcToken.isMobileLogin());
-			ajaxJson.put("JSESSIONID", UserUtils.getSession().getId());
-			StringUtils.printJson((HttpServletResponse) response, ajaxJson);
-			return false;
-		}
 	}
 	
 	 

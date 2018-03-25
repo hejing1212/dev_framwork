@@ -1,14 +1,9 @@
 package com.hy.sys.controller;
 
-import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -20,15 +15,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.ContextLoader;
-import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hy.sys.core.controller.AbstractBasicController;
-import com.hy.sys.core.utils.HlFramePropertiesUtil;
 import com.hy.sys.entity.SysRole;
 import com.hy.sys.entity.SysUser;
 import com.hy.sys.service.SysRoleService;
@@ -208,7 +198,7 @@ public class UserController extends AbstractBasicController {
 		return pages;
 	}
 	/***
-	 * 批量删除用户权限
+	 * 批量删除用户角色权限
 	 * @param userId
 	 * @param roleIds
 	 * @param response
@@ -219,7 +209,7 @@ public class UserController extends AbstractBasicController {
 	@RequestMapping("/deleteUserRole")
 	public Map<String,Object> deleteUserRole(@RequestParam(required = true) String userId,String roleIds,HttpServletResponse response, HttpServletRequest request){
 		Map<String,Object> map=new HashMap<String, Object>();
-		if(StringTools.isNotBlank(userId)){
+		if(StringTools.isNotBlank(userId)&&StringTools.isNotBlank(roleIds)){
 			sysRoleService.deleteUserRole(userId,roleIds.split(","));
 			map.put("code", "1");
 			map.put("msg", "删除成功");

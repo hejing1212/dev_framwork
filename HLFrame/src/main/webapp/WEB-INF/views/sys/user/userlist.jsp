@@ -142,7 +142,7 @@
 			
 			var roleIds=[];	
 			for(var i=0;i<rowRole.length;i++){
-				roleIds.push(rowRole[i]['funid']);
+				roleIds.push(rowRole[i]['roleid']);
 			}
 			
 			var param = {};

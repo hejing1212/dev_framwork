@@ -33,7 +33,12 @@
 								<h4>用户登录</h4>
 							</div>
 							<div class="alert alert-error">
-								<i class="iconfont">&#xe62e;</i> <span>请输入用户名</span>
+								<i class="iconfont">&#xe62e;</i> <span>
+								<c:choose><c:when test="${empty msg}">
+								请输入登录信息
+								</c:when>
+								<c:otherwise>${msg}</c:otherwise></c:choose>
+								</span>
 							</div>
 							<form>
 								<div class="lg-username input-item clearfix">
@@ -44,6 +49,7 @@
 									<i class="iconfont">&#xe634;</i> <input type="password"
 										placeholder="请输入密码" name="password">
 								</div>
+								 <c:if test="${showCaptcha eq 1}">
 								<div class="lg-check clearfix">
 									<div class="input-item">
 										<i class="iconfont">&#xe633;</i>
@@ -53,14 +59,10 @@
 <img id="img_jcaptcha"  src="${appPath}/jcaptcha.jpg" width="80" height="36" onclick="changeJcaptchaSrc();" />
                                    </span>
 								</div>
-								<div class="tips clearfix">
-									<label><input type="checkbox" name="rememberMe" checked="checked">记住用户名</label>
-									<a href="javascript:;" class="register">立即注册</a> <a
-										href="javascript:;" class="forget-pwd">忘记密码？</a>
-								</div>
+								</c:if>
 								<div class="enter">
 									 <a href="javascript:void(0);" id="login_btn" class="purchaser" onClick="UserLogin()">管理员登录</a>
-									 <a 	href="javascript:;" class="supplier" onClick="javascript:window.location='main.html'">供应商登录</a>
+									 <label><input type="checkbox" name="rememberMe" checked="checked">记住用户名</label>
 								</div>
 							</form>
 						</div>
@@ -94,7 +96,7 @@ function changeJcaptchaSrc(){
     document.getElementById("img_jcaptcha").src='${appPath}/jcaptcha.jpg?_='+(new Date()).getTime();  
 }
 
-$('#login_btn').bind('keydown',function(event){
+/* $('#login_btn').bind('keydown',function(event){
     if(event.keyCode == "13") {
     	UserLogin();
     }
@@ -104,6 +106,6 @@ $('#remember_input').bind('keydown',function(event){
     	UserLogin();
     }
 }); 
-
+ */
 
 </script>

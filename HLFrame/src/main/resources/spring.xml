@@ -10,7 +10,7 @@
 	<context:property-placeholder location="classpath:shiro.properties,classpath:config.properties" />
 	
 		<!-- 扫描service自动注入为bean -->
-	<context:component-scan base-package="com.hy.sys.service.impl,com.hy.sys.dao.impl,com.hy.sys.core.impl,com.hy.sys.interceptor,com.hy.sys.utils,com.hy.sys.shiro.authen.test" />
+	<context:component-scan base-package="com.hy.sys.service.impl,com.hy.sys.dao.impl,com.hy.sys.core.impl,com.hy.sys.interceptor,com.hy.sys.utils" />
 	 <import resource="spring-jdbc.xml"/>
 	 <import resource="spring-config-cache.xml" />
       <import resource="spring-config-shiro.xml"/>

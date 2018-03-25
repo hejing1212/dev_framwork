@@ -15,8 +15,8 @@ import com.hy.sys.utils.SpringContextHolder;
  * 
  * All rights Reserved, Designed By www.jeeweb.cn
  * @title:  RetryLimitHashedCredentialsMatcher.java   
- * @package cn.jeeweb.modules.sys.security.shiro.web.filter.authc.credential   
- * @description:   密码重试次数限制  
+ * @package    
+ * @description: 密码重试次数限制  
  * @author:   
  * @date:   2017年6月26日 下午5:55:43   
  * @version V1.0 
@@ -41,6 +41,9 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
 		passwordRetryCache = cacheManager.getCache("passwordRetryCache");
 	}
 
+	/**
+	 * 登录失败处理，记录登记 次数
+	 */
 	@Override
 	public boolean doCredentialsMatch(AuthenticationToken token, AuthenticationInfo info) {
 		UsernamePasswordToken authcToken = (UsernamePasswordToken) token;
