@@ -12,4 +12,5 @@ public interface SysDictItemService extends BasicService<SysDataDictItem>{
      */
 	public SysDataDictItem getDictItemName(String itemName);
 
+	public SysDataDictItem  getDictItemByDictId(String dictCode);
 }

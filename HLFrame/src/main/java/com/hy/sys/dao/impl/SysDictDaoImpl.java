@@ -3,6 +3,7 @@ package com.hy.sys.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.stereotype.Repository;
 
@@ -12,9 +13,8 @@ import com.hy.sys.entity.SysDataDict;
 import com.hy.sys.entity.SysRole;
 import com.hy.sys.utils.PageInfo;
 
-
 @Repository("dataDictDao")
-public class SysDictDaoImpl  extends BasicDaoImpl<SysDataDict> implements  SysDictDao{
+public class SysDictDaoImpl extends BasicDaoImpl<SysDataDict> implements SysDictDao {
 
 	@Override
 	public Class<SysDataDict> getEntityClass() {
@@ -22,7 +22,6 @@ public class SysDictDaoImpl  extends BasicDaoImpl<SysDataDict> implements  SysDi
 		return SysDataDict.class;
 	}
 
-	
 	@Override
 	public PageInfo<SysDataDict> getPageList(Map<String, Object> params, SysDataDict entity, int pageNo, int pageSize) {
 		StringBuffer sql = new StringBuffer();
@@ -34,18 +33,19 @@ public class SysDictDaoImpl  extends BasicDaoImpl<SysDataDict> implements  SysDi
 		if (params.containsKey("dict_name") && params.get("dict_name") != null && !"".equals(params.get("dict_name"))) {
 			sql.append(" AND ( dict_name like ?)");
 			String key = params.get("dict_name").toString().trim();
-			values.add("%" + key + "%");			
+			values.add("%" + key + "%");
 		}
 
 		sql.append(" ORDER BY create_date DESC");
-		return (PageInfo<SysDataDict>) this.findPageInfoByQueryJdbc(pageNo, pageSize, sql.toString(),
-				values.toArray(), SysDataDict.class);
+		return (PageInfo<SysDataDict>) this.findPageInfoByQueryJdbc(pageNo, pageSize, sql.toString(), values.toArray(),
+				SysDataDict.class);
 	}
-	
-	
+
 	/**
 	 * 查询是否存在同名的字典
-	 * @param dictName 数据字典名称
+	 * 
+	 * @param dictName
+	 *            数据字典名称
 	 * @return
 	 */
 	@Override
@@ -66,6 +66,48 @@ public class SysDictDaoImpl  extends BasicDaoImpl<SysDataDict> implements  SysDi
 		} else {
 			return null;
 		}
+	}
+
+	/**
+	 * 根据数据字典值查询数据字典及键值
+	 * 
+	 * @param dictName
+	 *            数据字典名称
+	 * @return
+	 */
+	@Override
+	public SysDataDict getDictListByDictCode(String dictCode) {
+		StringBuffer sql = new StringBuffer();
+		List<Object> values = new ArrayList<Object>();
+		sql.append(" FROM SysDataDict ");
+		sql.append(" WHERE 1=1 ");
+
+		if (dictCode != "") {
+			sql.append(" AND ( dict_name = ?)");
+			values.add(dictCode);
+		}
+		sql.append(" ORDER BY create_date DESC");
+		List<SysDataDict> list = this.findByHql(sql.toString(), values.toArray());
+		if (list.size() > 0) {
+			return (SysDataDict) list.get(0);
+		} else {
+			return null;
+		}
+	}
+
+	/**
+	 * 查询所有数据字典
+	 * 
+	 * @return
+	 */
+	@Override
+	public List<SysDataDict> getAllDictList() {
+		StringBuffer sql = new StringBuffer();
+		List<Object> values = new ArrayList<Object>();
+		sql.append(" FROM SysDataDict ");
+		sql.append(" ORDER BY create_date DESC");
+		List<SysDataDict> list = this.findByHql(sql.toString(), values.toArray());
+		return list;
 	}
 
 }

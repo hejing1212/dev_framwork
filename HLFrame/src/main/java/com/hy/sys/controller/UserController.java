@@ -264,8 +264,7 @@ public class UserController extends AbstractBasicController {
 	
 	@RequestMapping("/test")
 	public ModelAndView test(HttpServletResponse response, HttpServletRequest request) {
-		ModelAndView view = new ModelAndView();
-		 
+		ModelAndView view = new ModelAndView();		 
 		return view;
 	}
 }

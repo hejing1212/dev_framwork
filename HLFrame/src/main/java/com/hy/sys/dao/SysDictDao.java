@@ -1,6 +1,8 @@
 package com.hy.sys.dao;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.hy.sys.core.dao.BasicDao;
 import com.hy.sys.entity.SysDataDict;
@@ -30,5 +32,20 @@ public interface SysDictDao extends BasicDao<SysDataDict>{
 	 * @return
 	 */
 	public SysDataDict getDictName(String dictName);
+
+	
+    /**
+     * 根据数据字典值查询数据字典及键值
+     * @param dictCode
+     * @return
+     */
+	public SysDataDict getDictListByDictCode(String dictCode);
+
+
+	/**
+	 * 查询所有数据字典
+	 * @return
+	 */
+	public List<SysDataDict> getAllDictList();
 
 }

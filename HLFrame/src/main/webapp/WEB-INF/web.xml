@@ -46,6 +46,12 @@
 		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
 	</listener>
 	
+	<!-- 启动加载数据字典配置 -->
+	<listener>
+	   <description>初始化数据字典</description>
+		<listener-class>com.hy.sys.utils.InitDicListener</listener-class>
+	</listener>
+	
 	<servlet>
 		<description>spring mvc servlet</description>
 		<servlet-name>rest</servlet-name>

@@ -25,4 +25,11 @@ public interface SysDictItemDao extends BasicDao<SysDataDictItem> {
 	 */
 	public SysDataDictItem getDictItemName(String itemName);
 
+	/**
+	 *  查询当前字典是否存在键值
+	 * @param dict_code
+	 * @return
+	 */
+	public SysDataDictItem getDictItemByDictId(String dict_code);
+
 }

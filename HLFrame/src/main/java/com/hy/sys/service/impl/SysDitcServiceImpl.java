@@ -1,6 +1,8 @@
 package com.hy.sys.service.impl;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,4 +46,24 @@ public class SysDitcServiceImpl extends BasicServiceImpl<SysDataDict> implements
 		return  dataDictDao.getDictName(dictName);
 	}
 
+	
+	/**
+	 * 根据数据字典值查询数据字典及键值
+	 * @param dictName 数据字典名称
+	 * @return
+	 */
+	@Override
+	public SysDataDict getDictListByDictCode(String dictCode) {
+		return dataDictDao.getDictListByDictCode(dictCode);	
+	}
+	
+	/**
+	 * 查询所有数据字典
+	 * @param  
+	 * @return
+	 */
+	@Override
+	public List<SysDataDict> getAllDictList() {
+		return dataDictDao.getAllDictList();	
+	}
 }

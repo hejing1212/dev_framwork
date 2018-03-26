@@ -29,10 +29,10 @@ import com.hy.sys.utils.StringUtils;
 
 /**
  * 
- * All rights Reserved, Designed By www.jeeweb.cn
+ * All rights Reserved, 
  * 
  * @title: UserUtils.java
- * @package cn.jeeweb.modules.sys.utils
+ * @package  
  * @description: 用户工具类
  * @author: 
  * @date: 2017年6月26日 下午6:00:39
@@ -197,11 +197,6 @@ public class UserUtils {
 				return menu;
 			}
 		}
-		/*if (StringUtils.isEmpty(url)) {
-		return null;
-		}
-		url = url.substring(0, url.lastIndexOf("/"));
-		return getCurrentMenu(menuList, url);*/
 		return null;
 	}
 
@@ -237,20 +232,6 @@ public class UserUtils {
 				permissionsList.add(fun.getPermission());
 			}
 		}
-		
-		
-		/*List<SysMenu> list = UserUtils.getMenuList();
-		Set<String> permissionsList = Sets.newConcurrentHashSet();		
-		for (SysMenu menu : list) {
-			if (StringUtils.isNotBlank(menu.getPermission())) {
-				// 添加基于Permission的权限信息
-				for (String permission : StringUtils.split(menu.getPermission(), ",")) {
-					if (StringUtils.isNotBlank(permission)) {
-						permissionsList.add(permission);
-					}
-				}
-			}
-		}*/
 		return permissionsList;
 	}
 
@@ -325,4 +306,5 @@ public class UserUtils {
 		getSession().removeAttribute(key);
 	}
 
+	
 }

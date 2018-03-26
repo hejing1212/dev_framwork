@@ -78,7 +78,7 @@
 
 				if (data.code == '1') {
 					$.messager.alert('添加成功', data.msg,'info',function(){
-						window.parent.reloadDictListd();
+						window.parent.reloadDictList();
 					});
 					
 				} else {

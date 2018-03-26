@@ -79,4 +79,29 @@ public class SysDictItemDaoImpl extends BasicDaoImpl<SysDataDictItem> implements
 			return null;
 		}
 	}
+	
+	/**
+	 * 查询当前字典是否存在键值
+	 * @param dictName 数据字典名称
+	 * @return
+	 */
+	@Override
+	public SysDataDictItem getDictItemByDictId(String dict_code) {
+		StringBuffer sql = new StringBuffer();
+		List<Object> values = new ArrayList<Object>();
+		sql.append(" FROM SysDataDictItem ");
+		sql.append(" WHERE 1=1 ");
+
+		if (dict_code != "") {
+			sql.append(" AND ( dictCode = ?)");
+			values.add(dict_code);
+		}
+		sql.append(" ORDER BY create_date DESC");
+		List<SysDataDictItem> list = this.findByHql(sql.toString(), values.toArray());
+		if (list.size() > 0) {
+			return (SysDataDictItem) list.get(0);
+		} else {
+			return null;
+		}
+	}
 }

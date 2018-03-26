@@ -21,12 +21,12 @@ public class SysDataDictItem extends BaseSpuerEntity {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private String id;                   // 主键',
+	private String id;                         // 主键',
 	private String dictCode;                   // '分组ID',
 	private String itemName;                   // '键值键',
 	private String itemValue;                   // '值',
-	private Integer sort;                // '排序',
-	private String remarks;              // '描述',
+	private Integer sort;                       // '排序',
+	private String remarks;                     // '描述',
 	
 	
 	public SysDataDictItem(){

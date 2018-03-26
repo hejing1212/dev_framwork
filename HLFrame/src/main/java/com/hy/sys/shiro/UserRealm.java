@@ -68,7 +68,7 @@ public class UserRealm extends AuthorizingRealm {
 				getName() // realm name
 		);
 		// 记录登录日志
-	//	LogUtilsDEL.saveLog(ServletUtils.getRequest(), "系统登录");
+
 		return authenticationInfo;
 	}
 

@@ -280,4 +280,56 @@ public class DictController extends AbstractBasicController {
 		}
 		return map;
 	}
+	
+	/**
+	 * 删除数据字典
+	 * @param dictId
+	 * @param response
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/delDict")
+	public Map<String,Object> deleteDict(@RequestParam(required = true) String dictId,HttpServletResponse response, HttpServletRequest request){
+		Map<String,Object> map=new HashMap<String, Object>();
+		if(StringTools.isNotBlank(dictId)){
+			if(sysDictItemService.getDictItemByDictId(dictId)==null) {
+			dataDictService.delete(dictId, true);
+			map.put("code", "1");
+			map.put("msg", "删除成功");
+			}else {
+				map.put("code", "0");
+				map.put("msg", "当前字典存在键值项，不能删除！");
+			}
+		}else{
+			map.put("code", "0");
+			map.put("msg", "参数错误");
+		}
+		return map;
+	}
+	
+	/**
+	 * 删除数据字典键值
+	 * @param dictId
+	 * @param response
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/delDictItem")
+	public Map<String,Object> delDictItem(@RequestParam(required = true) String itemId,HttpServletResponse response, HttpServletRequest request){
+		Map<String,Object> map=new HashMap<String, Object>();
+		if(StringTools.isNotBlank(itemId)){
+			sysDictItemService.delete(itemId, true);
+			map.put("code", "1");
+			map.put("msg", "删除成功");
+		}else{
+			map.put("code", "0");
+			map.put("msg", "参数错误");
+		}
+		return map;
+	}
+	
+	
+	
 }

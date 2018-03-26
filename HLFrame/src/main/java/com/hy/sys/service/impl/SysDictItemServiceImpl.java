@@ -42,4 +42,9 @@ public class SysDictItemServiceImpl extends BasicServiceImpl<SysDataDictItem> im
 		return  dataDictDaoItem.getDictItemName(itemName);
 	}
 
+	@Override
+	public SysDataDictItem getDictItemByDictId(String dictCode) {
+		return dataDictDaoItem.getDictItemByDictId(dictCode);
+	}
+
 }

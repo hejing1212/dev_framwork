@@ -37,7 +37,7 @@
 						<tr>
 							<td class="kv-label">排序</td>
 							<td class="kv-content"  colspan="3">
-							<input class="easyui-textbox" value="${item.sort }"
+							<input class="easyui-numberbox" value="${item.sort }"
 								type="text" name="sort" data-options="required:true,missingMessage:'请输入排序数字！'" /></td>
 					    </tr>
 						<tr>
