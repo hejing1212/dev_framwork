@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -22,18 +23,24 @@
 		<div data-options="region:'center'">
 			<div id="tb" style="padding: 0 30px;">
 				<div class="conditions">
-					
+					<shiro:hasPermission name="sys:menu:menuquery">
 					名称: <input class="easyui-textbox" type="text" name="name" style="width: 166px; height: 35px; line-height: 35px;"></input>
 					 <a href="#" class="easyui-linkbutton" iconCls="icon-search"
 						data-options="selected:true">查询</a>
-						
+					</shiro:hasPermission>		
+					<shiro:hasPermission name="sys:menu:menuAdd">
 						<a href="javascript:void(0)" onclick="window.parent.mainPlatform._createWindows('添加资源','${basePath}/sys/menu/menuAdd.html','icon-add','menuAdd');"
 						class="easyui-linkbutton" data-options="iconCls:'icon-add'">
 						新增</a> 
+						</shiro:hasPermission>	
+						<shiro:hasPermission name="sys:menu:menuEdit">
 						<a href="javascript:void(0)" onclick="editMenu();"
 						class="easyui-linkbutton" data-options="iconCls:'icon-edit'">修改</a> 
+						</shiro:hasPermission>	
+						<shiro:hasPermission name="sys:menu:deleteMenu">
 						<a href="javascript:void(0)" onclick="delMenu();"
 						class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">删除</a>
+						</shiro:hasPermission>	
 				</div>
 			</div>
 
@@ -43,9 +50,9 @@ url: '${basePath}/sys/menu/getMenuList.html',method: 'get',rownumbers: true,idFi
 					<tr>
 						<th data-options="field:'name'" width="150" align="center">名称</th>
 						<th data-options="field:'url'" width="220" align="center">菜单路径</th>
-						<th data-options="field:'isshow',formatter:SetDictName" width="80" align="center">是否显示</th>
-						<th data-options="field:'current',formatter:SetDictName" width="80" align="center">默认展开</th>
-						<th data-options="field:'type',formatter:SetDictName" width="80" align="center">资源类型</th>
+						<th data-options="field:'isshow',formatter:SetDictNameMap" width="80" align="center">是否显示</th>
+						<th data-options="field:'current',formatter:SetDictNameMap" width="80" align="center">默认展开</th>
+						<th data-options="field:'type',formatter:SetDictNameMap" width="80" align="center">资源类型</th>
 						<th data-options="field:'create_date'" width="150" align="center">添加日期</th>
 						<th data-options="field:'remarks'" width="150" align="center">摘要</th>
 					</tr>
@@ -56,12 +63,18 @@ url: '${basePath}/sys/menu/getMenuList.html',method: 'get',rownumbers: true,idFi
 		<div data-options="region:'east',split:true,collapsed:true,"
 			title="功能编辑" style="width: 300px;">
 			<div style="padding: 5px 0; text-align: right;">
+			 <shiro:hasPermission name="sys:menu:fun:add">
 				<a href="#" onclick="addFun()" class="easyui-linkbutton"
-					data-options="plain:true,iconCls:'icon-add'">添加</a> <a href="#"
-					onclick="editFun()" class="easyui-linkbutton"
-					data-options="plain:true,iconCls:'icon-edit'">编辑</a> <a href="#"
-					onclick="delMenuFun();" class="easyui-linkbutton"
+					data-options="plain:true,iconCls:'icon-add'">添加</a>
+			 </shiro:hasPermission>	
+			<shiro:hasPermission name="sys:menu:fun:showFunction">		
+					 <a href="#" onclick="editFun()" class="easyui-linkbutton"
+					data-options="plain:true,iconCls:'icon-edit'">编辑</a> 
+			 </shiro:hasPermission>	
+			 <shiro:hasPermission name="sys:menu:fun:deleteMenuFun">
+					<a href="#" onclick="delMenuFun();" class="easyui-linkbutton"
 					data-options="plain:true,iconCls:'icon-remove'">移除</a>
+			 </shiro:hasPermission>	
 
 			</div>
 			<table id="function_dg" class="easyui-datagrid"

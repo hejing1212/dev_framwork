@@ -4,9 +4,8 @@
 package com.hy.sys.controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -65,6 +64,7 @@ public class IndexController extends AbstractBasicController{
 	public List<SysMenu> getMenuList(HttpServletResponse response,
 			HttpServletRequest request) {
 		List<SysMenu> list=UserUtils.getMenuList();
+		Collections.sort(list);
 		ArrayList<TreeNode> retlist = new ArrayList<TreeNode>();
 		ArrayList<TreeNode> arlist = CreateMenuFormat(list, SysFunctions.TopMenuNO(), retlist);
 		String jsonStr = JSON.toJSONString(arlist);

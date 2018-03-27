@@ -24,8 +24,8 @@
 					<th field="roleid" width="160" align="center">角色ID</th>
 					<th field="name" width="120" align="center">角色名称</th>
 					<th field="code" width="120" align="center">英文名称</th>
-					<th field="is_sys" width="80" align="center" data-options="formatter:SetDictName">是否系统数据</th>
-					<th field="usable" width="80" align="center" data-options="formatter:SetDictName">是否可用</th>					 
+					<th field="is_sys" width="80" align="center" data-options="formatter:SetDictNameMap">是否系统数据</th>
+					<th field="usable" width="80" align="center" data-options="formatter:SetDictNameMap">是否可用</th>					 
 					<th field="create_date" width="120" align="center">创建日期</th>
 					<th field="remarks" width="200">备注</th>
 				</tr>

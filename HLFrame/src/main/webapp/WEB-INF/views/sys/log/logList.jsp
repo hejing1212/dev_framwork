@@ -32,6 +32,7 @@
 			</thead>
 		</table>
 		<div id="tb" style="padding: 0 30px;">
+		<shiro:hasPermission name="sys:menu:fun:deleteMenuFun">
 			<div class="conditions">
 				操作人: <input class="easyui-textbox" type="text" name="code"
 					style="width: 166px; height: 35px; line-height: 35px;"></input>
@@ -40,7 +41,7 @@
 
 			 
 			</div>
-			
+		 </shiro:hasPermission>		
 		</div>
 	</div>
 

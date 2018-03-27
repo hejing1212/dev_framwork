@@ -1,10 +1,9 @@
 /**
- * 显示数据字典值
+ * 显示数据字典值,结合easyui框架formatter方法使用
  */
 
-//以下为数据字典设置相关，一个界面中只要一个该方法	
-    var dictJson="";		
-		//设置用户状态
+//该访求性能低下，每显示一行数据都要遍历	
+    var dictJson="";   
 	function SetDictName(value, text){
 			 if(dictJson==""){
 				 $.ajax({
@@ -31,7 +30,34 @@
 				}
 			}
 		}
-		
+	
+	//该访先对所胡数据生成MAP，然后减少循环，提供性能	
+	 var dictMap={};	
+	function SetDictNameMap(value, text){
+		 if(Object.keys(dictMap).length==0){
+			 
+			 $.ajax({
+	   				url:getRootPath()+"/sys/dict/getDitcJson.html",
+					type:"get",
+					dataType:"json",
+					async:false,
+			   		//提交成功后回调的函数
+	             	success: function(data){
+	             		var dictJsonArr=JSON.parse(data);
+	             		for(var i = 0, len = dictJsonArr.length; i < len; i++){
+	             			var itemMap={};
+	             			var dataDict=dictJsonArr[i].dataDict;
+	             			for(var v = 0, lens = dataDict.length; v < lens; v++){
+	             				itemMap[dataDict[v].itemValue]=dataDict[v].itemName;
+            			    }	             			
+	             			dictMap[dictJsonArr[i].dictCode]=itemMap;
+	            		}
+					} 
+				});	
+		 }
+		var field=this.field; 
+		return dictMap[field][value];
+	}
 		
 	function getRootPath(){
 		var strFullPath=window.document.location.href;

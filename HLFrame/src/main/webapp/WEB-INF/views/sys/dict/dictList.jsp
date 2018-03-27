@@ -36,23 +36,24 @@
 
 			<div id="tb" style="padding: 0 30px;">
 				<div class="conditions">
-					${test}字典名称: <input class="easyui-textbox" type="text" name="dict_name"
+				<shiro:hasPermission name="sys:dict:dictquery">
+					字典名称: <input class="easyui-textbox" type="text" name="dict_name"
 						style="width: 166px; height: 35px; line-height: 35px;"></input> <a
 						href="#" class="easyui-linkbutton" iconCls="icon-search"
 						data-options="selected:true">查询</a>
-						
+				</shiro:hasPermission>		
 
 
-					<shiro:hasPermission name="sys:user:adduser">
+					<shiro:hasPermission name="sys:dict:dictadd">
 						<a href="javascript:void(0)" class="easyui-linkbutton"
 							data-options="iconCls:'icon-add'" onclick="addDict()"> 新增</a>
 					</shiro:hasPermission>
-					<shiro:hasPermission name="sys:user:edituser">
+					<shiro:hasPermission name="sys:dict:dictedit">
 						<a href="javascript:void(0)" onclick="editDict();"
 							class="easyui-linkbutton" data-options="iconCls:'icon-edit'">修改</a>
 					</shiro:hasPermission>
 
-					<shiro:hasPermission name="sys:user:edituser">
+					<shiro:hasPermission name="sys:dict:dictdel">
 						<a href="javascript:void(0)" onclick="delDict();"
 							class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">删除</a>
 					</shiro:hasPermission>
@@ -65,15 +66,15 @@
 		<div data-options="region:'east',split:true" title="角色设置"
 			style="width: 40%;">
 			<div style="padding: 5px 0; text-align: right;">
-				<shiro:hasPermission name="sys:role:addAuthorize">
+				<shiro:hasPermission name="sys:dict:item:add">
 					<a href="#" onclick="addDictItem()" class="easyui-linkbutton"
 						data-options="plain:true,iconCls:'icon-add'">新增</a>
 				</shiro:hasPermission>
-				<shiro:hasPermission name="sys:user:userRoleRm">
+				<shiro:hasPermission name="sys:dict:item:edit">
 					<a href="#" onclick="editDictItem();" class="easyui-linkbutton"
 						data-options="plain:true,iconCls:'icon-edit'">修改</a>
 				</shiro:hasPermission>
-				<shiro:hasPermission name="sys:user:userRoleRm">
+				<shiro:hasPermission name="sys:dict:item:itemdel">
 					<a href="#" onclick="delDictItem();" class="easyui-linkbutton"
 						data-options="plain:true,iconCls:'icon-cancel'">删除</a>
 				</shiro:hasPermission>

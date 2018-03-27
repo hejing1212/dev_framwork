@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,12 +22,13 @@
 		<div data-options="region:'center'">
 			<div id="tb" style="padding: 0 30px;">
 				<div class="conditions">
-
-					<input type="checkbox" onclick="checkAll();" name="checkall">
-					全选 <input type="checkbox" onclick="uncheckAll();" name="checkall">
-					取消全选 <a href="javascript:void(0)" onclick="saveAuths();"
+	
+					<input type="checkbox" onclick="checkAll();" name="checkall"> 全选 
+					<input type="checkbox" onclick="uncheckAll();" name="checkall"> 取消全选 
+					<shiro:hasPermission name="sys:role:authorrole">
+					<a href="javascript:void(0)" onclick="saveAuths();"
 						class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-save'">保存</a>
-
+                   </shiro:hasPermission>	
 				</div>
 			</div>                                                      
 			<input type="hidden" id="roleId" name="roleId" value="${roleId}">

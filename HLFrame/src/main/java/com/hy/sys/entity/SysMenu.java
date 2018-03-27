@@ -22,7 +22,7 @@ import com.hy.sys.utils.Comment;
 @Entity
 @Table(name = "sys_menu")
 @Comment(value = "菜单管理表")
-public class SysMenu extends BaseSpuerEntity {
+public class SysMenu extends BaseSpuerEntity implements Comparable<SysMenu>{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -204,6 +204,10 @@ public class SysMenu extends BaseSpuerEntity {
 	}
 	public void setCurrent(Integer current) {
 		this.current = current;
+	}
+	@Override
+	public int compareTo(SysMenu arg0) {
+		return  this.getSort().compareTo(getSort());
 	}
 	
 	
