@@ -1,26 +1,28 @@
 package com.hy.sys.utils;
 
-import java.util.List;
-
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-import com.alibaba.fastjson.JSON;
-import com.hy.sys.entity.SysDataDict;
-                                        
-public class InitDicListener implements ServletContextListener{
+import org.springframework.web.context.ContextLoader;
+
+public class  InitDicListener implements ServletContextListener{
 
 	/**
-	 * 系统启动初始化数据。可以设置值直接在JSP页面中调用显示
+	 * 系统启动初始化数据
 	 */
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
-		// TODO Auto-generated method stub
+		try {
+		DictUtils.setCacheDic();
 		ServletContext context=sce.getServletContext();
-		List<SysDataDict> list=DictUtils.getAllList();
-		String distJsonStr=JSON.toJSONString(list);
-		context.setAttribute("dictJson", distJsonStr);
+		
+		
+		String basePath =context.getContextPath(); //ContextLoader.getCurrentWebApplicationContext().getServletContext().getRealPath("/");
+		context.setAttribute("basePath",basePath);
+		}catch (Exception e) {
+			System.out.println("初始化数据失败："+e.toString());
+		}
 	}
 
 	@Override
@@ -29,8 +31,8 @@ public class InitDicListener implements ServletContextListener{
 		
 	}
 
-	
-	 
-	 
 
+	
 }
+
+

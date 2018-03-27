@@ -1,12 +1,11 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
- <c:set var="basePath" value='<%=request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort() + request.getContextPath()%>' />
+<%@ taglib prefix= "c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html> 
 <html lang="en"> 
 <head> 
     <meta charset="utf-8"> 
     <meta name="viewport" content="width=device-width, initial-scale=1"> 
-    <title>工作台</title> 
+    <title>${basePath}-工作台</title> 
 
 <link href="${basePath}/static/css/base.css" rel="stylesheet">
 <link rel="stylesheet" href="${basePath}/static/easyui/darkblue/easyui.css">
@@ -351,7 +350,6 @@
     </div>
     <script type="text/javascript" src="${basePath}/static/easyui/jquery.min.js"></script>
     <script type="text/javascript" src="${basePath}/static/easyui/jquery.easyui.min.js"></script>
-    <!-- <script type="text/javascript" src="js/menu.js"></script> -->
     <script type="text/javascript" src="${basePath}/static/js/echarts-all.js"></script>
     
   

@@ -31,4 +31,6 @@ public interface SysDictService extends BasicService<SysDataDict> {
 	 */
 	public List<SysDataDict> getAllDictList();
 
+	 
+
 }

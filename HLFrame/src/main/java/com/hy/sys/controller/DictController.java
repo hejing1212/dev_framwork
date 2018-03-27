@@ -2,6 +2,7 @@ package com.hy.sys.controller;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +27,7 @@ import com.hy.sys.entity.SysRole;
 import com.hy.sys.service.SysDictItemService;
 import com.hy.sys.service.SysDictService;
 import com.hy.sys.shiro.UserUtils;
+import com.hy.sys.utils.DictUtils;
 import com.hy.sys.utils.IntegerTools;
 import com.hy.sys.utils.PageInfo;
 import com.hy.sys.utils.StringTools;
@@ -97,7 +99,8 @@ public class DictController extends AbstractBasicController {
 	 * @return
 	 */
 	@RequestMapping("/dictItemAdd")
-	public ModelAndView dictItemAdd(@RequestParam(value = "dictId",required = false) String dictId, ModelMap mode,HttpServletRequest req) {
+	public ModelAndView dictItemAdd(@RequestParam(value = "dictId", required = false) String dictId, ModelMap mode,
+			HttpServletRequest req) {
 		ModelAndView view = new ModelAndView();
 		if (StringTools.isNotEmpty(dictId)) {
 			view.addObject("dictId", dictId);
@@ -115,7 +118,8 @@ public class DictController extends AbstractBasicController {
 	 * @return
 	 */
 	@RequestMapping("/dictItemEdit")
-	public ModelAndView dictItemEdit(@RequestParam(value = "itemId",required = false ) String itemId, HttpServletRequest req) {
+	public ModelAndView dictItemEdit(@RequestParam(value = "itemId", required = false) String itemId,
+			HttpServletRequest req) {
 		ModelAndView view = new ModelAndView();
 		if (StringTools.isNotEmpty(itemId)) {
 			SysDataDictItem item = sysDictItemService.get(itemId);
@@ -168,12 +172,13 @@ public class DictController extends AbstractBasicController {
 	 */
 	@ResponseBody
 	@RequestMapping("/getDictItemList")
-	public PageInfo<SysDataDictItem> getDictItemList(@ModelAttribute SysDataDictItem entity,HttpServletResponse response, HttpServletRequest request) {
+	public PageInfo<SysDataDictItem> getDictItemList(@ModelAttribute SysDataDictItem entity,
+			HttpServletResponse response, HttpServletRequest request) {
 		int pageNo = (request.getParameter("page") == null) ? PAGE_NO
 				: IntegerTools.parseInt(request.getParameter("page"));
 		int pageSize = (request.getParameter("rows") == null) ? PAGE_SIZE
 				: IntegerTools.parseInt(request.getParameter("rows"));
-		 String dictId=request.getParameter("dictId");
+		String dictId = request.getParameter("dictId");
 		// 装载查询条件
 		Map<String, Object> params = new HashMap<String, Object>();
 		if (StringTools.isNotEmpty(dictId)) {
@@ -274,15 +279,16 @@ public class DictController extends AbstractBasicController {
 					map.put("msg", e.toString());
 				}
 			}
-		}else {
+		} else {
 			map.put("code", 0);
 			map.put("msg", "非法操作 ，未获取到数据字典编码！");
 		}
 		return map;
 	}
-	
+
 	/**
 	 * 删除数据字典
+	 * 
 	 * @param dictId
 	 * @param response
 	 * @param request
@@ -290,26 +296,28 @@ public class DictController extends AbstractBasicController {
 	 */
 	@ResponseBody
 	@RequestMapping("/delDict")
-	public Map<String,Object> deleteDict(@RequestParam(required = true) String dictId,HttpServletResponse response, HttpServletRequest request){
-		Map<String,Object> map=new HashMap<String, Object>();
-		if(StringTools.isNotBlank(dictId)){
-			if(sysDictItemService.getDictItemByDictId(dictId)==null) {
-			dataDictService.delete(dictId, true);
-			map.put("code", "1");
-			map.put("msg", "删除成功");
-			}else {
+	public Map<String, Object> deleteDict(@RequestParam(required = true) String dictId, HttpServletResponse response,
+			HttpServletRequest request) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		if (StringTools.isNotBlank(dictId)) {
+			if (sysDictItemService.getDictItemByDictId(dictId) == null) {
+				dataDictService.delete(dictId, true);
+				map.put("code", "1");
+				map.put("msg", "删除成功");
+			} else {
 				map.put("code", "0");
 				map.put("msg", "当前字典存在键值项，不能删除！");
 			}
-		}else{
+		} else {
 			map.put("code", "0");
 			map.put("msg", "参数错误");
 		}
 		return map;
 	}
-	
+
 	/**
 	 * 删除数据字典键值
+	 * 
 	 * @param dictId
 	 * @param response
 	 * @param request
@@ -317,19 +325,42 @@ public class DictController extends AbstractBasicController {
 	 */
 	@ResponseBody
 	@RequestMapping("/delDictItem")
-	public Map<String,Object> delDictItem(@RequestParam(required = true) String itemId,HttpServletResponse response, HttpServletRequest request){
-		Map<String,Object> map=new HashMap<String, Object>();
-		if(StringTools.isNotBlank(itemId)){
+	public Map<String, Object> delDictItem(@RequestParam(required = true) String itemId, HttpServletResponse response,
+			HttpServletRequest request) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		if (StringTools.isNotBlank(itemId)) {
 			sysDictItemService.delete(itemId, true);
 			map.put("code", "1");
 			map.put("msg", "删除成功");
-		}else{
+		} else {
 			map.put("code", "0");
 			map.put("msg", "参数错误");
 		}
 		return map;
 	}
+
+	/**
+	 * 返回SON格式的 所有数据字典
+	 * @param itemValue
+	 * @param response
+	 * @param request
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/getDitcJson")
+	public String getDitcJson(HttpServletResponse response, HttpServletRequest request) {
+		List<SysDataDict> list=DictUtils.getCacheDic();
+		if(list!=null) {
+			return JSON.toJSONString(list);
+		}
+		 return null;
+	}
 	
+	@RequestMapping("/test")
+	public ModelAndView test() {
+		ModelAndView view = new ModelAndView();
+		return view;
+	}
 	
 	
 }

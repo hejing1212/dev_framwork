@@ -7,12 +7,14 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSON;
 import com.hy.sys.core.dao.BasicDao;
 import com.hy.sys.core.service.impl.BasicServiceImpl;
 import com.hy.sys.dao.SysDictDao;
 import com.hy.sys.entity.SysDataDict;
 import com.hy.sys.entity.SysRole;
 import com.hy.sys.service.SysDictService;
+import com.hy.sys.utils.DictUtils;
 import com.hy.sys.utils.PageInfo;
 
 
@@ -66,4 +68,6 @@ public class SysDitcServiceImpl extends BasicServiceImpl<SysDataDict> implements
 	public List<SysDataDict> getAllDictList() {
 		return dataDictDao.getAllDictList();	
 	}
+	
+	
 }

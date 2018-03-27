@@ -43,7 +43,6 @@ public class IndexController extends AbstractBasicController{
 	@Override
 	protected void init(ModelMap mode, HttpServletRequest req) {
 		// TODO Auto-generated method stub
-		basePath="abc";
 	}
 
 	@RequestMapping("/main")
@@ -59,7 +58,6 @@ public class IndexController extends AbstractBasicController{
 	@RequestMapping("/index")
 	public ModelAndView index(ModelMap mode, HttpServletRequest req) {
 		ModelAndView view = new ModelAndView();
-		 req.setAttribute("basePath",basePath);
 		return view;
 	}
 	

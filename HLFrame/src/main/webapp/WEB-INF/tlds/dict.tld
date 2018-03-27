@@ -2,6 +2,11 @@
 <taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
 	version="2.0">
+	
+	<tlib-version>4.0</tlib-version>
+    <jsp-version>2.2</jsp-version>
+    <short-name>EFT JSP Helpers</short-name>
+	
 	<!-- 数据字典标签 -->
 	<tag>
 		<name>dict</name>
@@ -67,10 +72,11 @@
 		</attribute>
 	</tag>
 
+   <!-- 返回值对应的名称 -->
 	<tag>
 		<name>dicK2V</name>
 		<description>数据字典</description>
-		<tag-class>com.hy.sys.tag.DictK2V</tag-class>
+		<tag-class>com.hy.sys.tag.DictKey2Value</tag-class>
 		<body-content>JSP</body-content>
 		<display-name>数据转换</display-name>
 		<attribute>
@@ -85,4 +91,18 @@
 		</attribute>
 	</tag>
 
+ <!-- 返回某一字典下的所有鍵值 -->
+	<tag>
+		<name>dicK2Json</name>
+		<description>数据字典项JSON</description>
+		<tag-class>com.hy.sys.tag.DictKey2Json</tag-class>
+		<body-content>JSP</body-content>
+		<display-name>数据字典项转成JSON</display-name>
+		<attribute>
+			<name>itemCode</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	
 </taglib>

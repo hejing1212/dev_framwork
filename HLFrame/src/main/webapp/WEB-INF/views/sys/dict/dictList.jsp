@@ -1,9 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="shiro" uri="http://shiro.apache.org/tags"%>
-<c:set var="basePath"
-	value='<%=request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-					+ request.getContextPath()%>' />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,10 +36,11 @@
 
 			<div id="tb" style="padding: 0 30px;">
 				<div class="conditions">
-					字典名称: <input class="easyui-textbox" type="text" name="dict_name"
+					${test}字典名称: <input class="easyui-textbox" type="text" name="dict_name"
 						style="width: 166px; height: 35px; line-height: 35px;"></input> <a
 						href="#" class="easyui-linkbutton" iconCls="icon-search"
 						data-options="selected:true">查询</a>
+						
 
 
 					<shiro:hasPermission name="sys:user:adduser">

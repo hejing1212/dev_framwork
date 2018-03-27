@@ -1,8 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="basePath"
-	value='<%=request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-					+ request.getContextPath()%>' />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,8 +24,8 @@
 					<th field="roleid" width="160" align="center">角色ID</th>
 					<th field="name" width="120" align="center">角色名称</th>
 					<th field="code" width="120" align="center">英文名称</th>
-					<th field="is_sys" width="80" align="center">是否系统数据</th>
-					<th field="usable" width="80" align="center">是否可用</th>					 
+					<th field="is_sys" width="80" align="center" data-options="formatter:SetDictName">是否系统数据</th>
+					<th field="usable" width="80" align="center" data-options="formatter:SetDictName">是否可用</th>					 
 					<th field="create_date" width="120" align="center">创建日期</th>
 					<th field="remarks" width="200">备注</th>
 				</tr>
@@ -57,7 +54,7 @@
 		src="${basePath}/static/easyui/jquery.easyui.min.js"></script>
 	<script type="text/javascript"
 		src="${basePath}/static/easyui/easyui-lang-zh_CN.js"></script>
-
+   <script type="text/javascript" src="${basePath}/static/js/dict.js"></script>
 	<script type="text/javascript">	
 		/*
 		 * 显示列表

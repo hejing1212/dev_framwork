@@ -1,9 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="shiro" uri="http://shiro.apache.org/tags" %> 
-<c:set var="basePath"
-	value='<%=request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-					+ request.getContextPath()%>' />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,7 +30,7 @@
 						<th field="username" width="120" align="center">用户名</th>
 						<th field="email" width="150" align="center">邮箱</th>
 						<th field="phone" width="130" align="center">手机号</th>
-						<th field="status" width="100" align="center">状态</th>
+						<th field="status" width="100" data-options="formatter:SetDictName" align="center">状态</th>
 
 						<th field="create_date" width="120" align="center">创建日期</th>
 						<th field="remarks" width="200">备注</th>
@@ -83,7 +80,7 @@
 				<thead>
 					<tr>
 						<th data-options="field:'name'" width="80">角色名称</th>
-						<th data-options="field:'usable',align:'right'" width="80">是否可用</th>
+						<th data-options="field:'usable',align:'right',formatter:SetDictName" width="80">是否可用</th>
 						<th data-options="field:'remarks'" width="100">角色描述</th>
 					</tr>
 				</thead>
@@ -101,7 +98,8 @@
 		src="${basePath}/static/easyui/jquery.easyui.min.js"></script>
 	<script type="text/javascript"
 		src="${basePath}/static/easyui/easyui-lang-zh_CN.js"></script>
-
+<script type="text/javascript"
+		src="${basePath}/static/js/dict.js"></script>
 	<script type="text/javascript">
 		/*
 		 * 显示列表
@@ -264,6 +262,7 @@
 				} 
 			});		
 		}
+	
 	</script>
 
 </body>

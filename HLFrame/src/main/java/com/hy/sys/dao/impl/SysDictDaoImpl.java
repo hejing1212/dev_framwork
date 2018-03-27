@@ -83,7 +83,7 @@ public class SysDictDaoImpl extends BasicDaoImpl<SysDataDict> implements SysDict
 		sql.append(" WHERE 1=1 ");
 
 		if (dictCode != "") {
-			sql.append(" AND ( dict_name = ?)");
+			sql.append(" AND ( dictCode = ?)");
 			values.add(dictCode);
 		}
 		sql.append(" ORDER BY create_date DESC");

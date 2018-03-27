@@ -1,8 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="basePath"
-	value='<%=request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
-					+ request.getContextPath()%>' />
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,9 +43,9 @@ url: '${basePath}/sys/menu/getMenuList.html',method: 'get',rownumbers: true,idFi
 					<tr>
 						<th data-options="field:'name'" width="150" align="center">名称</th>
 						<th data-options="field:'url'" width="220" align="center">菜单路径</th>
-						<th data-options="field:'isshow'" width="80" align="center">是否显示</th>
-						<th data-options="field:'current'" width="80" align="center">默认展开</th>
-						<th data-options="field:'type'" width="80" align="center">资源类型</th>
+						<th data-options="field:'isshow',formatter:SetDictName" width="80" align="center">是否显示</th>
+						<th data-options="field:'current',formatter:SetDictName" width="80" align="center">默认展开</th>
+						<th data-options="field:'type',formatter:SetDictName" width="80" align="center">资源类型</th>
 						<th data-options="field:'create_date'" width="150" align="center">添加日期</th>
 						<th data-options="field:'remarks'" width="150" align="center">摘要</th>
 					</tr>
@@ -90,7 +88,7 @@ url: '${basePath}/sys/menu/getMenuList.html',method: 'get',rownumbers: true,idFi
 		src="${basePath}/static/easyui/jquery.easyui.min.js"></script>
 	<script type="text/javascript"
 		src="${basePath}/static/easyui/easyui-lang-zh_CN.js"></script>
-
+   <script type="text/javascript" src="${basePath}/static/js/dict.js"></script>
 	<script type="text/javascript">
                 $('#menuTree').treegrid({
                  onClickRow : function(rowlndex, rowData) {
