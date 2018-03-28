@@ -119,8 +119,9 @@ public class SysMenuServiceImpl extends BasicServiceImpl<SysMenu> implements Sys
 	 * 查询所有菜单，遍历后返回列表
 	 */
 	@Override
-	public ArrayList<SysMenu> getMenuList() {
-		List<SysMenu> list = getBasicDao().findAll(SysMenu.class);
+	public ArrayList<SysMenu> getMenuList(Map<String, Object> params, SysMenu entity) {
+		//List<SysMenu> list = getBasicDao().findAll(SysMenu.class);
+		List<SysMenu> list = sysMenuDao.getList(params, entity);
 		ArrayList<SysMenu> retlist = new ArrayList<SysMenu>();
 
 		if (list.size() > 0) {

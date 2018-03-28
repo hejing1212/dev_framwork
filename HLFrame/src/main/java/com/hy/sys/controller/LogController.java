@@ -57,7 +57,8 @@ public class LogController extends AbstractBasicController{
 				: IntegerTools.parseInt(request.getParameter("rows"));
 
 		Map<String, Object> params = new HashMap<String, Object>();
-
+        params.put("queryKey", request.getParameter("queryKey"));
+        
 		PageInfo<SysLog> pages = sysLogService.getPageList(params, entity, pageNo, pageSize);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("total", pages.getTotalrecond());

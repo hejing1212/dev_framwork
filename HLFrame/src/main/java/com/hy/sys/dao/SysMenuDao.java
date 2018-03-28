@@ -3,9 +3,11 @@ package com.hy.sys.dao;
 
 
 import java.util.List;
+import java.util.Map;
 
 import com.hy.sys.core.dao.BasicDao;
 import com.hy.sys.entity.SysMenu;
+import com.hy.sys.entity.SysRole;
 
 
 /**
@@ -53,6 +55,16 @@ public interface SysMenuDao extends BasicDao<SysMenu> {
 	 * @param parentId
 	 */
 	public void updataMenuCurrent(String parentId);
+
+	/**
+	 * 查询菜单列表，带查询参数 
+	 * @param params
+	 * @param entity
+	 * @param pageNo
+	 * @param pageSize
+	 * @return
+	 */
+	public List<SysMenu> getList(Map<String, Object> params, SysMenu entity);
 
 	
 

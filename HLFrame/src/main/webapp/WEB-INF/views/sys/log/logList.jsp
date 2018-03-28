@@ -24,7 +24,7 @@
 					<th field="opt_user_name" width="60" align="center">操作人</th>
 					<th field="opt_table_name" width="60" align="center">操作表</th>
 					<th field="opt_data_id" width="120" align="center">操作数据ID</th>
-					<th field="opt_type" width="50" align="center">操作类型</th>
+					<th field="opt_type" data-options="formatter:SetDictNameMap"  width="50" align="center" >操作类型</th>
 					<th field="opt_content" width="360" align="center">操作内容</th>					 
 					<th field="create_date" width="80" align="center">创建日期</th>
 					 
@@ -34,10 +34,8 @@
 		<div id="tb" style="padding: 0 30px;">
 		<shiro:hasPermission name="sys:menu:fun:deleteMenuFun">
 			<div class="conditions">
-				操作人: <input class="easyui-textbox" type="text" name="code"
-					style="width: 166px; height: 35px; line-height: 35px;"></input>
-			  <a href="#" class="easyui-linkbutton" iconCls="icon-search"
-					data-options="selected:true">查询</a> 
+				关键字: <input class="easyui-textbox" type="text" id="queryKey" style="width: 166px; height: 35px; line-height: 35px;"></input>
+			          <a href="#" class="easyui-linkbutton" iconCls="icon-search" data-options="selected:true" onclick="javascript:doSearch()">查询</a> 
 
 			 
 			</div>
@@ -51,7 +49,8 @@
 		src="${basePath}/static/easyui/jquery.easyui.min.js"></script>
 	<script type="text/javascript"
 		src="${basePath}/static/easyui/easyui-lang-zh_CN.js"></script>
-
+<script type="text/javascript"
+		src="${basePath}/static/js/dict.js"></script>
 	<script type="text/javascript">	
 		/*
 		 * 显示列表
@@ -63,7 +62,14 @@
 			});
 		});
 		
-	    
+		//查询功能
+		function doSearch() {
+			var queryParams = $("#dg").datagrid("options").queryParams;
+			queryParams["queryKey"] = $.trim($("#queryKey").val());
+			$("#dg").datagrid({
+				url : "${basePath}/sys/log/getLogList.html"
+			});
+		}
 		
 	</script>
 

@@ -193,7 +193,8 @@ public class RoleController extends AbstractBasicController {
 				: IntegerTools.parseInt(request.getParameter("rows"));
 
 		Map<String, Object> params = new HashMap<String, Object>();
-
+		params.put("queryKey", request.getParameter("queryKey"));
+		
 		PageInfo<SysRole> pages = sysRoleService.getList(params, entity, pageNo, pageSize);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("total", pages.getTotalrecond());

@@ -20,7 +20,7 @@ public interface SysMenuService extends BasicService<SysMenu> {
 	 * 列表展示
 	 * @return
 	 */
-	public ArrayList<SysMenu> getMenuList(); 
+	public ArrayList<SysMenu> getMenuList(Map<String, Object> params, SysMenu entity); 
 	
 	/**
 	 * 根据菜单名称查询同名菜单是否存在

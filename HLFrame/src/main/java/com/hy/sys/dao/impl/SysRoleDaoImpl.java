@@ -15,6 +15,7 @@ import com.hy.sys.entity.SysRole;
 import com.hy.sys.entity.SysUser;
 import com.hy.sys.shiro.UserUtils;
 import com.hy.sys.utils.PageInfo;
+import com.hy.sys.utils.StringTools;
 import com.hy.sys.utils.logs.LogUtil;
 
 @Repository("sysRoleDao")
@@ -106,10 +107,11 @@ public class SysRoleDaoImpl extends BasicDaoImpl<SysRole> implements SysRoleDao{
 		sql.append(" FROM sys_role   ");
 		sql.append(" WHERE 1=1 ");
 
-		if (params.containsKey("queryKey") && params.get("queryKey") != null && !"".equals(params.get("queryKey"))) {
-			sql.append(" AND ( name like ?)");
+		if (StringTools.mapGetKeyIsEmpty(params, "queryKey")) {
+			sql.append(" AND ( name like ? OR code like ?)");
 			String key = params.get("queryKey").toString().trim();
-			values.add("%" + key + "%");			
+			values.add("%" + key + "%");
+			values.add("%" + key + "%");
 		}
 
 		sql.append(" ORDER BY create_date DESC");

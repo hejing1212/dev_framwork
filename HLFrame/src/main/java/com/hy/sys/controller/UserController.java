@@ -143,14 +143,16 @@ public class UserController extends AbstractBasicController {
 	 */
 	@ResponseBody
 	@RequestMapping("/getlist")
-	public PageInfo<SysUser> getList(@ModelAttribute SysUser entity, HttpServletResponse response,
-			HttpServletRequest request) {
+	public PageInfo<SysUser> getList(@ModelAttribute SysUser entity, HttpServletResponse response,HttpServletRequest request) {
 		int pageNo = (request.getParameter("page") == null) ? PAGE_NO
 				: IntegerTools.parseInt(request.getParameter("page"));
 		int pageSize = (request.getParameter("rows") == null) ? PAGE_SIZE
 				: IntegerTools.parseInt(request.getParameter("rows"));
 
 		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("queryKey", request.getParameter("queryKey"));
+		//params.put("phone", request.getParameter("phone"));
+		
 		PageInfo<SysUser> pages = sysUserService.getList(params, entity, pageNo, pageSize);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("total", pages.getTotalrecond());

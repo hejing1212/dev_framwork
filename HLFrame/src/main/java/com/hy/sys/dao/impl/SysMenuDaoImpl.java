@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.stereotype.Repository;
@@ -11,8 +12,10 @@ import org.springframework.stereotype.Repository;
 import com.hy.sys.core.dao.impl.BasicDaoImpl;
 import com.hy.sys.dao.SysMenuDao;
 import com.hy.sys.entity.SysMenu;
+import com.hy.sys.entity.SysRole;
 import com.hy.sys.entity.SysUser;
 import com.hy.sys.shiro.UserUtils;
+import com.hy.sys.utils.PageInfo;
 import com.hy.sys.utils.StringTools;
 import com.hy.sys.utils.logs.LogUtil;
 
@@ -151,7 +154,36 @@ public class SysMenuDaoImpl extends BasicDaoImpl<SysMenu> implements SysMenuDao 
 				
 			});
 		}
-		
-
 	}
+	
+	/**
+	 * 查询菜单列表，带查询参数 
+	 * @param params
+	 * @param entity
+	 * @param pageNo
+	 * @param pageSize
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<SysMenu> getList(Map<String, Object> params, SysMenu entity) {
+		StringBuffer sql = new StringBuffer();
+		List<Object> values = new ArrayList<Object>();
+		sql.append(" SELECT  * ");
+		sql.append(" FROM sys_menu   ");
+		sql.append(" WHERE 1=1 ");
+
+		if (StringTools.mapGetKeyIsEmpty(params, "queryKey")) {
+			sql.append(" AND ( name like ? OR url like ?)");
+			String key = params.get("queryKey").toString().trim();
+			values.add("%" + key + "%");
+			values.add("%" + key + "%");
+		}
+
+		sql.append(" ORDER BY create_date DESC");
+		//return (List<SysMenu>) this.findPageInfoByQueryJdbc(pageNo, pageSize, sql.toString(),
+				//values.toArray(), SysRole.class);
+		return (List<SysMenu>)this.findListJdbc(sql.toString(), values.toArray(), SysMenu.class);
+	}
+	
 }

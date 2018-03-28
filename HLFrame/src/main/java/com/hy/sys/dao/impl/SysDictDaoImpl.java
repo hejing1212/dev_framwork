@@ -12,6 +12,7 @@ import com.hy.sys.dao.SysDictDao;
 import com.hy.sys.entity.SysDataDict;
 import com.hy.sys.entity.SysRole;
 import com.hy.sys.utils.PageInfo;
+import com.hy.sys.utils.StringTools;
 
 @Repository("dataDictDao")
 public class SysDictDaoImpl extends BasicDaoImpl<SysDataDict> implements SysDictDao {
@@ -30,9 +31,10 @@ public class SysDictDaoImpl extends BasicDaoImpl<SysDataDict> implements SysDict
 		sql.append(" FROM sys_dict   ");
 		sql.append(" WHERE 1=1 ");
 
-		if (params.containsKey("dict_name") && params.get("dict_name") != null && !"".equals(params.get("dict_name"))) {
-			sql.append(" AND ( dict_name like ?)");
-			String key = params.get("dict_name").toString().trim();
+		if (StringTools.mapGetKeyIsEmpty(params, "queryKey")) {
+			sql.append(" AND ( dict_name like ? OR dictCode like ? )");
+			String key = params.get("queryKey").toString().trim();
+			values.add("%" + key + "%");
 			values.add("%" + key + "%");
 		}
 

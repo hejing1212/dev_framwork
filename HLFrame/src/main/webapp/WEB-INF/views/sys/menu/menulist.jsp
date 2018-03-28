@@ -24,9 +24,8 @@
 			<div id="tb" style="padding: 0 30px;">
 				<div class="conditions">
 					<shiro:hasPermission name="sys:menu:menuquery">
-					名称: <input class="easyui-textbox" type="text" name="name" style="width: 166px; height: 35px; line-height: 35px;"></input>
-					 <a href="#" class="easyui-linkbutton" iconCls="icon-search"
-						data-options="selected:true">查询</a>
+					关键字: <input class="easyui-textbox" type="text" id="queryKey" name="queryKey" style="width: 166px; height: 35px; line-height: 35px;"/>
+					 <a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="javascript:doSearch()" data-options="selected:true">查询</a>
 					</shiro:hasPermission>		
 					<shiro:hasPermission name="sys:menu:menuAdd">
 						<a href="javascript:void(0)" onclick="window.parent.mainPlatform._createWindows('添加资源','${basePath}/sys/menu/menuAdd.html','icon-add','menuAdd');"
@@ -112,6 +111,15 @@ url: '${basePath}/sys/menu/getMenuList.html',method: 'get',rownumbers: true,idFi
 					 });
 				}
                 });
+                
+              //查询功能
+            	function doSearch() {
+            		var queryParams = $("#menuTree").treegrid("options").queryParams;
+            		queryParams["queryKey"] = $.trim($("#queryKey").val());
+            		$("#menuTree").treegrid({
+            			url : "${basePath}/sys/menu/getMenuList.html"
+            		});
+            	}
                 
                 //刷新菜单对应的功能列表
         		function reloadFunList() {

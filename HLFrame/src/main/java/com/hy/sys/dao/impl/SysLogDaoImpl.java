@@ -11,6 +11,7 @@ import com.hy.sys.dao.SysLogDao;
 import com.hy.sys.entity.SysLog;
 import com.hy.sys.entity.SysRole;
 import com.hy.sys.utils.PageInfo;
+import com.hy.sys.utils.StringTools;
 
 @Repository("logDao")
 public class SysLogDaoImpl extends  BasicDaoImpl<SysLog> implements SysLogDao{
@@ -29,10 +30,13 @@ public class SysLogDaoImpl extends  BasicDaoImpl<SysLog> implements SysLogDao{
 		sql.append(" FROM sys_log   ");
 		sql.append(" WHERE 1=1 ");
 
-		if (params.containsKey("queryKey") && params.get("queryKey") != null && !"".equals(params.get("queryKey"))) {
-			sql.append(" AND ( opt_content like ?)");
+		if (StringTools.mapGetKeyIsEmpty(params, "queryKey")) {
+			sql.append(" AND ( opt_content like ? OR  opt_table_name like ?  OR opt_user_name like ? OR opt_data_id like ? )");
 			String key = params.get("queryKey").toString().trim();
-			values.add("%" + key + "%");			
+			values.add("%" + key + "%");
+			values.add("%" + key + "%");
+			values.add("%" + key + "%");
+			values.add("%" + key + "%");
 		}
 
 		sql.append(" ORDER BY create_date DESC");

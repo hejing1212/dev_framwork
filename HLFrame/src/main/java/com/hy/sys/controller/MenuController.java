@@ -188,7 +188,10 @@ public class MenuController extends AbstractBasicController {
 	@RequestMapping("/getMenuList")
 	public ArrayList<SysMenu> getMenuList(@ModelAttribute SysMenu entity, HttpServletResponse response,
 			HttpServletRequest request) {
-		ArrayList<SysMenu> list = sysMenuService.getMenuList();
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("queryKey", request.getParameter("queryKey"));
+		
+		ArrayList<SysMenu> list = sysMenuService.getMenuList(params,entity);
 		String jsonStr = JSON.toJSONString(list);
 		writeResult(jsonStr, response);
 		return list;

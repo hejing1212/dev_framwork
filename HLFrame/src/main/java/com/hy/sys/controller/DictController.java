@@ -148,9 +148,9 @@ public class DictController extends AbstractBasicController {
 				: IntegerTools.parseInt(request.getParameter("rows"));
 
 		Map<String, Object> params = new HashMap<String, Object>();
-		if (entity.getDictName() != null) {
-			params.put("dict_name", entity.getDictName());
-		}
+		
+		params.put("queryKey", request.getParameter("queryKey"));
+		
 		PageInfo<SysDataDict> pages = dataDictService.getPageList(params, entity, pageNo, pageSize);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("total", pages.getTotalrecond());

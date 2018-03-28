@@ -37,10 +37,8 @@
 			<div id="tb" style="padding: 0 30px;">
 				<div class="conditions">
 				<shiro:hasPermission name="sys:dict:dictquery">
-					字典名称: <input class="easyui-textbox" type="text" name="dict_name"
-						style="width: 166px; height: 35px; line-height: 35px;"></input> <a
-						href="#" class="easyui-linkbutton" iconCls="icon-search"
-						data-options="selected:true">查询</a>
+					关键字: <input class="easyui-textbox" type="text" id="queryKey" style="width: 166px; height: 35px; line-height: 35px;"></input>
+			        <a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="javascript:doSearch()" data-options="selected:true">查询</a> 
 				</shiro:hasPermission>		
 
 
@@ -116,19 +114,24 @@
 								rownumbers : true,
 								onClickRow : function(rowlndex, rowData) {
 									$("#mypanels").layout('expand', 'east');
-									$("#dict_item_dg")
-											.datagrid(
-													{
-														url : "${basePath}/sys/dict/getDictItemList.html?dictId="
-																+ rowData.id
-																+ "",
-														rownumbers : true
-													});
+									$("#dict_item_dg").datagrid({
+										url : "${basePath}/sys/dict/getDictItemList.html?dictId="
+												+ rowData.id
+												+ "",
+										rownumbers : true
+									});
 								}
 							});
 		});
 
-		
+		//查询功能
+		function doSearch() {
+			var queryParams = $("#dg").datagrid("options").queryParams;
+			queryParams["queryKey"] = $.trim($("#queryKey").val());
+			$("#dg").datagrid({
+				url : "${basePath}/sys/dict/getDictList.html"
+			});
+		}
 		//删除字典内容
 		function delDict() {
 			var dictId = $('#dg').datagrid('getSelected').id;

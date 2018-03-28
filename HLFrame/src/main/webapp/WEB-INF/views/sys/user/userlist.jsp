@@ -40,12 +40,8 @@
 
 			<div id="tb" style="padding: 0 30px;">
 				<div class="conditions">
-					真实姓名: <input class="easyui-textbox" type="text" name="code"
-						style="width: 166px; height: 35px; line-height: 35px;"></input>
-					手机号: <input class="easyui-textbox" type="text" name="name"
-						style="width: 166px; height: 35px; line-height: 35px;"></input> <a
-						href="#" class="easyui-linkbutton" iconCls="icon-search"
-						data-options="selected:true">查询</a>  
+					关键字: <input class="easyui-textbox" type="text" id="queryKey" name="queryKey" style="width: 166px; height: 35px; line-height: 35px;"/>
+					<a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="javascript:doSearch()" data-options="selected:true">查询</a>  
 				</div>
 				<div class="opt-buttons">
 				<shiro:hasPermission name="sys:user:adduser">
@@ -117,6 +113,19 @@
 				}
 			});
 		});
+		
+		//查询功能
+		function doSearch() {
+			var queryParams = $("#dg").datagrid("options").queryParams;
+			queryParams["queryKey"] = $.trim($("#queryKey").val());
+			//queryParams["phone"] = $.trim($("#phone").val());
+			//queryParams["phone"] = $.trim($("#is_top").combobox("getValue"));
+			//queryParams["start_create_date"] = $.trim($("#start_create_date").datebox("getValue"));
+			//queryParams["end_create_date"] = $.trim($("#end_create_date").datebox("getValue"));
+			$("#dg").datagrid({
+				url : "${basePath}/sys/user/getlist.html"
+			});
+		}
       //删除用户角色
 		function delUserRole(){
 			var userid = $('#dg').datagrid('getSelected').userid;

@@ -33,10 +33,8 @@
 		</table>
 		<div id="tb" style="padding: 0 30px;">
 			<div class="conditions">
-				角色名称: <input class="easyui-textbox" type="text" name="code"
-					style="width: 166px; height: 35px; line-height: 35px;"></input>
-			  <a href="#" class="easyui-linkbutton" iconCls="icon-search"
-					data-options="selected:true">查询</a> 
+				关键字: <input class="easyui-textbox" type="text" id="queryKey" style="width: 166px; height: 35px; line-height: 35px;"></input>
+			        <a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="javascript:doSearch()" data-options="selected:true">查询</a> 
 					
 					 
 				<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="window.parent.mainPlatform._createWindows('添加角色','${basePath}/sys/role/addRole.html','icon-add','addRole');"> 新增</a>
@@ -56,6 +54,16 @@
 		src="${basePath}/static/easyui/easyui-lang-zh_CN.js"></script>
    <script type="text/javascript" src="${basePath}/static/js/dict.js"></script>
 	<script type="text/javascript">	
+	
+	//查询功能
+	function doSearch() {
+		var queryParams = $("#dg").datagrid("options").queryParams;
+		queryParams["queryKey"] = $.trim($("#queryKey").val());
+		$("#dg").datagrid({
+			url : "${basePath}/sys/role/getRoleList.html"
+		});
+	}
+	
 		/*
 		 * 显示列表
 		 */

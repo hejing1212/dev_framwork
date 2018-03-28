@@ -13,6 +13,7 @@ import com.hy.sys.dao.SysUserDao;
 import com.hy.sys.entity.SysUser;
 import com.hy.sys.service.SysUserService;
 import com.hy.sys.utils.PageInfo;
+import com.hy.sys.utils.StringTools;
 import com.hy.sys.utils.logs.DeleteLog;
 import com.hy.sys.utils.logs.SaveLog;
 import com.hy.sys.utils.logs.SysLogOperationType;
@@ -53,14 +54,15 @@ public class SysUserServiceImpl extends BasicServiceImpl<SysUser> implements Sys
 		sql.append(" SELECT  * ");
 		sql.append(" FROM sys_user   ");
 		sql.append(" WHERE 1=1 ");
-
-		if (params.containsKey("queryKey") && params.get("queryKey") != null && !"".equals(params.get("queryKey"))) {
-			sql.append(" AND ( login_name like ? OR mobile like ? OR name like ? )");
+        //多个关键字查询
+		if(StringTools.mapGetKeyIsEmpty(params, "queryKey"))  {
+			sql.append(" AND ( username like ? OR phone like ? OR realname like ? )");
 			String key = params.get("queryKey").toString().trim();
 			values.add("%" + key + "%");
 			values.add("%" + key + "%");
 			values.add("%" + key + "%");
 		}
+	 
 
 		sql.append(" ORDER BY create_date DESC");
 		return (PageInfo<SysUser>) getBasicDao().findPageInfoByQueryJdbc(pageNo, pageSize, sql.toString(),
