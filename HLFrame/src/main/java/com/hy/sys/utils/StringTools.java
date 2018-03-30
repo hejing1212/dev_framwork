@@ -842,7 +842,6 @@ public class StringTools {
 	 *@Time  2017年3月31日 下午3:38:08
 	 */
 	public static boolean mapGetKeyIsEmpty(Map<String, Object> params,String key){
-		System.out.println("getKey=="+params.get(key));
 		if(params.get(key)!=null&&!"".equals(params.get(key).toString())){
 			return true;
 		}

@@ -9,7 +9,6 @@ import javax.persistence.Version;
 
 @MappedSuperclass
 public class BaseSpuerEntity extends AbstractBasicEntity {
-
 	/**
 	 * 
 	 */
