@@ -31,12 +31,13 @@ public class AreaController extends AbstractBasicController{
 	public Map<String,Object> getAreaList(@ModelAttribute SysArea entity, HttpServletResponse response,
 			HttpServletRequest request){
 		
-		Map<String, Object> params = new HashMap<String, Object>();
+		/*Map<String, Object> params = new HashMap<String, Object>();
 		params.put("queryKey", request.getParameter("queryKey"));
 		
 		ArrayList<SysMenu> list = sysAreaService.getMenuList(params,entity);
 		String jsonStr = JSON.toJSONString(list);
 		writeResult(jsonStr, response);
-		return list;
+		return list;*/
+		return null;
 	}
 }
