@@ -58,21 +58,21 @@ var mainPlatform = {
             // if is no-child
             if($(this).closest('.no-child').size() > 0) {
             	var index = $(this).closest('.pf-sider').attr('arrindex');
-            	var test=$(this).find('.sider-nav-title').text();
 	        	if($('.easyui-tabs1[arrindex='+ index +']').tabs('exists', $(this).find('.sider-nav-title').text())){
 	        		$('.easyui-tabs1[arrindex='+ index +']').tabs('select', $(this).find('.sider-nav-title').text())
 	        		return false;
 	        	}
 	        	$('.easyui-tabs1[arrindex='+ index +']').tabs('add',{
 					title: $(this).find('.sider-nav-title').text(),
-					id:$(this).attr('arrmenuid'),
+					id:$(this).parent().attr('arrmenuid'),
 					content: '<iframe class="page-iframe" src="'+ $(this).closest('.no-child').data('href') +'" frameborder="no" border="no" height="100%" width="100%" scrolling="auto"></iframe>',
 					closable: true
 				});
             }
             //$('iframe').attr('src', $(this).data('src'));
         });
-
+         
+        
         $(document).on('click', '.pf-logout', function() {
             layer.confirm('您确定要退出吗？', {
               icon: 4,
@@ -131,7 +131,7 @@ var mainPlatform = {
 		var menuStr = '',
 			currentIndex = 0;
 		for(var i = 0, len = SystemMenu.length; i < len; i++) {
-			menuStr += '<li class="pf-nav-item project" data-sort="'+ i +'" arrmenuid="'+SystemMenu[i].menuid+'" data-menu="system_menu_" + i>'+
+			menuStr += '<li class="pf-nav-item project" data-sort="'+ i +'" arrmenuid="'+SystemMenu[i].menuid+'" data-menu="system_menu_"'+ i+' >'+
                       '<a href="javascript:;">'+
                           '<span class="iconfont">'+ SystemMenu[i].iconCls +'</span>'+
                           '<span class="pf-nav-title">'+ SystemMenu[i].text +'</span>'+
@@ -156,17 +156,19 @@ var mainPlatform = {
 			$('.pf-sider[arrindex='+ index +']').show();
 			return false;
 		};
+		//显示左部菜单顶上标题
 		var menuStr = '<h2 class="pf-model-name">'+
                     '<span class="iconfont">'+ menu.iconCls+'</span>'+
                     '<span class="pf-name">'+ menu.text +'</span>'+
                     '<span class="toggle-icon"></span>'+
                 '</h2><ul class="sider-nav">';
-
+           //遍历二级菜单 
         for(var i = 0, len = menu.children.length; i < len; i++){
         	var m = menu.children[i],
         		mstr = '';
         	var str = '';
 
+        	//如果只有两级的处理
         	if(m.isCurrent){
         		if(m.children && m.children.length > 0) {
         			str = '<li class="current">';
@@ -188,19 +190,22 @@ var mainPlatform = {
             '</a>'+
             '<ul class="sider-nav-s">';
             var childStr = '';
-            for(var j = 0, jlen = m.children.length; j < jlen; j++){
-            	var child = m.children[j];
-            	if(child.isCurrent){
-            		childStr += '<li class="active" text="'+ child.text +'" arrmenuid="'+child.menuid+'" data-href="' +basePath+ child.href + '"><a href="#">'+ child.text +'</a></li>';
-            		$('.easyui-tabs1[arrindex='+ index +']').tabs('add',{
-						title: child.text,
-						id:child.menuid,
-						content: '<iframe class="page-iframe" src="'+basePath+ child.href +'" frameborder="no" border="no" height="100%" width="100%" scrolling="auto"></iframe>',
-						closable: true
-					});
-            	}else {
-            		childStr += '<li text="'+ child.text +'" arrmenuid="'+child.menuid+'" data-href="' +basePath+ child.href + '"><a href="#">'+ child.text +'</a></li>';
-            	}
+            //遍历三级菜单 
+            if(m.children && m.children.length > 0){
+	            for(var j = 0, jlen = m.children.length; j < jlen; j++){
+	            	var child = m.children[j];
+	            	if(child.isCurrent){
+	            		childStr += '<li class="active" text="'+ child.text +'" arrmenuid="'+child.menuid+'" data-href="' +basePath+ child.href + '"><a href="#">'+ child.text +'</a></li>';
+	            		$('.easyui-tabs1[arrindex='+ index +']').tabs('add',{
+							title: child.text,
+							id:child.menuid,
+							content: '<iframe class="page-iframe" src="'+basePath+ child.href +'" frameborder="no" border="no" height="100%" width="100%" scrolling="auto"></iframe>',
+							closable: true
+						});
+	            	}else {
+	            		childStr += '<li text="'+ child.text +'" arrmenuid="'+child.menuid+'" data-href="' +basePath+ child.href + '"><a href="#">'+ child.text +'</a></li>';
+	            	}
+	            }
             }
             mstr = str + childStr + '</ul></li>';
             menuStr += mstr;            
@@ -245,12 +250,13 @@ var mainPlatform = {
 	/*hejing -add */
 	
 	_createWindows: function(title,url,icon,tabid){
-    	var index =$('.pf-sider').attr('arrindex');   	 
+		var index=$('.current').attr('data-sort');    	
     	if($('.easyui-tabs1[arrindex='+ index +']').tabs('exists', title)){
     		$('.easyui-tabs1[arrindex='+ index +']').tabs('select', title);
     		return false;
     	}
-     	var pid=this.getSelected()[0].id;
+    	
+    	var pid=$('.easyui-tabs1[arrindex='+ index +']').tabs('getSelected')[0].id;   	
      	$('.easyui-tabs1[arrindex='+ index +']').tabs('add',{
      		    id:pid+"_"+tabid,
 				title: title,

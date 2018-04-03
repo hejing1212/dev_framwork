@@ -13,6 +13,8 @@
 		<class>com.hy.sys.entity.SysRoleMenuFun</class>
 		<class>com.hy.sys.entity.SysUser</class>
 		<class>com.hy.sys.entity.SysUserRole</class>
+		<class>com.hy.cb.entity.seller.SeMember</class>
+		<class>com.hy.cb.entity.seller.SeSeller</class>
 	 
 	</persistence-unit>
 </persistence>
