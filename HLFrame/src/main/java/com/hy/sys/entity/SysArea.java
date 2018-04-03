@@ -1,10 +1,13 @@
 package com.hy.sys.entity;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.hy.sys.core.entity.AbstractBasicEntity;
 
@@ -14,13 +17,13 @@ import com.hy.sys.core.entity.AbstractBasicEntity;
  * 
  */
 @Entity
-@Table(name="sys_area")
+@Table(name = "sys_area")
 @NamedQuery(name="SysArea.findAll", query="SELECT s FROM SysArea s")
 public class SysArea extends AbstractBasicEntity{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int id;
+	private String id;
 
 	private float latitude;
 
@@ -31,7 +34,7 @@ public class SysArea extends AbstractBasicEntity{
 	private String name;
 
 	@Column(name="parent_id")
-	private int parentId;
+	private String parentId;
 
 	@Column(name="region_name_en")
 	private String regionNameEn;
@@ -45,15 +48,25 @@ public class SysArea extends AbstractBasicEntity{
 	private int sort;
 
 	private int status;
+    
+	@Transient
+	private List<SysArea> childenArea;
+	
+	
+	@Transient
+	private String state;
+	
+	
+	
 
 	public SysArea() {
 	}
 
-	public int getId() {
+	public String getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -89,11 +102,11 @@ public class SysArea extends AbstractBasicEntity{
 		this.name = name;
 	}
 
-	public int getParentId() {
+	public String getParentId() {
 		return this.parentId;
 	}
 
-	public void setParentId(int parentId) {
+	public void setParentId(String parentId) {
 		this.parentId = parentId;
 	}
 
@@ -137,4 +150,28 @@ public class SysArea extends AbstractBasicEntity{
 		this.status = status;
 	}
 
+	
+	public List<SysArea> getChildenArea() {
+		return childenArea;
+	}
+
+	public void setChildenArea(List<SysArea> childenArea) {
+		this.childenArea = childenArea;
+	}
+
+	public String getState() {
+		String state;
+		if(this.level<4) {
+			state="closed";
+		}else {
+			state="open";
+		}
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+	
+	
 }
