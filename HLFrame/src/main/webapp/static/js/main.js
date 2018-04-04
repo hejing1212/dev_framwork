@@ -163,6 +163,7 @@ var mainPlatform = {
                     '<span class="toggle-icon"></span>'+
                 '</h2><ul class="sider-nav">';
            //遍历二级菜单 
+		if(menu.children && menu.children.length > 0){
         for(var i = 0, len = menu.children.length; i < len; i++){
         	var m = menu.children[i],
         		mstr = '';
@@ -209,9 +210,9 @@ var mainPlatform = {
             }
             mstr = str + childStr + '</ul></li>';
             menuStr += mstr;            
-        }
+          }
+	    }
         $('.pf-sider-wrap').append($('<div class="pf-sider" arrindex="'+ index +'"></div>').html(menuStr + '</ul>'));
-
 	},
 
 	_createPageContainer: function(index){

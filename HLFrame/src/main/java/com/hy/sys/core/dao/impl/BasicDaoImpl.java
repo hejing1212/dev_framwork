@@ -58,13 +58,22 @@ public abstract class BasicDaoImpl<T extends AbstractBasicEntity> extends Abstra
 	public void saveBatch(Collection<T> entities) {
 		Session session = this.getCurrentSession();
 		int i = 0;
+		int v=entities.size();
+		int count=20;
+		int b=v%count;   //得到余数
 		for (T tmp : entities) {
+			i++;
 			session.save(tmp);
-			if (i % 20 == 0) {
+			if(v>count&&i<=(v-b)) {
+				if (i % count == 0) {
+					session.flush();
+					session.clear();
+				}
+			}else if(i==v){
 				session.flush();
 				session.clear();
 			}
-			i++;
+			
 		}
 	}
 

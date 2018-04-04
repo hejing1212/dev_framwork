@@ -22,25 +22,44 @@
 				<table class="kv-table">
 					<tbody>
 						<tr>
-							<td class="kv-label">用户ID</td>
+							<td class="kv-label">登录名称</td>
 							<td class="kv-content"><input class="easyui-textbox"
-								type="text" name="name" data-options="required:true,missingMessage:'请输入角色名称！'" /></td>
+								type="text" name="username" data-options="required:true,missingMessage:'请输入登录名称！'" /></td>
 
-							<td class="kv-label">英文名称</td>
+							<td class="kv-label">登录密码</td>
 							<td class="kv-content"><input class="easyui-textbox"
-								type="text" name="code" data-options="required:true,missingMessage:'请输入角色名称！'"/></td>
+								type="text" name="password" data-options="required:true,missingMessage:'请输入用户密码！'"/></td>
+						</tr>
+						
+							<tr>
+							<td class="kv-label">手机号</td>
+							<td class="kv-content"><input class="easyui-textbox"
+								type="text" name="mobilephone" data-options="required:true,missingMessage:'请输入手机号！'" /></td>
+
+							<td class="kv-label">真实姓名	</td>
+							<td class="kv-content"><input class="easyui-textbox"
+								type="text" name="realname" data-options="required:true,missingMessage:'请输入真实姓名！'"/></td>
+						</tr>						
+							<tr> 
+							<td class="kv-label">邮箱</td>
+							<td class="kv-content"><input class="easyui-textbox"
+								type="text" name="email" data-options="required:true,missingMessage:'请输入邮箱！'" /></td>
+
+							<td class="kv-label">身份证号码</td>
+							<td class="kv-content"><input class="easyui-textbox"
+								type="text" name="card_no" data-options="required:true,missingMessage:'请输入身份证号码！'"/></td>
 						</tr>
 						<tr>
-							<td class="kv-label">是否系统数据</td>
-							<td class="kv-content">
-							<input type="radio" name="is_sys" value="1" checked="checked" class="easyui-radiobox">是
-                               <input type="radio" name="is_sys" value="0" class="easyui-radiobox"> 否
-							 </td>
-							<td class="kv-label">是否可用</td>
-							<td class="kv-content">
-                              <input type="radio" name="usable" value="1" checked="checked" class="easyui-radiobox">是
-                               <input type="radio" name="usable" value="0" class="easyui-radiobox"> 否</td>
-						</tr>
+							<td class="kv-label">用户类型</td>
+							<td class="kv-content"><input class="easyui-textbox"
+								type="text" name="usertype" data-options="required:true,missingMessage:'请输入手机号！'" /></td>
+                            <td class="kv-label">状态</td>
+							<td class="kv-content"><input class="easyui-textbox"
+								type="text" name="status" data-options="required:true,missingMessage:'请输入QQ号！'"/></td>
+							 
+						</tr>		
+						
+						
 					</tbody>
 				</table>
 				<div class="column">
@@ -50,11 +69,17 @@
 					<tbody>
 						
 						<tr>
-							<td class="kv-label">备注</td>
-							<td class="kv-content" colspan="5">
-							<textarea rows="5" cols="50" name="remarks"></textarea></td>
-
+							<td class="kv-label">头像</td>
+							<td class="kv-content" >
+							<input type="file" name="portrait"/>
+							 </td>
+                           <td class="kv-label">QQ号</td>
+							<td class="kv-content" >
+							<input class="easyui-textbox"
+								type="text" name="qq" data-options=""/>
+							 </td>
 						</tr>
+					
 					</tbody>
 				</table>
 				<div class="easyui-panel" style="padding: 10px;">

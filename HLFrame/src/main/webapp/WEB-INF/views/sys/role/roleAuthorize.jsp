@@ -25,10 +25,12 @@
 	
 					<input type="checkbox" onclick="checkAll();" name="checkall"> 全选 
 					<input type="checkbox" onclick="uncheckAll();" name="checkall"> 取消全选 
-					<shiro:hasPermission name="sys:role:authorrole">
+					
 					<a href="javascript:void(0)" onclick="saveAuths();"
 						class="easyui-linkbutton" data-options="plain:true, iconCls:'icon-save'">保存</a>
-                   </shiro:hasPermission>	
+						
+						<!--<shiro:hasPermission name="sys:role:authorrole">-->
+                   	<!--</shiro:hasPermission>	-->
 				</div>
 			</div>                                                      
 			<input type="hidden" id="roleId" name="roleId" value="${roleId}">
@@ -152,6 +154,7 @@
 			}
 		}
 
+		
 		//根据角色查询权限赋权
 		function empowerment() {
 			var roleId = $("#roleId").val();
@@ -167,7 +170,7 @@
 				success : function(data) {
 					if (data) {
 						for (var i = 0; i < data.length; i++) {
-							var funId = data[i].menu_id + "-" + data[i].fun_id;
+							var funId = data[i].menuId + "-" + data[i].funId;
 							$($("input[name='funName']")).each(function() {
 										if (funId == this.value) {
 											$(this).attr('checked', true); 

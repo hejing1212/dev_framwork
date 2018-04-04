@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.hy.sys.core.dao.BasicDao;
 import com.hy.sys.core.service.impl.BasicServiceImpl;
 import com.hy.sys.dao.SysMenuDao;
+import com.hy.sys.dao.SysRoleMenuDao;
 import com.hy.sys.entity.SysFunction;
 import com.hy.sys.entity.SysMenu;
 import com.hy.sys.entity.SysRoleMenu;
@@ -36,6 +37,8 @@ public class SysMenuServiceImpl extends BasicServiceImpl<SysMenu> implements Sys
 	@Autowired
 	private SysRoleMenuService sysRoleMenuService;
 
+	@Autowired
+	private SysRoleMenuDao sysRoleMenuDao;
 	/*
 	 * @see 查询菜单是否添加过，避免重复添加
 	 */
@@ -223,6 +226,7 @@ public class SysMenuServiceImpl extends BasicServiceImpl<SysMenu> implements Sys
 		try {
 			if (roleId != "" && auths != "") {
 				sysRoleMenuService.deleteRoleMenu(roleId); // 更新前，册掉之前的
+				List<SysRoleMenu> addlist = new ArrayList<SysRoleMenu>();
 				List<String> list = new ArrayList<String>();
 				String[] menuId_funId = auths.split(",");
 				for (int i = 0; i < menuId_funId.length; i++) {
@@ -232,9 +236,13 @@ public class SysMenuServiceImpl extends BasicServiceImpl<SysMenu> implements Sys
 					if (!list.contains(menuid)) {
 						entity.setMenu_id(menuid);
 						entity.setRole_id(roleId);
-						sysRoleMenuService.save(entity);
+						addlist.add(entity);
 						list.add(menuid);
 					}
+				}
+				
+				if(addlist.size()>0) {
+					sysRoleMenuDao.saveBatch(addlist);
 				}
 				map.put("code", 1);
 				map.put("msg", "设置成功！");

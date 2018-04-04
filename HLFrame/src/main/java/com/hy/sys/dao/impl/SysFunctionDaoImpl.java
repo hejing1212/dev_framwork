@@ -109,7 +109,7 @@ public class SysFunctionDaoImpl extends BasicDaoImpl<SysFunction> implements Sys
 		List<Object> values = new ArrayList<Object>();
 		sql.append("SELECT a ");
 		sql.append(" FROM SysFunction a, SysUserRole b,SysRoleMenuFun c ");
-		sql.append(" WHERE a.funid=c.fun_id and b.role_id=c.role_id ");
+		sql.append(" WHERE a.funid=c.funId and b.role_id=c.roleId ");
 				 
 		sql.append(" AND (b.user_id = ?)");  
 		values.add(userId);

@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
 import com.hy.sys.core.controller.AbstractBasicController;
+import com.hy.sys.dao.SysRoleMenuFunDao;
 import com.hy.sys.entity.SysMenu;
 import com.hy.sys.entity.SysRole;
 import com.hy.sys.entity.SysRoleMenuFun;
@@ -56,6 +57,8 @@ public class RoleController extends AbstractBasicController {
 	@Autowired
 	private SysRoleMenuFunService sysRoleMenuFunService;
 
+	@Autowired
+	private SysRoleMenuFunDao sysRoleMenuFunDao;
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -286,7 +289,6 @@ public class RoleController extends AbstractBasicController {
 	@RequestMapping("/authByRoleSave")
 	public Map<String, Object> authByRoleSave(String roleId, String auths, HttpServletResponse response,
 			HttpServletRequest request) {
-
 		Map<String, Object> map = new HashMap<String, Object>();
 		// 更新菜单
 		map = sysMenuService.roleMenuAuthSave(roleId, auths);
@@ -297,5 +299,6 @@ public class RoleController extends AbstractBasicController {
 		}
 		return map;
 	}
+	
 
 }

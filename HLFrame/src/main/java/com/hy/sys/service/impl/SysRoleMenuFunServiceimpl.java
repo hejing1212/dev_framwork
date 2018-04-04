@@ -1,5 +1,6 @@
 package com.hy.sys.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,18 +65,20 @@ public class SysRoleMenuFunServiceimpl extends BasicServiceImpl<SysRoleMenuFun> 
 			if (roleId != "" && auths != "") {
 				sysRoleMenuFunDao.deleteRoleAuthFun(roleId);
 				String[] menuId_funId = auths.split(",");
-
+                List<SysRoleMenuFun> list=new ArrayList<SysRoleMenuFun>();
 				for (int i = 0; i < menuId_funId.length; i++) {
 					String menuid = menuId_funId[i].split("-")[0];
 					String funId = menuId_funId[i].split("-")[1];
 					if (menuid != null && funId != null) {
 						SysRoleMenuFun entity = new SysRoleMenuFun();
-						entity.setRole_id(roleId);
-						entity.setMenu_id(menuid);
-						entity.setFun_id(funId);
-
-						sysRoleMenuFunDao.save(entity);
+						entity.setRoleId(roleId);
+						entity.setMenuId(menuid);
+						entity.setFunId(funId);
+						list.add(entity);
 					}
+				}
+				if(list.size()>0) {
+					sysRoleMenuFunDao.saveBatch(list);
 				}
 				map.put("code", 1);
 				map.put("msg", "设置成功！");

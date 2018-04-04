@@ -52,7 +52,7 @@
 										 <input type="text" id="remember_input" placeholder="验证码"  name="jcaptchaCode">
 									</div>
 									<span class="check-code">
-<img id="img_jcaptcha"  src="${appPath}/jcaptcha.jpg" width="80" height="36" onclick="changeJcaptchaSrc();" />
+<img id="img_jcaptcha"  src="${basePath}/jcaptcha.jpg" width="80" height="36" onclick="changeJcaptchaSrc();" />
                                    </span>
 								</div>
 								</c:if>
@@ -89,7 +89,7 @@ function UserLogin(){
  * 刷新验证码
  */
 function changeJcaptchaSrc(){  
-    document.getElementById("img_jcaptcha").src='${appPath}/jcaptcha.jpg?_='+(new Date()).getTime();  
+    document.getElementById("img_jcaptcha").src='${basePath}/jcaptcha.jpg?_='+(new Date()).getTime();  
 }
 
 /* $('#login_btn').bind('keydown',function(event){

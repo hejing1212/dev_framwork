@@ -119,10 +119,9 @@ public class MenuController extends AbstractBasicController {
 			if (StringTools.equals(entity.getParent_id(), SysFunctions.TopMenuNO())) { // 顶级
 				menu.setParentIds(SysFunctions.TopMenuNO());
 				menu.setLevel(1);
-			} else {
-				
-				SysMenu parentMenu = sysMenuService.get(menu.getParent_id());
-				menu.setParentIds(parentMenu.getParentIds() + "," + menu.getParent_id());
+			} else {				
+				SysMenu parentMenu = sysMenuService.get(entity.getParent_id());
+				menu.setParentIds(parentMenu.getParentIds() + "," + entity.getParent_id());
 				menu.setLevel(parentMenu.getLevel() + 1);
 			}
 						

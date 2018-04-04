@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import com.hy.sys.core.dao.impl.BasicDaoImpl;
 import com.hy.sys.dao.SysRoleMenuFunDao;
-import com.hy.sys.entity.SysFunction;
 import com.hy.sys.entity.SysRoleMenuFun;
 import com.hy.sys.entity.SysUser;
 import com.hy.sys.shiro.UserUtils;
