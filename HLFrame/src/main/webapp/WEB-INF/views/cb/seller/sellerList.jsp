@@ -24,8 +24,9 @@
 					<th field="name" width="160" align="center">商家名称</th> 
 					<th field="contacts" width="120" align="center">联系人</th>
 					<th field="tel" width="120" align="center">联系电话</th>
-					<th field="purchase" width="80" align="center" data-options="formatter:SetDictNameMap">采购商</th>
-					<th field="retail" width="80" align="center" data-options="formatter:SetDictNameMap">零售商</th>		
+					<th field="purchase" width="80" align="center"  data-options="formatter:SetDictByField">采购商</th>
+					<th field="retail" width="80" align="center" data-options="formatter:SetDictByField">零售商</th>		
+					<th field="wholesale" width="80" align="center" data-options="formatter:SetDictByField">批发商</th>	
 					<th field="status" width="80" align="center" data-options="formatter:SetDictNameMap">状态</th>				 
 					<th field="createTime" width="120" align="center">创建日期</th>
 					<th field="introduce" width="200">备注</th>
@@ -40,7 +41,7 @@
 					 
 				<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="window.parent.mainPlatform._createWindows('添加商家','${basePath}/cb/seller/addSeller.html','icon-add','addSeller');"> 新增</a>
 				<a href="javascript:void(0)" onclick="editRole();" class="easyui-linkbutton" data-options="iconCls:'icon-edit'">修改</a>
-				<a href="javascript:void(0)" onclick="setRole();" class="easyui-linkbutton" data-options="iconCls:'icon-set'">授权</a>  
+				<a href="javascript:void(0)" onclick="setRole();" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">删除</a>  
 			 
 			</div>
 			
@@ -118,6 +119,11 @@
 						"${basePath}/sys/role/roleAuthorize.html?roleId="
 								+ row.roleid + "&index=" + index, "icon-set",
 						'setRoleAuthorize');
+		}
+		
+		function  SetDictByField(value, text,index){
+			  field="status";
+			  return SetDictByFieldMap(value, text,index,field);
 		}
 	</script>
 

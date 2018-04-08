@@ -36,14 +36,11 @@
 		<div id="tb" style="padding: 0 30px;">
 			<div class="conditions">
 				关键字: <input class="easyui-textbox" type="text" id="queryKey" style="width: 166px; height: 35px; line-height: 35px;"></input>
-			        <a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="javascript:doSearch()" data-options="selected:true">查询</a> 
-										 
+			        <a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="javascript:doSearch()" data-options="selected:true">查询</a> 										 
 				<a href="javascript:void(0)" id="btn_menu" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="window.parent.mainPlatform._createWindows('添加会员用户','${basePath}/cb/member/addMember.html','icon-add','addMember');"> 新增</a>
 				<a href="javascript:void(0)" onclick="editRole();" class="easyui-linkbutton" data-options="iconCls:'icon-edit'">修改</a>
-				<a href="javascript:void(0)" onclick="setRole();" class="easyui-linkbutton" data-options="iconCls:'icon-set'">删除</a>  
-			 
-			</div>
-			
+				<a href="javascript:void(0)" onclick="setRole();" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">删除</a>  			 
+			</div>			
 		</div>
 	</div>
 

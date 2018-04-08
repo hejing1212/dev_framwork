@@ -29,7 +29,7 @@ public class SeSellerDaoImpl extends BasicDaoImpl<SeSeller> implements SellerDao
 		StringBuffer sql = new StringBuffer();
 		List<Object> values = new ArrayList<Object>();
 		sql.append(" SELECT  * ");
-		sql.append(" FROM se_member   ");
+		sql.append(" FROM se_seller   ");
 		sql.append(" WHERE 1=1 ");
         //多个关键字查询
 		if(StringTools.mapGetKeyIsEmpty(params, "queryKey"))  {

@@ -45,7 +45,7 @@ public class SysAreaDaoImpl extends BasicDaoImpl<SysArea> implements SysAreaDao{
 			values.add(params.get("parent_id"));
 		}
 
-		sql.append(" ORDER BY sort DESC");
+		sql.append(" ORDER BY sort asc");
 		return (PageInfo<SysArea>) this.findPageInfoByQueryJdbc(pageNo, pageSize, sql.toString(),
 				values.toArray(), SysArea.class);
 	}
@@ -74,7 +74,7 @@ public class SysAreaDaoImpl extends BasicDaoImpl<SysArea> implements SysAreaDao{
 			values.add(params.get("parent_id"));
 		}
 
-		sql.append(" ORDER BY sort DESC");
+		sql.append(" ORDER BY sort asc");
 		return (List<SysArea>) this.findListJdbc(sql.toString(), values.toArray(), SysArea.class);
 	}
 

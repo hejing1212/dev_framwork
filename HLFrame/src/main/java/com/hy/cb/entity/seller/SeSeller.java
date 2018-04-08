@@ -5,11 +5,14 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.GenericGenerator;
 
 
 /**
@@ -25,6 +28,8 @@ public class SeSeller extends SellerBasicEntity{
 
     /**商家编号**/
 	@Id
+	@GeneratedValue(generator = "tableIdGenerator")
+	@GenericGenerator(name = "tableIdGenerator", strategy = UUID_GENERATED)
 	@Column(name="seller_id")
 	private String seller_id;
 	
@@ -32,7 +37,6 @@ public class SeSeller extends SellerBasicEntity{
 	private String name;
 
 	/**是否为采购商{1：是，0：否}**/
-	@Column(name="purchase")
 	private int purchase;
 	
 	/**是否为零售商{1：是，0：否}**/
@@ -84,23 +88,20 @@ public class SeSeller extends SellerBasicEntity{
 	private String introduce;
 
 	/**纬度**/
+	@Column(name = "latitude", length = 32)
 	private BigDecimal latitude;
 	
 	/**经度**/
+	@Column(name = "longitude", length = 32)
 	private BigDecimal longitude;
 
 	/**企业LOGO**/
 	private String logo;
 
-	
-	
-	
-	
-	
+
 	public SeSeller() {
 	}
-	
-	
+		
 	public String getSeller_id() {
 		return seller_id;
 	}
@@ -201,7 +202,7 @@ public class SeSeller extends SellerBasicEntity{
 		return this.purchase;
 	}
 
-	public void setPurchaseNo(int purchase) {
+	public void setPurchase(int purchase) {
 		this.purchase = purchase;
 	}
 
@@ -260,7 +261,5 @@ public class SeSeller extends SellerBasicEntity{
 	public void setWholesale(int wholesale) {
 		this.wholesale = wholesale;
 	}
-
-	
 
 }

@@ -34,8 +34,7 @@
 	//该访先对所胡数据生成MAP，然后减少循环，提供性能	
 	 var dictMap={};	
 	function SetDictNameMap(value, text){
-		 if(Object.keys(dictMap).length==0){
-			 
+		 if(Object.keys(dictMap).length==0){			 
 			 $.ajax({
 	   				url:getRootPath()+"/sys/dict/getDitcJson.html",
 					type:"get",
@@ -58,7 +57,37 @@
 		var field=this.field; 
 		return dictMap[field][value];
 	}
-		
+	
+	function SetDictByFieldMap(value, text,index,field){
+		 if(Object.keys(dictMap).length==0){			 
+			 $.ajax({
+	   				url:getRootPath()+"/sys/dict/getDitcJson.html",
+					type:"get",
+					dataType:"json",
+					async:false,
+			   		//提交成功后回调的函数
+	             	success: function(data){
+	             		var dictJsonArr=JSON.parse(data);
+	             		for(var i = 0, len = dictJsonArr.length; i < len; i++){
+	             			var itemMap={};
+	             			var dataDict=dictJsonArr[i].dataDict;
+	             			for(var v = 0, lens = dataDict.length; v < lens; v++){
+	             				itemMap[dataDict[v].itemValue]=dataDict[v].itemName;
+            			    }	             			
+	             			dictMap[dictJsonArr[i].dictCode]=itemMap;
+	            		}
+					} 
+				});	
+		 } 
+		if(Object.keys(dictMap).length>0){
+		  return dictMap[field][value];
+	    }else{
+		 return '';
+	}
+	}
+	
+	
+	
 	function getRootPath(){
 		var strFullPath=window.document.location.href;
 		var strPath=window.document.location.pathname;

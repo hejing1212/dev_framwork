@@ -15,7 +15,7 @@
 </head>
 <body>
 	<div class="container">
-		<form id="save_user" method="post">
+		<form id="save_user" method="post" >
 			<div class="content">
 				<div class="column">
 					<span class="current">基础信息</span>
@@ -81,13 +81,13 @@
 						<tr>
 							<td class="kv-label">所在区域</td>
 							<td class="kv-content">
-							<select class="easyui-combotree" name="region"  id="areaTree" data-options="required:true" style="height:30px;width:40%"/>
-							<input type="hidden" id="area_code"/>
+							<select class="easyui-combotree" name="region"  id="areaTree" data-options="required:true" style="height:30px;width:30%"/>
+							 <input type="hidden" id="area_code" name="province"/>
 							 </td>
 							<td class="kv-label">详细地址</td>
 							<td class="kv-content">
                               <input class="easyui-textbox"
-								type="text" name="name" data-options="required:true,missingMessage:'详细地址！'" style="height:30px" />
+								type="text" id="address" name="address" data-options="required:true,missingMessage:'详细地址！'" style="height:30px;width:300px;" />
                            </td>
 						</tr>
 					</tbody>
@@ -143,7 +143,7 @@
 	 */
 	function submitFormData() {
 		$('#save_user').form('submit', {
-			url : "${basePath}/sys/role/saveRole.html",
+			url : "${basePath}/cb/seller/saveSeller.html",
 			onSubmit : function() {
                 return $(this).form('validate');
 			},
@@ -174,7 +174,7 @@
 		$("#areaTree").combotree({
 			url:"${basePath}/sys/area/getAreaTreeList.html",
 			onLoadSuccess:function(node, data){
-				$("#parent_id").combotree('setValue',0);
+				$("#parent_id").combotree('setValue','0');
 			},			 			    
 			onBeforeExpand:function(row){    //每次展开前都会调用
 	             //动态设置展开查询的url  
@@ -183,7 +183,8 @@
 	           return true;  //返回false表示停止展开节点    
 	          },
 	        onExpand : function(row){ //每次展后都会调用;传入的row已经包含了 children
-	           var children = $("#areaTree").combotree('getChildren',row.id);
+	        	var tree = $('#areaTree').combotree('tree'); 
+	        	var children = tree.tree('getChildren', row.id);
 	           if(children.length<=0){ 
 	               row.leaf=true;
 	               $("#areaTree").combotree('refresh', row.id);
@@ -205,11 +206,13 @@
                 	 textStr += text[i];  
                 	 valStr+=value[i];
                      if (i < text.length - 1) {  
-                    	 textStr += ' - ';  
+                    	 textStr += ' ';  
                     	 valStr+='-';
                      }  
                  }  
-                 $('#area_code').text(textStr+":"+valStr);
+
+                 $("#address").textbox("setValue",textStr)  
+                 $('#area_code').val(valStr);
 	        },
 	        onDblClickRow: function(row){
 	         

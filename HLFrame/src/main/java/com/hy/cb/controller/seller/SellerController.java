@@ -100,6 +100,25 @@ public class SellerController extends AbstractBasicController {
 		if (StringTools.isBlank(entity.getSeller_id())) {
 			SeSeller seller = sellerService.findByName(entity.getName());
 			if (seller == null) {
+				if(StringTools.isNotBlank(entity.getProvince())) {
+					String areaCode=entity.getProvince();
+					String[] areaCodeArr=areaCode.split("-");
+					if(areaCodeArr.length==1) {
+						entity.setProvince(areaCodeArr[0]);
+					}else if(areaCodeArr.length==2) {
+						entity.setProvince(areaCodeArr[0]);
+						entity.setCity(areaCodeArr[1]);
+					}else if(areaCodeArr.length==3) {
+						entity.setProvince(areaCodeArr[0]);
+						entity.setCity(areaCodeArr[1]);
+						entity.setRegion(areaCodeArr[2]);
+					}else if(areaCodeArr.length==4) {
+						entity.setProvince(areaCodeArr[0]);
+						entity.setCity(areaCodeArr[1]);
+						entity.setRegion(areaCodeArr[2]);
+						entity.setTown(areaCodeArr[3]);
+					}
+				}
 				entity.setCreateTime(now);
 				sellerService.save(entity);
 				map.put("code", "1");
