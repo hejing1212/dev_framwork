@@ -15,7 +15,8 @@
 		<class>com.hy.sys.entity.SysRoleMenu</class>
 		<class>com.hy.sys.entity.SysUser</class>
 		<class>com.hy.sys.entity.SysUserRole</class>
-		<class>com.hy.cb.entity.seller.SeMember</class>
+		<class>com.hy.cb.entity.seller.SellerBasicEntity</class>
+		<class>com.hy.cb.entity.member.SeMember</class>
 		<class>com.hy.cb.entity.seller.SeSeller</class>
 		<class>com.hy.sys.entity.SysRoleMenuFun</class>
 	

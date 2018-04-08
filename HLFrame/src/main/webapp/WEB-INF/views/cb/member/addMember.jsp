@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@taglib prefix="f" uri="/WEB-INF/tlds/dict.tld"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +15,7 @@
 </head>
 <body>
 	<div class="container">
-		<form id="save_user" method="post">
+		<form id="save_user" method="post" enctype="multipart/form-data">
 			<div class="content">
 				<div class="column">
 					<span class="current">基础信息</span>
@@ -28,7 +29,7 @@
 
 							<td class="kv-label">登录密码</td>
 							<td class="kv-content"><input class="easyui-textbox"
-								type="text" name="password" data-options="required:true,missingMessage:'请输入用户密码！'"/></td>
+								type="password" name="password" data-options="required:true,missingMessage:'请输入用户密码！'"/></td>
 						</tr>
 						
 							<tr>
@@ -43,43 +44,52 @@
 							<tr> 
 							<td class="kv-label">邮箱</td>
 							<td class="kv-content"><input class="easyui-textbox"
-								type="text" name="email" data-options="required:true,missingMessage:'请输入邮箱！'" /></td>
+								type="text" name="email" /></td>
 
 							<td class="kv-label">身份证号码</td>
 							<td class="kv-content"><input class="easyui-textbox"
-								type="text" name="card_no" data-options="required:true,missingMessage:'请输入身份证号码！'"/></td>
+								type="text" name="cardNo" /></td>
 						</tr>
 						<tr>
 							<td class="kv-label">用户类型</td>
-							<td class="kv-content"><input class="easyui-textbox"
-								type="text" name="usertype" data-options="required:true,missingMessage:'请输入手机号！'" /></td>
+							<td class="kv-content">
+							<f:dictRadio name="usertype" nodeKey="usertype" required="true" value="1" clazz="easyui-radiobox"/>
+							 </td>
                             <td class="kv-label">状态</td>
-							<td class="kv-content"><input class="easyui-textbox"
-								type="text" name="status" data-options="required:true,missingMessage:'请输入QQ号！'"/></td>
-							 
+							<td class="kv-content">
+							<f:dictRadio name="status" nodeKey="status" required="true" value="1" clazz="easyui-radiobox"/>
+							 </td>							 
 						</tr>		
-						
-						
 					</tbody>
 				</table>
 				<div class="column">
 					<span class="current">扩展信息</span>
 				</div>
 				<table class="kv-table">
-					<tbody>
-						
+					<tbody>						
 						<tr>
 							<td class="kv-label">头像</td>
 							<td class="kv-content" >
-							<input type="file" name="portrait"/>
+							<input id="up_portrait"
+								name="uploadFile" class="easyui-filebox"
+								data-options="buttonText:'选择图片',accept:'image/*',onChange:function(){upload_cover(this,'${basePath}/cb/member/fileUpload.html','portrait')}"
+								style="width: 40%;height: 30px;" />
+								<input type="hidden" id="portrait" name="portrait"/>
 							 </td>
                            <td class="kv-label">QQ号</td>
 							<td class="kv-content" >
 							<input class="easyui-textbox"
-								type="text" name="qq" data-options=""/>
+								type="text" name="qq" />
 							 </td>
-						</tr>
-					
+								 
+							<tr>
+							<td class="kv-label">头像预览</td>
+							<td>
+							<!-- 图片预览区 --> 
+								<img id="image" class="cover-radius" src="${basePath}/static/images/main/user.png" width="100" height="100" style="cursor: pointer;" />
+							</td>
+							</tr> 
+						</tr>					
 					</tbody>
 				</table>
 				<div class="easyui-panel" style="padding: 10px;">
@@ -89,7 +99,6 @@
 						class="easyui-linkbutton" data-options="iconCls:'icon-remove'"
 						onclick="clearForm()">重 置</a>
 				</div>
-
 			</div>
 		</form>
 	</div>
@@ -100,13 +109,16 @@
 	src="${basePath}/static/easyui/jquery.min.js"></script>
 <script type="text/javascript"
 	src="${basePath}/static/easyui/jquery.easyui.min.js"></script>
+	 <!-- 上传文件一定要带上这两个JS -->
+<script type="text/javascript" src="${basePath}/static/js/ajaxfileupload.js"></script> 
+<script type="text/javascript" src="${basePath}/static/js/upload.js"></script>	
 <script type="text/javascript">
 	/**
 	 * 提交表单
 	 */
 	function submitFormData() {
 		$('#save_user').form('submit', {
-			url : "${basePath}/sys/role/saveRole.html",
+			url : "${basePath}/cb/member/saveMember.html",
 			onSubmit : function() {
                 return $(this).form('validate');
 			},

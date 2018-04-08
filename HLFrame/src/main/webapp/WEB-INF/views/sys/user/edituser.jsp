@@ -50,7 +50,7 @@
 							<td class="kv-label">头像</td>
 							<td class="kv-content"><input id="picture_upload"
 								name="uploadFile" class="easyui-filebox"
-								data-options="buttonText:'选择图片',accept:'image/*',onChange:function(){upload_cover(this,'${basePath}/sys/user/fileUpload.html')}"
+								data-options="buttonText:'选择图片',accept:'image/*',onChange:function(){upload_cover(this,'${basePath}/sys/user/fileUpload.html','uerhadpic')}"
 								style="width: 70%" /></td>
 
 							<td class="kv-label">状态</td>

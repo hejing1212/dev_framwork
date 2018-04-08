@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -119,16 +120,16 @@ public class AreaController extends AbstractBasicController {
 	 */
 	@ResponseBody
 	@RequestMapping("/getAreaTreeList")
-	public List<TreeNode> getAreaTreeList(@ModelAttribute SysArea entity, HttpServletResponse response,
+	public List<TreeNode> getAreaTreeList(@RequestParam(value="parentId",required=false) String parentId, HttpServletResponse response,
 			HttpServletRequest request){
 		Map<String, Object> params = new HashMap<String, Object>();
-		if(StringTools.isNotBlank(request.getParameter("parentId"))){
-			params.put("parent_id",request.getParameter("parentId"));
+		if(StringTools.isNotBlank(parentId)){
+			params.put("parent_id",parentId);
 		}else {
 			params.put("parent_id",0);
 		}
-		
-		List<SysArea> list = sysAreaService.getAreaList(params, entity);
+		SysArea area=new SysArea();
+		List<SysArea> list = sysAreaService.getAreaList(params, area);
 		List<TreeNode> treelist=new ArrayList<TreeNode>();
 		for(SysArea areali:list) {
 			TreeNode node=new TreeNode();
@@ -146,7 +147,7 @@ public class AreaController extends AbstractBasicController {
 	/**
 	 * 查询所有菜单，遍历后返回
 	 */
-	public List<SysArea> getAreaTree(Map<String, Object> params, List<SysArea> li, SysArea entity) {
+	/*public List<SysArea> getAreaTree(Map<String, Object> params, List<SysArea> li, SysArea entity) {
 		List<SysArea> list = new ArrayList<SysArea>();
 		List<SysArea> retlist = new ArrayList<SysArea>();
 
@@ -155,7 +156,7 @@ public class AreaController extends AbstractBasicController {
 			list.add(area);
 		}
 		return list;
-	}
+	}*/
 
 	/**
 	 * 根据菜单的子父级关系生成上下级关系的数据
@@ -163,7 +164,7 @@ public class AreaController extends AbstractBasicController {
 	 * @param menu
 	 * @return
 	 */
-	public List<SysArea> CreateAreaTree(Map<String, Object> params, String id, List<SysArea> li,
+	/*public List<SysArea> CreateAreaTree(Map<String, Object> params, String id, List<SysArea> li,
 			SysArea entity) {
 		params.put("parent_id", id);
 		List<SysArea> list = sysAreaService.getAreaList(params, entity);
@@ -174,6 +175,6 @@ public class AreaController extends AbstractBasicController {
 			}
 		}
 		return li;
-	}
+	}*/
 
 }

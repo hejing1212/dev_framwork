@@ -249,18 +249,12 @@ public class DictController extends AbstractBasicController {
 		Date now = new Date();
 		if (StringTools.isNotEmpty(item.getDictCode())) {
 			if (StringTools.isBlank(item.getId())) {
-				SysDataDictItem items = sysDictItemService.getDictItemName(item.getItemName());
-				if (items == null) {
 					item.setCreate_date(now);
 					item.setCreate_by(UserUtils.getUser().getUserid());
 
 					sysDictItemService.save(item);
 					map.put("code", "1");
-					map.put("msg", "添加成功！");
-				} else {
-					map.put("code", "0");
-					map.put("msg", "字典名称已经存在，添加失败！");
-				}
+					map.put("msg", "添加成功！");				
 			} else {
 				try {
 					SysDataDictItem items = sysDictItemService.get(item.getId());

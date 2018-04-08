@@ -13,7 +13,6 @@
 	<!-- 扫描service自动注入为bean -->
 	<context:component-scan
 		base-package="com.hy.sys.service.impl,com.hy.sys.dao.impl,com.hy.sys.core.impl,com.hy.sys.interceptor,com.hy.sys.utils,com.hy.cb.service.*.impl,com.hy.cb.dao.*.impl" />
-		<context:component-scan base-package="com.hy.cb.service.*,com.hy.cb.dao.*" />
 	<import resource="spring-jdbc.xml" />
 	<import resource="spring-config-cache.xml" />
 	<import resource="spring-config-shiro.xml" />

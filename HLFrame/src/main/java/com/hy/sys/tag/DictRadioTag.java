@@ -27,12 +27,8 @@ public class DictRadioTag extends TagSupport {
 
 	private String id; // EAMPLE:<select name="selectName" id = "" />
 	private String name;
-	private String title;
 	private String value = ""; // 默认值 即是回显 ID
-	private String nodeKey; // 数据字典节点
-	private String divClass; // DIV样式
-	private String labelClass; // Label样式
-	private boolean hasLabel = false; // 是否显示label
+	private String nodeKey; // 数据字典节点	 	 
 	private String clazz;
 	private String style;
 	private boolean required = false; // 如果必须选择、则添加required = true
@@ -54,13 +50,7 @@ public class DictRadioTag extends TagSupport {
 	public StringBuffer end() {
 		StringBuffer sb = new StringBuffer();
 		try {
-			if (StringUtils.isBlank(divClass)) {
-				divClass = ""; // 默认form样式
-			}
-			if (StringUtils.isBlank(labelClass)) {
-				labelClass = ""; // 默认label样式
-			}
-
+			 
 			Set<SysDataDictItem> dictionary = DictUtils.get(this.getNodeKey()); 
 			if (dictionary == null) {
 				sb.append("<span color=\"red\">  未查找到数据字典</span>");
@@ -68,9 +58,9 @@ public class DictRadioTag extends TagSupport {
 				
 				for (SysDataDictItem dic : dictionary) {
 					if (dic.getItemValue().toString().equals(this.getValue())) {
-						sb.append(" <input type=\"radio\" value=\"" + dic.getItemValue() + "\" checked=\"checked\" class=\"" + this.getClazz() + "\" >");
+						sb.append(" <input type=\"radio\" name=\""+name+"\"  id=\""+id+"\"  value=\"" + dic.getItemValue() + "\" checked=\"checked\" class=\"" + this.getClazz() + "\" >");
 					} else {
-						sb.append(" <input type=\"radio\" value=\"" + dic.getItemValue() + "\"  class=\"" + this.getClazz() + "\">");
+						sb.append(" <input type=\"radio\"  name=\""+name+"\" id=\""+id+"\"  value=\"" + dic.getItemValue() + "\"  class=\"" + this.getClazz() + "\">");
 					}
 					sb.append(dic.getItemName());
 					
@@ -102,30 +92,7 @@ public class DictRadioTag extends TagSupport {
 		this.id = id;
 	}
 
-	public String getDivClass() {
-		return divClass;
-	}
-
-	public void setDivClass(String divClass) {
-		this.divClass = divClass;
-	}
-
-	public String getLabelClass() {
-		return labelClass;
-	}
-
-	public void setLabelClass(String labelClass) {
-		this.labelClass = labelClass;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
+	 
 	public String getNodeKey() {
 		return nodeKey;
 	}
@@ -134,13 +101,7 @@ public class DictRadioTag extends TagSupport {
 		this.nodeKey = nodeKey;
 	}
 
-	public boolean isHasLabel() {
-		return hasLabel;
-	}
-
-	public void setHasLabel(boolean hasLabel) {
-		this.hasLabel = hasLabel;
-	}
+	 
 
 	public String getName() {
 		return name;

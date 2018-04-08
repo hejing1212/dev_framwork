@@ -1,12 +1,17 @@
 package com.hy.cb.entity.seller;
 
-import java.io.Serializable;
+import javax.persistence.MappedSuperclass;
 
-public class SellerBasicEntity implements Serializable{
+import com.hy.sys.core.entity.AbstractBasicEntity;
+
+@MappedSuperclass
+public class SellerBasicEntity extends AbstractBasicEntity{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	protected static final String UUID_GENERATED = "com.hy.sys.utils.HibernateIdGenerator";
+
+	 
+	 
 }

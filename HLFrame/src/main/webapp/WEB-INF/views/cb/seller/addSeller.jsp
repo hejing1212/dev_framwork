@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@taglib prefix="f" uri="/WEB-INF/tlds/dict.tld"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,24 +23,72 @@
 				<table class="kv-table">
 					<tbody>
 						<tr>
-							<td class="kv-label">角色名称</td>
+							<td class="kv-label">名称</td>
 							<td class="kv-content"><input class="easyui-textbox"
-								type="text" name="name" data-options="required:true,missingMessage:'请输入角色名称！'" /></td>
+								type="text" name="name" data-options="required:true,missingMessage:'请输入角色名称！'" style="height:30px"/></td>
 
-							<td class="kv-label">英文名称</td>
+							<td class="kv-label">联系人</td>
 							<td class="kv-content"><input class="easyui-textbox"
-								type="text" name="code" data-options="required:true,missingMessage:'请输入角色名称！'"/></td>
+								type="text" name="contacts" data-options="required:true,missingMessage:'请输入角色名称！'" style="height:30px"/></td>
 						</tr>
 						<tr>
-							<td class="kv-label">是否系统数据</td>
+							<td class="kv-label">联系电话</td>
+							<td class="kv-content"><input class="easyui-textbox"
+								type="text" name="telephone" data-options="required:true,missingMessage:'请输入角色名称！'" style="height:30px"/></td>
+
+							<td class="kv-label">公司电话</td>
+							<td class="kv-content"><input class="easyui-textbox"
+								type="text" name="tel" data-options="required:true,missingMessage:'请输入角色名称！'" style="height:30px"/></td>
+						</tr>
+						<tr>
+							<td class="kv-label">证件号码</td>
+							<td class="kv-content"><input class="easyui-textbox"
+								type="text" name="idNo" data-options="required:true,missingMessage:'请输入角色名称！'"  style="height:30px"/></td>
+
+							<td class="kv-label">LOGO</td>
 							<td class="kv-content">
-							<input type="radio" name="is_sys" value="1" checked="checked" class="easyui-radiobox">是
-                               <input type="radio" name="is_sys" value="0" class="easyui-radiobox"> 否
+							<input id="up_portrait"
+								name="uploadFile" class="easyui-filebox"
+								data-options="buttonText:'选择图片',accept:'image/*',onChange:function(){upload_cover(this,'${basePath}/cb/seller/fileUpload.html','logo')}"
+								style="width: 40%;height: 30px;" />
+								<input type="hidden" id="logo" name="logo"/>
+								
+								
+							</td>
+						</tr>
+						<tr>
+							<td class="kv-label">状态</td>
+							<td class="kv-content">
+							<f:dictRadio name="status" nodeKey="user_status" required="true" value="1" clazz="easyui-radiobox"/>
+							</td>
+
+							<td class="kv-label">采购商</td>
+							<td class="kv-content">
+								 <f:dictRadio name="purchase" nodeKey="status" required="true" value="1" clazz="easyui-radiobox"/>
+								</td>
+						</tr>
+						
+						<tr>
+							<td class="kv-label">批发商</td>
+							<td class="kv-content">
+                               <f:dictRadio name="wholesale" nodeKey="status" required="true" value="1" clazz="easyui-radiobox"/>
 							 </td>
-							<td class="kv-label">是否可用</td>
+							<td class="kv-label">零售商</td>
 							<td class="kv-content">
-                              <input type="radio" name="usable" value="1" checked="checked" class="easyui-radiobox">是
-                               <input type="radio" name="usable" value="0" class="easyui-radiobox"> 否</td>
+							<f:dictRadio name="retail" nodeKey="status" required="true" value="1" clazz="easyui-radiobox"/>
+                              </td>
+						</tr>
+						<tr>
+							<td class="kv-label">所在区域</td>
+							<td class="kv-content">
+							<select class="easyui-combotree" name="region"  id="areaTree" data-options="required:true" style="height:30px;width:40%"/>
+							<input type="hidden" id="area_code"/>
+							 </td>
+							<td class="kv-label">详细地址</td>
+							<td class="kv-content">
+                              <input class="easyui-textbox"
+								type="text" name="name" data-options="required:true,missingMessage:'详细地址！'" style="height:30px" />
+                           </td>
 						</tr>
 					</tbody>
 				</table>
@@ -48,12 +97,23 @@
 				</div>
 				<table class="kv-table">
 					<tbody>
-						
 						<tr>
-							<td class="kv-label">备注</td>
-							<td class="kv-content" colspan="5">
-							<textarea rows="5" cols="50" name="remarks"></textarea></td>
+							<td class="kv-label">经度</td>
+							<td class="kv-content"><input class="easyui-textbox"
+								type="text" name="longitude"  style="height:30px" /></td>
 
+							<td class="kv-label">纬度</td>
+							<td class="kv-content"><input class="easyui-textbox"
+								type="text" name="latitude" style="height:30px" /></td>
+						</tr>
+						<tr>
+							<td class="kv-label">商家介绍</td>
+							<td class="kv-content"  >
+							<textarea rows="5" cols="50" name="introduce"></textarea></td>
+							<td class="kv-label">图片预览</td>
+							<td class="kv-content"  >
+							  <img id="image" class="cover-radius" src="${basePath}/static/images/main/user.png" width="60" height="60" style="cursor: pointer;" />
+							</td>
 						</tr>
 					</tbody>
 				</table>
@@ -75,6 +135,8 @@
 	src="${basePath}/static/easyui/jquery.min.js"></script>
 <script type="text/javascript"
 	src="${basePath}/static/easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="${basePath}/static/js/ajaxfileupload.js"></script> 
+<script type="text/javascript" src="${basePath}/static/js/upload.js"></script>	
 <script type="text/javascript">
 	/**
 	 * 提交表单
@@ -104,4 +166,54 @@
 	function clearForm() {
 		$('#save_user').form('clear');
 	}
+	
+	/***
+	*设置父级菜单选择树
+	**/
+	$(function(){ 
+		$("#areaTree").combotree({
+			url:"${basePath}/sys/area/getAreaTreeList.html",
+			onLoadSuccess:function(node, data){
+				$("#parent_id").combotree('setValue',0);
+			},			 			    
+			onBeforeExpand:function(row){    //每次展开前都会调用
+	             //动态设置展开查询的url  
+	           var url = "${basePath}/sys/area/getAreaTreeList.html?parentId="+row.id; 
+	           $("#areaTree").combotree("tree").tree("options").url = url;  
+	           return true;  //返回false表示停止展开节点    
+	          },
+	        onExpand : function(row){ //每次展后都会调用;传入的row已经包含了 children
+	           var children = $("#areaTree").combotree('getChildren',row.id);
+	           if(children.length<=0){ 
+	               row.leaf=true;
+	               $("#areaTree").combotree('refresh', row.id);
+	           }
+	        },
+	        onSelect: function (item){
+	        	 var parent = item;  
+                 var tree = $('#areaTree').combotree('tree');  
+                 var text = new Array();  
+                 var value = new Array();
+                 do {  
+                	 text.unshift(parent.text);  
+                	 value.unshift(parent.id);
+                     var parent = tree.tree('getParent', parent.target);  
+                 } while (parent);  
+                 var textStr="";  
+                 var valStr="";
+                 for (var i = 0; i < text.length; i++) {  
+                	 textStr += text[i];  
+                	 valStr+=value[i];
+                     if (i < text.length - 1) {  
+                    	 textStr += ' - ';  
+                    	 valStr+='-';
+                     }  
+                 }  
+                 $('#area_code').text(textStr+":"+valStr);
+	        },
+	        onDblClickRow: function(row){
+	         
+	         }
+		});
+	})
 </script>

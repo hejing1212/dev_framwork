@@ -72,6 +72,54 @@
 		</attribute>
 	</tag>
 
+
+<!-- 数据字典标签 -->
+	<tag>
+		<name>dictRadio</name>
+		<description>数据字典单项选择</description>
+		<tag-class>com.hy.sys.tag.DictRadioTag</tag-class>
+		<body-content>JSP</body-content>
+		<display-name>数据字典选择控件</display-name>
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>required</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		 
+		<attribute>
+			<name>value</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>nodeKey</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>数据字典的节点key</description>
+		</attribute>
+		 
+		 
+		<attribute>
+			<name>clazz</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>style</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
    <!-- 返回值对应的名称 -->
 	<tag>
 		<name>dicK2V</name>

@@ -1,7 +1,5 @@
 package com.hy.sys.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.hy.sys.core.dao.BasicDao;
 import com.hy.sys.core.service.impl.BasicServiceImpl;
 import com.hy.sys.dao.SysUserRoleDao;
-import com.hy.sys.entity.SysRole;
 import com.hy.sys.entity.SysUserRole;
 import com.hy.sys.service.SysUserRoleService;
 import com.hy.sys.utils.PageInfo;

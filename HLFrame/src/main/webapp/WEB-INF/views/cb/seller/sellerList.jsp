@@ -15,19 +15,20 @@
 </head>
 <body>
 	<div class="container">
-		<table id="dg" style="width: 100%; height: 554px" title="角色列表"
+		<table id="dg" style="width: 100%; height: 554px" title="注册商家列表"
 			data-options="  rownumbers:true,
                 singleSelect:true, autoRowHeight:false,  pagination:true, fitColumns:true,  striped:true,  checkOnSelect:false,
                 selectOnCheck:false, collapsible:true,  toolbar:'#tb',  pageSize:10 ,iconCls:'icon-list'">
 			<thead>
 				<tr>
-					<th field="roleid" width="160" align="center">角色ID</th>
-					<th field="name" width="120" align="center">角色名称</th>
-					<th field="code" width="120" align="center">英文名称</th>
-					<th field="is_sys" width="80" align="center" data-options="formatter:SetDictNameMap">是否系统数据</th>
-					<th field="usable" width="80" align="center" data-options="formatter:SetDictNameMap">是否可用</th>					 
-					<th field="create_date" width="120" align="center">创建日期</th>
-					<th field="remarks" width="200">备注</th>
+					<th field="name" width="160" align="center">商家名称</th> 
+					<th field="contacts" width="120" align="center">联系人</th>
+					<th field="tel" width="120" align="center">联系电话</th>
+					<th field="purchase" width="80" align="center" data-options="formatter:SetDictNameMap">采购商</th>
+					<th field="retail" width="80" align="center" data-options="formatter:SetDictNameMap">零售商</th>		
+					<th field="status" width="80" align="center" data-options="formatter:SetDictNameMap">状态</th>				 
+					<th field="createTime" width="120" align="center">创建日期</th>
+					<th field="introduce" width="200">备注</th>
 				</tr>
 			</thead>
 		</table>
@@ -37,7 +38,7 @@
 			        <a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="javascript:doSearch()" data-options="selected:true">查询</a> 
 					
 					 
-				<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="window.parent.mainPlatform._createWindows('添加角色','${basePath}/sys/role/addRole.html','icon-add','addRole');"> 新增</a>
+				<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="window.parent.mainPlatform._createWindows('添加商家','${basePath}/cb/seller/addSeller.html','icon-add','addSeller');"> 新增</a>
 				<a href="javascript:void(0)" onclick="editRole();" class="easyui-linkbutton" data-options="iconCls:'icon-edit'">修改</a>
 				<a href="javascript:void(0)" onclick="setRole();" class="easyui-linkbutton" data-options="iconCls:'icon-set'">授权</a>  
 			 
@@ -60,7 +61,7 @@
 		var queryParams = $("#dg").datagrid("options").queryParams;
 		queryParams["queryKey"] = $.trim($("#queryKey").val());
 		$("#dg").datagrid({
-			url : "${basePath}/sys/role/getRoleList.html"
+			url : "${basePath}/cb/seller/getSellerList.html"
 		});
 	}
 	
@@ -69,7 +70,7 @@
 		 */
 		$(function() {
 			$('#dg').datagrid({
-				url : "${basePath}/sys/role/getRoleList.html",
+				url : "${basePath}/cb/seller/getSellerList.html",
 				rownumbers : true,
 			});
 		});
