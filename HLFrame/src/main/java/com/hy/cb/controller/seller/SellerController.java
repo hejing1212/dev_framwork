@@ -130,7 +130,7 @@ public class SellerController extends AbstractBasicController {
 		}else { //修改
 			
 		}
-		return null;
+		return map;
 
 	}
 
@@ -145,7 +145,7 @@ public class SellerController extends AbstractBasicController {
 	 */
 	@ResponseBody
 	@RequestMapping("/fileUpload")
-	public Map<String, Object> fileUpload(@RequestParam(value="uploadFile") MultipartFile multipart,HttpServletResponse response, HttpServletRequest request) throws Exception {
+	public Map<String, Object> fileUpload(HttpServletResponse response, HttpServletRequest request) throws Exception {
 		Map<String, Object> map = FileUploads.upload(request);
 		return map;
 	}

@@ -81,7 +81,7 @@
 						<tr>
 							<td class="kv-label">所在区域</td>
 							<td class="kv-content">
-							<select class="easyui-combotree" name="region"  id="areaTree" data-options="required:true" style="height:30px;width:30%"/>
+							<select class="easyui-combotree" name="region"  id="areaTree" data-options="required:true" style="height:30px;width:40%"/>
 							 <input type="hidden" id="area_code" name="province"/>
 							 </td>
 							<td class="kv-label">详细地址</td>

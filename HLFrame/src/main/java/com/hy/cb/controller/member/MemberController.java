@@ -1,5 +1,7 @@
 package com.hy.cb.controller.member;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.hy.cb.entity.member.SeMember;
-import com.hy.cb.service.member.impl.MemberPasswordServiceImpl;
+import com.hy.cb.utils.api.Md5Tools;
 import com.hy.sys.core.controller.AbstractBasicController;
 import com.hy.sys.utils.FileUploads;
 import com.hy.sys.utils.IntegerTools;
@@ -34,9 +36,6 @@ public class MemberController extends AbstractBasicController {
 
 	@Autowired
 	private com.hy.cb.service.member.MemberService memberService;
-
-	@Autowired
-	protected MemberPasswordServiceImpl memberPasswordService;
 
 	@Override
 	protected void init(ModelMap mode, HttpServletRequest req) {
@@ -70,11 +69,13 @@ public class MemberController extends AbstractBasicController {
 	 * 添加数据
 	 * 
 	 * @return
+	 * @throws UnsupportedEncodingException 
+	 * @throws NoSuchAlgorithmException 
 	 */
 	@ResponseBody
 	@RequestMapping("/saveMember")
 	public Map<String, Object> saveMember(@ModelAttribute SeMember entity, HttpServletResponse response,
-			HttpServletRequest request) {
+			HttpServletRequest request) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		Date now = new Date();
 		Map<String, Object> map = new HashMap<String, Object>();
 		try {
@@ -94,7 +95,8 @@ public class MemberController extends AbstractBasicController {
 				}
 				if(member==null) {
 				entity.setCreateTime(now);
-				memberPasswordService.encryptPassword(entity);
+				entity.setRandom(Md5Tools.getrandomNumber());
+				entity.setPassword(Md5Tools.EncoderByMd5(Md5Tools.EncoderByMd5(entity.getPassword())+entity.getRandom()));
 				memberService.save(entity);
 				map.put("code", "1");
 				map.put("msg", "添加会员信息成功");

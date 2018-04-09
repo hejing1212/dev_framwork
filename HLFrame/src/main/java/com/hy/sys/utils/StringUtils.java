@@ -3,6 +3,7 @@ package com.hy.sys.utils;
 import java.io.PrintWriter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Random;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -252,4 +253,22 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 		System.out.print(dfdssd.replace("R&B", "R&amp;B"));
 	}
 
+	/**
+	 * 生成数字随机数理
+	 * @param charCount 位数
+	 * @return
+	 */
+	public static String getRandNum(int charCount) {
+	    String charValue = "";
+	    for (int i = 0; i < charCount; i++) {
+	        char c = (char) (randomInt(0, 10) + '0');
+	        charValue += String.valueOf(c);
+	    }
+	    return charValue;
+	}
+	
+	public static int randomInt(int from, int to) {
+	    Random r = new Random();
+	    return from + r.nextInt(to - from);
+	}
 }
