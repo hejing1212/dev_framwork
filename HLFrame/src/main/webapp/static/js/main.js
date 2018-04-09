@@ -290,7 +290,7 @@ var mainPlatform = {
 };
 
 var SystemMenu="";
-var basePath=getRootPath();
+ 
 
 function loadMenu(){
 	$.ajax({
@@ -306,14 +306,6 @@ function loadMenu(){
 		}
 	});
 }
-//得到当前虚拟目录路径 
-function getRootPath(){
-	var strFullPath=window.document.location.href;
-	var strPath=window.document.location.pathname;
-	var pos=strFullPath.indexOf(strPath);
-	var prePath=strFullPath.substring(0,pos);
-	var postPath=strPath.substring(0,strPath.substr(1).indexOf('/')+1);
-	return(prePath+postPath);
-	}	
+ 
 
 mainPlatform.init();

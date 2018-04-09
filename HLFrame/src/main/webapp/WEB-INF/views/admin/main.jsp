@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="${basePath}/static/easyui/darkblue/easyui.css">
 <script type="text/javascript" src="${basePath}/static/easyui/jquery.min.js"></script>
 <script type="text/javascript">
+var basePath="${basePath}";
 </script>
 </head> 
 <body>

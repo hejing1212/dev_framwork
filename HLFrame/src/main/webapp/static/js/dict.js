@@ -7,7 +7,7 @@
 	function SetDictName(value, text){
 			 if(dictJson==""){
 				 $.ajax({
-		   				url:getRootPath()+"/sys/dict/getDitcJson.html",
+		   				url:basePath+"/sys/dict/getDitcJson.html",
 						type:"get",
 						dataType:"json",
 						async:false,
@@ -36,7 +36,7 @@
 	function SetDictNameMap(value, text){
 		 if(Object.keys(dictMap).length==0){			 
 			 $.ajax({
-	   				url:getRootPath()+"/sys/dict/getDitcJson.html",
+	   				url:basePath+"/sys/dict/getDitcJson.html",
 					type:"get",
 					dataType:"json",
 					async:false,
@@ -61,7 +61,7 @@
 	function SetDictByFieldMap(value, text,index,field){
 		 if(Object.keys(dictMap).length==0){			 
 			 $.ajax({
-	   				url:getRootPath()+"/sys/dict/getDitcJson.html",
+	   				url:basePath+"/sys/dict/getDitcJson.html",
 					type:"get",
 					dataType:"json",
 					async:false,
@@ -85,14 +85,4 @@
 		 return '';
 	}
 	}
-	
-	
-	
-	function getRootPath(){
-		var strFullPath=window.document.location.href;
-		var strPath=window.document.location.pathname;
-		var pos=strFullPath.indexOf(strPath);
-		var prePath=strFullPath.substring(0,pos);
-		var postPath=strPath.substring(0,strPath.substr(1).indexOf('/')+1);
-		return(prePath+postPath);
-		}	
+ 
