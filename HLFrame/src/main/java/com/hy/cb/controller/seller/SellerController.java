@@ -119,12 +119,10 @@ public class SellerController extends AbstractBasicController {
 						entity.setTown(areaCodeArr[3]);
 					}
 				}
-				entity.setCreateTime(now);
-				sellerService.save(entity);
-				map.put("code", "1");
+				
+				map=sellerService.saveSeller(entity);				
 				map.put("msg", "添加成功！");
 			} else {
-				map.put("code", "0");
 				map.put("msg", "商家名称已经存在！");
 			}
 		}else { //修改
