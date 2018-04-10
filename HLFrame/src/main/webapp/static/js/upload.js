@@ -2,7 +2,6 @@
  * AJAX图片文件上传
  * @author hejing
  */
-var basePath=getRootPath();
 function upload_cover(obj,url,name) {
         ajax_upload(obj.id,url, function(data) {               //function(data)是上传图片的成功后的回调方法
             var isrc = data.relatPath.replace(/\/\//g, '/'); //获取的图片的绝对路径
@@ -39,12 +38,4 @@ function upload_cover(obj,url,name) {
         })();
     }
     
-  //得到当前虚拟目录路径 
-    function getRootPath(){
-    	var strFullPath=window.document.location.href;
-    	var strPath=window.document.location.pathname;
-    	var pos=strFullPath.indexOf(strPath);
-    	var prePath=strFullPath.substring(0,pos);
-    	var postPath=strPath.substring(0,strPath.substr(1).indexOf('/')+1);
-    	return(prePath+postPath);
-    	}	
+  

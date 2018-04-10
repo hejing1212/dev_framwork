@@ -19,5 +19,18 @@ public interface SysAreaDao extends BasicDao<SysArea>{
 	 * @return
 	 */
 	public List<SysArea> getAreaList(Map<String, Object> params, SysArea entity);
+    /**
+     * 根据父ID进行递归查询所有子节点
+     * @param params
+     * @return
+     */
+	public List<SysArea> getRecursionAreaListByParentId(String pareatId);
+
+	/**
+	 * 查询顶级地区列表
+	 * @param params
+	 * @return
+	 */
+	public List<SysArea> getAreaListByParentId(String pareatId);
 
 }
