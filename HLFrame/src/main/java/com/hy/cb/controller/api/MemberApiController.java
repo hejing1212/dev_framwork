@@ -238,12 +238,18 @@ public class MemberApiController extends AbstractBasicController {
 	@RequestMapping(value = "getAuthCode")
 	public WebServiceResult getAuthCode(String userId, String phone, HttpServletRequest req) {
 		WebServiceResult json = new WebServiceResult();
-		if (StringTools.isEmpty(userId)) {
+		if (StringTools.isEmpty(userId)&&StringTools.isEmpty(phone)) {
 			json.setSuccess(false);
-			json.setMessage("手机号不能为空！");
+			json.setMessage("用户ID或手机号不能同时为空！");
 			return json;
 		}
 
+		if (StringTools.isEmpty(phone)&&StringTools.isNotBlank(userId)) {
+			 SeMember member=memberService.get(userId);
+			 if(member!=null) {
+				 phone=member.getMobilephone();
+			 }
+		}
 		if (StringTools.isEmpty(phone)) {
 			json.setSuccess(false);
 			json.setMessage("手机号不能为空！");

@@ -2,17 +2,23 @@ package com.hy.cb.entity.seller;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.GenericGenerator;
+
+import com.hy.cb.entity.member.SeMember;
 
 
 /**
@@ -98,10 +104,24 @@ public class SeSeller extends SellerBasicEntity{
 	/**企业LOGO**/
 	private String logo;
 
+	
 
+	@OneToMany
+	@JoinColumn(name = "ep_no")
+	private Set<SeMember> member;
+
+	
 	public SeSeller() {
 	}
-		
+	
+	public Set<SeMember> getMember() {
+		return member;
+	}
+
+	public void setMember(Set<SeMember> member) {
+		this.member = member;
+	}
+	
 	public String getSeller_id() {
 		return seller_id;
 	}

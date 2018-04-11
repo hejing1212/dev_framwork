@@ -109,26 +109,10 @@ var basePath="${basePath}";
 		        });
 		    }
 		}		
-		//设置角色权限 
-		function setRole(){
-			 var row = $('#dg').datagrid('getSelected');
-			 if (row==null ||row=='') {
-		            $.messager.alert('操作提示','请先选择记录后再进行此操作!','info'); 
-		            return;
-		        }
-			 
-			 var index = $('#dg').datagrid('getRowIndex', row);
-			 window.parent.mainPlatform._createWindows("角色授权",
-						"${basePath}/sys/role/roleAuthorize.html?roleId="
-								+ row.roleid + "&index=" + index, "icon-set",
-						'setRoleAuthorize');
-		}
-		
 		function  SetDictByField(value, text,index){
 			  field="status";
 			  return SetDictByFieldMap(value, text,index,field);
 		}
 	</script>
-
 </body>
 </html>

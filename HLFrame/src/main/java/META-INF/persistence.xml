@@ -19,6 +19,9 @@
 		<class>com.hy.cb.entity.member.SeMember</class>
 		<class>com.hy.cb.entity.seller.SeSeller</class>
 		<class>com.hy.sys.entity.SysRoleMenuFun</class>
+		<class>com.hy.cb.entity.seller.SeEnterpriseGood</class>
+		<class>com.hy.cb.entity.seller.SeGood</class>
+		<class>com.hy.cb.entity.seller.SeGoodsCategory</class>
 	
 	</persistence-unit>
 </persistence>

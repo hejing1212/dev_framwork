@@ -6,13 +6,16 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.hy.cb.entity.seller.SeSeller;
 import com.hy.cb.entity.seller.SellerBasicEntity;
 
 
@@ -96,6 +99,11 @@ public class SeMember extends SellerBasicEntity {
 	/** 微信号 openid**/
 	private String weixin;
 
+	@OneToOne
+	@JoinColumn(name = "ep_no", nullable = false, updatable = false, insertable = false)
+	private SeSeller seller;
+	
+	
 	public SeMember() {
 	}
 
@@ -257,6 +265,19 @@ public class SeMember extends SellerBasicEntity {
 
 	public void setRealname(String realname) {
 		this.realname = realname;
+	}
+
+	/**
+	 * 用户与商家一对一
+	 * @return
+	 */
+	
+	public SeSeller getSeller() {
+		return seller;
+	}
+
+	public void setSeller(SeSeller seller) {
+		this.seller = seller;
 	}
 
 }

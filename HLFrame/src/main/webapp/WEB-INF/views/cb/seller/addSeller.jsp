@@ -219,4 +219,9 @@
 	         }
 		});
 	})
+	
+	//子页面调用后刷新列表
+		window.top["reload_Abnormal_Monitor"] = function() {
+			$("#dg").datagrid('reload');
+		};
 </script>
