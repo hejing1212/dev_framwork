@@ -23,6 +23,7 @@
 		<class>com.hy.cb.entity.seller.SeGood</class>
 		<class>com.hy.cb.entity.seller.SeGoodsCategory</class>
 		<class>com.hy.cb.entity.seller.SeShop</class>
+		<class>com.hy.cb.entity.seller.SeSellerCategory</class>
 	
 	</persistence-unit>
 </persistence>

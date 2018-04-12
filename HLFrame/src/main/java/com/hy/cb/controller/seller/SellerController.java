@@ -35,6 +35,7 @@ public class SellerController extends AbstractBasicController {
 
 	@Autowired
 	private SellerService sellerService;
+	
 	@Autowired
 	private SeShopService seShopService;
 

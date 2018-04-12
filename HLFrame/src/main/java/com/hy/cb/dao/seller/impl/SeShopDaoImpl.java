@@ -34,7 +34,13 @@ public class SeShopDaoImpl extends BasicDaoImpl<SeShop> implements SeShopDao{
 			values.add("%" + key + "%");
 			values.add("%" + key + "%");
 			values.add("%" + key + "%");
-		}	 
+		}
+		if(StringTools.mapGetKeyIsEmpty(params, "ep_no"))  {
+			sql.append(" AND ( ep_no = ? )");
+			String key = params.get("ep_no").toString().trim();
+			values.add("%" + key + "%");
+		}
+		
 		sql.append(" ORDER BY create_date DESC");
 		return (PageInfo<SeShop>) this.findPageInfoByQueryJdbc(pageNo, pageSize, sql.toString(),
 				values.toArray(), SeShop.class);
