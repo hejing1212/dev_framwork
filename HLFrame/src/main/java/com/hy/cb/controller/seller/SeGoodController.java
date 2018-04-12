@@ -130,7 +130,7 @@ public class SeGoodController  extends AbstractBasicController {
 		return map;
 
 	}
-	
+	@RequestMapping("/delCategory")
 	public Map<String, Object> delCategory(@RequestParam(required = true) String categoryId, HttpServletResponse response, HttpServletRequest request) throws Exception{
 		Map<String, Object> map = new HashMap<String, Object>();
 		if(StringTools.isNotBlank(categoryId)) {

@@ -22,7 +22,7 @@ var basePath="${basePath}";
 			<div class="content">
 				<div class="column">
 					<span class="current">基础信息</span>
-					<input type="text" name="category_id" value="${cat.category_id}" /> 
+					<input type="hidden" name="categoryId" value="${cat.categoryId}" /> 
 				</div>
 				<table class="kv-table">
 					<tbody>

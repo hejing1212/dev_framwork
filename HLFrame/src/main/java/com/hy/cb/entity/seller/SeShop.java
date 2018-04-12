@@ -11,6 +11,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -38,7 +39,10 @@ public class SeShop extends SellerBasicEntity{
 
 	@Column(name="ep_no")
 	private String epNo;
-
+	
+	@Transient
+	private String epName;
+	
 	@Lob
 	private String introduce;
 
@@ -169,5 +173,11 @@ public class SeShop extends SellerBasicEntity{
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
+	public String getEpName() {
+		return epName;
+	}
 
+	public void setEpName(String epName) {
+		this.epName = epName;
+	}
 }

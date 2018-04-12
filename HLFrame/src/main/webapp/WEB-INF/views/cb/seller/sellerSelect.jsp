@@ -5,11 +5,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>商家管理</title>
+<title>流程页</title>
 <link href="${basePath}/static/css/base.css" rel="stylesheet">
 <link rel="stylesheet"
 	href="${basePath}/static/easyui/darkblue/easyui.css">
- <link rel="stylesheet"
+<link rel="stylesheet"
 	href="${basePath}/static/easyui/darkblue/icon.css">
 <link rel="stylesheet" href="${basePath}/static/css/providers.css">
 <script type="text/javascript">
@@ -18,10 +18,11 @@ var basePath="${basePath}";
 </head>
 <body>
 	<div class="container">
-		<table id="dg" style="width: 100%; height: 554px" title="注册商家列表"
+
+		<table id="dg" style="width: 100%; height: 554px" title="商家列表"
 			data-options="  rownumbers:true,
-                singleSelect:true, autoRowHeight:false,  pagination:true, fitColumns:true,  striped:true,  checkOnSelect:false,
-                selectOnCheck:false, collapsible:true,  toolbar:'#tb',  pageSize:10 ,iconCls:'icon-list'">
+                singleSelect:false, autoRowHeight:false,  pagination:true, fitColumns:true,  striped:true,  checkOnSelect:false,
+                selectOnCheck:false, collapsible:true,  toolbar:'#tb',  pageSize:10">
 			<thead>
 				<tr>
 					<th field="name" width="160" align="center">商家名称</th> 
@@ -30,25 +31,21 @@ var basePath="${basePath}";
 					<th field="purchase" width="80" align="center"  data-options="formatter:SetDictByField">采购商</th>
 					<th field="retail" width="80" align="center" data-options="formatter:SetDictByField">零售商</th>		
 					<th field="wholesale" width="80" align="center" data-options="formatter:SetDictByField">批发商</th>	
-					<th field="status" width="80" align="center" data-options="formatter:SetDictNameMap">状态</th>				 
-					<th field="createTime" width="120" align="center">创建日期</th>
-					<th field="introduce" width="200">备注</th>
+					<th field="status" width="80" align="center" data-options="formatter:SetDictNameMap">状态</th>
 				</tr>
 			</thead>
 		</table>
+
 		<div id="tb" style="padding: 0 30px;">
 			<div class="conditions">
-				关键字: <input class="easyui-textbox" type="text" id="queryKey" style="width: 166px; height: 35px; line-height: 35px;"></input>
-			        <a href="#" class="easyui-linkbutton" iconCls="icon-search" onclick="javascript:doSearch()" data-options="selected:true">查询</a> 
-					
-					 
-				<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="window.parent.mainPlatform._createWindows('添加商家','${basePath}/cb/seller/addSeller.html','icon-add','addSeller');"> 新增</a>
-				<a href="javascript:void(0)" onclick="editRole();" class="easyui-linkbutton" data-options="iconCls:'icon-edit'">修改</a>
-				<a href="javascript:void(0)" onclick="setRole();" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">删除</a>  
-			 
+				关键字: <input class="easyui-textbox" type="text" name="code"
+					style="width: 166px; height: 35px; line-height: 35px;"></input> 
+			 <a href="#" class="easyui-linkbutton" onclick="javascript:doSearch()" iconCls="icon-search" data-options="selected:true">查询</a> 
+              <a href="javascript:void(0)" onclick="selectSeller();" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">确定</a>
 			</div>
-			
+
 		</div>
+		
 	</div>
 
 	<script type="text/javascript"
@@ -58,7 +55,7 @@ var basePath="${basePath}";
 	<script type="text/javascript"
 		src="${basePath}/static/easyui/easyui-lang-zh_CN.js"></script>
    <script type="text/javascript" src="${basePath}/static/js/dict.js"></script>
-	<script type="text/javascript">	
+	<script type="text/javascript">
 	
 	//查询功能
 	function doSearch() {
@@ -76,30 +73,17 @@ var basePath="${basePath}";
 			$('#dg').datagrid({
 				url : "${basePath}/cb/seller/getSellerList.html",
 				rownumbers : true,
+				pagination : true
 			});
 		});
-		//子页面调用后刷新列表
-	    window.top["reload_Abnormal_Monitor"]=function(){
-	    	$("#dg").datagrid('reload');
-	    };
-	    
-		//编辑角色
-		function editSeller() {
-		    var row = $('#dg').datagrid('getSelected');
-		    if (row) {
-		        if (row.roleid == '') {
-		            $.messager.show({
-		                title: '操作提示',
-		                msg: '请先选择记录后再进行此操作!',
-		                showType: 'slide'
-		            }); 
-		            return;
-		        }
-		        var index = $('#dg').datagrid('getRowIndex', row);
-		        window.parent.mainPlatform._createWindows("编辑用户",
-						"${basePath}/sys/role/editRole.html?roleid="
-								+ row.roleid + "&index=" + index, "icon-edit",
-						'edit');
+
+		//设置角色权限
+		function selectSeller() {
+			var row = $('#dg').datagrid('getSelected');
+			if (row) {
+				$("#epNo",window.parent.document).val(row.seller_id);//子窗口给父窗口元素赋值
+				parent.$("#epnName").textbox("setValue",row.name); 
+				parent.$("#dialog").dialog('close');
 		    } else {
 		        $.messager.show({
 		            title: '操作提示',
@@ -107,12 +91,14 @@ var basePath="${basePath}";
 		            timeout: 2000,
 		            showType: 'slide'
 		        });
-		    }
-		}		
+		    }						
+		}
+		
 		function  SetDictByField(value, text,index){
 			  field="status";
 			  return SetDictByFieldMap(value, text,index,field);
 		}
 	</script>
+
 </body>
 </html>
