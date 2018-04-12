@@ -20,8 +20,7 @@ public class SeGoodServiceImpl extends BasicServiceImpl<SeGood> implements SeGoo
 	
 	@Override
 	public PageInfo<SeGood> getPageList(Map<String, Object> params, SeGood entity, int pageNo, int pageSize) {
-		// TODO Auto-generated method stub
-		return null;
+		return seGoodDao.getPageList(params, entity, pageNo, pageSize);
 	}
 
 	@Override

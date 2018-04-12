@@ -2,6 +2,7 @@ package com.hy.cb.dao.seller.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
@@ -9,6 +10,8 @@ import com.hy.cb.dao.seller.SeGoodsDao;
 import com.hy.cb.entity.seller.SeGood;
 import com.hy.cb.entity.seller.SeGoodsCategory;
 import com.hy.sys.core.dao.impl.BasicDaoImpl;
+import com.hy.sys.utils.PageInfo;
+import com.hy.sys.utils.StringTools;
 
 @Repository("seGoods")
 public class SeGoodDaoImpl extends  BasicDaoImpl<SeGood> implements SeGoodsDao{
@@ -36,6 +39,24 @@ public class SeGoodDaoImpl extends  BasicDaoImpl<SeGood> implements SeGoodsDao{
 		} else {
 			return null;
 		}
+	}
+
+	@Override
+	public PageInfo<SeGood> getPageList(Map<String, Object> params, SeGood entity, int pageNo, int pageSize) {
+		StringBuffer sql = new StringBuffer();
+		List<Object> values = new ArrayList<Object>();
+		sql.append(" SELECT  a.*,b.category_name ");
+		sql.append(" FROM se_goods a ,se_goods_category b   ");
+		sql.append(" WHERE a.category_id=b.category_id ");
+        //多个关键字查询
+		if(StringTools.mapGetKeyIsEmpty(params, "queryKey"))  {
+			sql.append(" AND ( goods_name like ? )");
+			String key = params.get("queryKey").toString().trim();
+			values.add("%" + key + "%");
+		}	 
+		sql.append(" ORDER BY create_date DESC");
+		return (PageInfo<SeGood>) this.findPageInfoByQueryJdbc(pageNo, pageSize, sql.toString(),
+				values.toArray(), SeGood.class);
 	}
 
 }

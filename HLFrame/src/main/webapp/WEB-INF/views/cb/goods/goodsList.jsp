@@ -25,7 +25,7 @@ var basePath="${basePath}";
 			<thead>
 				<tr>
 					<th field="goodsName" width="160" align="center">名称</th> 
-					<th field="categoryId" width="120" align="center">分类名称</th>				 
+					<th field="categoryName" width="120" align="center">分类名称</th>				 
 					<th field="createBy" width="200">添加人</th>
 				</tr>
 			</thead>
@@ -59,7 +59,7 @@ var basePath="${basePath}";
 		var queryParams = $("#dg").datagrid("options").queryParams;
 		queryParams["queryKey"] = $.trim($("#queryKey").val());
 		$("#dg").datagrid({
-			url : "${basePath}/cb/goods/goodsList.html"
+			url : "${basePath}/cb/goods/getGoodsList.html"
 		});
 	}
 	
@@ -68,7 +68,7 @@ var basePath="${basePath}";
 		 */
 		$(function() {
 			$('#dg').datagrid({
-				url : "${basePath}/cb/goods/goodsList.html",
+				url : "${basePath}/cb/goods/getGoodsList.html",
 				rownumbers : true,
 			});
 		});
@@ -91,8 +91,8 @@ var basePath="${basePath}";
 		        }
 		        var index = $('#dg').datagrid('getRowIndex', row);
 		        window.parent.mainPlatform._createWindows("编辑用户",
-						"${basePath}/cb/goods/categoryEdit.html?categoryId="
-								+ row.categoryId + "&index=" + index, "icon-edit",
+						"${basePath}/cb/goods/goodsEdit.html?goodsId="
+								+ row.goodsId + "&index=" + index, "icon-edit",
 						'edit');
 		    } else {
 		        $.messager.show({

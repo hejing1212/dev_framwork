@@ -104,23 +104,11 @@ public class SeSeller extends SellerBasicEntity{
 	/**企业LOGO**/
 	private String logo;
 
-	
 
-	@OneToMany
-	@JoinColumn(name = "ep_no")
-	private Set<SeMember> member;
-
-	
 	public SeSeller() {
 	}
 	
-	public Set<SeMember> getMember() {
-		return member;
-	}
-
-	public void setMember(Set<SeMember> member) {
-		this.member = member;
-	}
+	 
 	
 	public String getSeller_id() {
 		return seller_id;

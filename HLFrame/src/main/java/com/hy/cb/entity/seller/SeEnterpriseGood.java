@@ -44,17 +44,29 @@ public class SeEnterpriseGood extends SellerBasicEntity {
 	private String epAlias;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="ep_create_teim")
-	private Date epCreateTeim;
-
-	
+	@Column(name="ep_create_date")
+	private Date epCreateDate;
 
 	@Column(name="supplier_no")
 	private String supplierNo;
-
+    /**单价**/
 	@Column(name="unit_price")
 	private BigDecimal unitPrice;
 
+	/**进货价**/
+	@Column(name="purchase_price")
+	private BigDecimal purchasePrice;
+	
+	
+
+	/**活动价**/
+	@Column(name="activity_price")
+	private BigDecimal activityPrice;
+	
+	/**商品分类编号**/
+	@Column(name="class_id")
+	private BigDecimal classId;
+	
 	@Column(name="wrapper_type")
 	private int wrapperType;
 
@@ -69,12 +81,12 @@ public class SeEnterpriseGood extends SellerBasicEntity {
 		this.epAlias = epAlias;
 	}
 
-	public Date getEpCreateTeim() {
-		return this.epCreateTeim;
+	public Date getEpCreateDate() {
+		return this.epCreateDate;
 	}
 
-	public void setEpCreateTeim(Date epCreateTeim) {
-		this.epCreateTeim = epCreateTeim;
+	public void setEpCreateDate(Date epCreateDate) {
+		this.epCreateDate = epCreateDate;
 	}
 
 	public String getEpGoodsId() {
@@ -125,6 +137,30 @@ public class SeEnterpriseGood extends SellerBasicEntity {
 		this.unitPrice = unitPrice;
 	}
 
+	public BigDecimal getPurchasePrice() {
+		return purchasePrice;
+	}
+
+	public void setPurchasePrice(BigDecimal purchasePrice) {
+		this.purchasePrice = purchasePrice;
+	}
+
+	public BigDecimal getActivityPrice() {
+		return activityPrice;
+	}
+
+	public void setActivityPrice(BigDecimal activityPrice) {
+		this.activityPrice = activityPrice;
+	}
+
+	public BigDecimal getClassId() {
+		return classId;
+	}
+
+	public void setClassId(BigDecimal classId) {
+		this.classId = classId;
+	}
+	
 	public int getWrapperType() {
 		return this.wrapperType;
 	}
@@ -132,5 +168,6 @@ public class SeEnterpriseGood extends SellerBasicEntity {
 	public void setWrapperType(int wrapperType) {
 		this.wrapperType = wrapperType;
 	}
+	
 
 }

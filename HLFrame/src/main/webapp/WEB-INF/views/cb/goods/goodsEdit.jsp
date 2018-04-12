@@ -22,39 +22,38 @@ var basePath="${basePath}";
 			<div class="content">
 				<div class="column">
 					<span class="current">基础信息</span>
+					<input type="hidden" name="goodsId" value="${goods.goodsId}" />
 				</div>
 				<table class="kv-table">
 					<tbody>
 						<tr>
 							<td class="kv-label">名称</td>
 							<td class="kv-content"><input class="easyui-textbox"
-								type="text" name="goodsName" data-options="required:true,missingMessage:'请输入商品名称！'" style="height:30px"/></td>
+								type="text" name="goodsName" value="${goods.goodsName}" data-options="required:true,missingMessage:'请输入商品名称！'" style="height:30px"/></td>
 
 							<td class="kv-label">分类</td>
 							<td class="kv-content"><input class="easyui-textbox" editable="false"
-								type="text" id="category" name="category"  data-options="required:true,missingMessage:'选择分类！'" style="height:30px"  />
-								<input type="hidden" name="categoryId" id="categoryId" />
+								type="text" id="category" name="category"  value="${goods.categoryName}"   data-options="required:true,missingMessage:'选择分类！'" style="height:30px"  />
+								<input type="hidden" name="categoryId" id="categoryId" value="${goods.categoryId}" />
 								
 								<a href="#" onclick="getCategoryList();" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-ok'">选择</a> 
 								</td>
-						</tr>
-						
-						<tr>
-							 
-
+						</tr>						
+						<tr>							 
 							<td class="kv-label">分类图片</td>
 							<td class="kv-content">
-							<input id="up_portrait"
+							<input id="up_portrait" value="${goods.picture}"
 								name="uploadFile" class="easyui-filebox"
 								data-options="buttonText:'选择图片',accept:'image/*',onChange:function(){upload_cover(this,'${basePath}/cb/goods/fileUpload.html','picture')}"
 								style="width: 40%;height: 30px;" />
-								<input type="hidden" id="picture" name="picture"/>
-								
-							</td>
-							
+								<input type="hidden" id="picture" name="picture" value="${goods.picture}" />								
+							</td>						
 							<td class="kv-label">图片预览</td>
 							<td class="kv-content"  >
-							<img id="image" class="cover-radius" src="${basePath}/static/images/main/user.png" width="60" height="60" style="cursor: pointer;" /></td>
+							<img id="image" class="cover-radius"<c:choose><c:when test="${goods.picture eq ''}">src="${basePath}/static/images/main/user.png"</c:when>
+								<c:otherwise>src="${basePath}/${goods.picture}"</c:otherwise></c:choose>
+								 width="60" height="60" style="cursor: pointer;" />
+							</td>
 						</tr>	
 					</tbody>
 				</table>

@@ -10,6 +10,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.GenericGenerator;
 
@@ -32,6 +33,9 @@ public class SeGood extends SellerBasicEntity {
 
 	@Column(name="category_id")
 	private String categoryId;
+	
+	@Transient
+	private String categoryName;
 
 	@Column(name="create_by")
 	private String createBy;
@@ -131,6 +135,14 @@ public class SeGood extends SellerBasicEntity {
 
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
+	}
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
 	}
 
 }

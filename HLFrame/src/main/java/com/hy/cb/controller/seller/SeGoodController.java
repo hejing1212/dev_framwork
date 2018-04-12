@@ -156,7 +156,14 @@ public class SeGoodController  extends AbstractBasicController {
 		ModelAndView view = new ModelAndView();
 		String goodsId = request.getParameter("goodsId");
 		SeGood entity = seGoodService.get(goodsId);
-		view.addObject("cat", entity);
+		if(entity!=null&&StringTools.isNotEmpty(entity.getCategoryId())) {
+			SeGoodsCategory category=seGoodsCategoryService.get(entity.getCategoryId());
+					if(category!=null) {
+						entity.setCategoryName(category.getCategoryName());
+					}
+		}
+		
+		view.addObject("goods", entity);
 		return view;
 	}
 	
@@ -208,11 +215,10 @@ public class SeGoodController  extends AbstractBasicController {
 	 */
 	@ResponseBody
 	@RequestMapping("/saveGoods")
-	public Map<String, Object> saveGoods(@ModelAttribute SeGood entity, HttpServletResponse response,
-			HttpServletRequest request) {
+	public Map<String, Object> saveGoods(@ModelAttribute SeGood entity, HttpServletResponse response,HttpServletRequest request) {
 		Map<String, Object> map = new HashMap<String, Object>();
         Date now=new Date();
-		if (StringTools.isBlank(entity.getCategoryId())) {
+		if (StringTools.isBlank(entity.getGoodsId())) {
 			try {
 				entity.setCreateDate(now);
 				entity.setCreateBy(UserUtils.getUser().getUserid());

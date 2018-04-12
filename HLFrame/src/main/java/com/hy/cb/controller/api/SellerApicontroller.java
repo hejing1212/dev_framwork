@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hy.cb.entity.member.SeMember;
 import com.hy.cb.entity.seller.SeSeller;
@@ -39,7 +40,7 @@ public class SellerApicontroller extends AbstractBasicController {
 	}
 
 	/**
-	 * 使用添加商家 信息
+	 * 添加商家 信息
 	 * 
 	 * @param entity
 	 * @param userId
@@ -47,6 +48,8 @@ public class SellerApicontroller extends AbstractBasicController {
 	 * @return
 	 * @throws ParseException
 	 */
+	@ResponseBody
+	@RequestMapping(value = "addSeller")
 	public WebServiceResult addSeller(@ModelAttribute SeSeller entity, String userId, HttpServletRequest request)
 			throws ParseException {
 		WebServiceResult json = new WebServiceResult();
@@ -114,7 +117,9 @@ public class SellerApicontroller extends AbstractBasicController {
 	 * @param sellerId
 	 * @return
 	 */
-	public WebServiceResult getSellerBySellerId(String sellerId) {
+	@ResponseBody
+	@RequestMapping(value = "getSellerBySellerId")
+	public WebServiceResult getSellerBySellerId(String sellerId,HttpServletRequest req) {
 		WebServiceResult json = new WebServiceResult();
 		if (StringTools.isBlank(sellerId)) {
 			json.setSuccess(false);
@@ -139,7 +144,9 @@ public class SellerApicontroller extends AbstractBasicController {
 	 * @param userId
 	 * @return
 	 */
-	public WebServiceResult getSellerByUserId(String userId) {
+	@ResponseBody
+	@RequestMapping(value = "getSellerByUserId")
+	public WebServiceResult getSellerByUserId(String userId,HttpServletRequest req) {
 		WebServiceResult json = new WebServiceResult();
 		if (StringTools.isBlank(userId)) {
 			json.setSuccess(false);

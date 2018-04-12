@@ -75,9 +75,9 @@
 		function selectCategory() {
 			var row = $('#dg').datagrid('getSelected');
 			if (row) {
-				alert(row.categoryName);
 				$("#categoryId",window.parent.document).val(row.categoryId);//子窗口给父窗口元素赋值
-				$("#category",window.parent.document).textbox("setValue",row.categoryName); 
+				parent.$("#category").textbox("setValue",row.categoryName); 
+				parent.$("#dialog").dialog('close');
 		    } else {
 		        $.messager.show({
 		            title: '操作提示',
