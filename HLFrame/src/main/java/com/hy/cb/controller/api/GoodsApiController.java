@@ -72,13 +72,23 @@ public class GoodsApiController extends AbstractBasicController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "getSysGoods")
-	public WebServiceResult getSysGoods(int pageNo, int pageSize, HttpServletRequest request) {
+	public WebServiceResult getSysGoods(String sellerId,String shopId,int pageNo, int pageSize, HttpServletRequest request) {
 		WebServiceResult json = new WebServiceResult();
-
+		if (StringTools.isEmpty(shopId)) {
+			json.setSuccess(false);
+			json.setMessage("档口编号不能为空！");
+			return json;
+		}
+		if (StringTools.isEmpty(sellerId)) {
+			json.setSuccess(false);
+			json.setMessage("商家编号不能为空！");
+			return json;
+		}
 		pageNo = (pageNo == 0) ? PAGE_NO : pageNo;
 		pageSize = (pageSize == 0) ? PAGE_SIZE : pageSize;
 		Map<String, Object> params = new HashMap<String, Object>();
-
+        params.put("sellerId", sellerId);
+        params.put("shopId", shopId);
 		SeGood entity = new SeGood();
 		PageInfo<SeGood> pages = seGoodService.getPageList(params, entity, pageNo, pageSize);
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -140,6 +150,52 @@ public class GoodsApiController extends AbstractBasicController {
 			json.setMessage("操作失败:" + e.toString());
 			json.setSuccess(false);
 		}
+		return json;
+
+	}
+	
+	/**
+	 * 获取商家设定的商品
+	 * 
+	 * @param sort
+	 * @param pageNo
+	 * @param pageSize
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "getSellerShopGoods")
+	public WebServiceResult getSellerShopGoods(String sellerId,String shopId,int pageNo, int pageSize, HttpServletRequest request) {
+		WebServiceResult json = new WebServiceResult();
+		if (StringTools.isEmpty(shopId)) {
+			json.setSuccess(false);
+			json.setMessage("档口编号不能为空！");
+			return json;
+		}
+		if (StringTools.isEmpty(sellerId)) {
+			json.setSuccess(false);
+			json.setMessage("商家编号不能为空！");
+			return json;
+		}
+		pageNo = (pageNo == 0) ? PAGE_NO : pageNo;
+		pageSize = (pageSize == 0) ? PAGE_SIZE : pageSize;
+		Map<String, Object> params = new HashMap<String, Object>();
+        params.put("sellerId", sellerId);
+        params.put("shopId", shopId);
+        SeEnterpriseGood entity = new SeEnterpriseGood();
+		PageInfo<SeEnterpriseGood> pages = seEnterpriseGoodService.getPageList(params, entity, pageNo, pageSize);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("total", pages.getTotalrecond());
+		map.put("rows", pages.getResultlist());
+		if (pages.getTotalrecond() > 0) {
+			json.setMessage("操作成功！");
+			json.setDatas(map);
+			json.setSuccess(true);
+			json.setCode(200);
+		} else {
+			json.setMessage("未获取到数据！");
+			json.setSuccess(false);
+		}
+
 		return json;
 
 	}

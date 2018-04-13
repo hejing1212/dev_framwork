@@ -59,4 +59,14 @@ public class MemberServiceImpl extends BasicServiceImpl<SeMember> implements Mem
 	public SeMember findByPhone(String phone) {
 		return memberDao.findByPhone(phone);
 	}
+
+	/**
+	 * 查询检查其它用户是否使用过该手机号
+	 */
+	@Override
+	public SeMember findByOtherPhone(String mobilephone, String userid) {
+		// TODO Auto-generated method stub
+		return memberDao.findByOtherPhone(mobilephone,userid);
+	}
+	
 }

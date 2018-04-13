@@ -57,7 +57,7 @@ public class SeMember extends SellerBasicEntity {
 	/**邮箱 **/
 	private String email;
 
-	/**推广人编号 **/
+	/**企业编号 **/
 	@Column(name="ep_no")
 	private String epNo;
 

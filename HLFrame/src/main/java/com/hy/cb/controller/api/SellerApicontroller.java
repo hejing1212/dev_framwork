@@ -281,7 +281,7 @@ public class SellerApicontroller extends AbstractBasicController {
 	}
 
 	/**
-	 * 获取商家档口列表
+	 * 获取单个商家档口列表
 	 * 
 	 * @param shopid
 	 * @param pageNo

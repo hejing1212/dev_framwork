@@ -24,6 +24,14 @@ public interface MemberService extends BasicService<SeMember>{
 	 * @param phone
 	 * @return
 	 */
-	SeMember findByPhone(String phone);
+	public SeMember findByPhone(String phone);
+
+	/**
+	 * 查询检查其它用户是否使用过该手机号
+	 * @param mobilephone
+	 * @param userid
+	 * @return
+	 */
+	public SeMember findByOtherPhone(String mobilephone, String userid);
 
 }

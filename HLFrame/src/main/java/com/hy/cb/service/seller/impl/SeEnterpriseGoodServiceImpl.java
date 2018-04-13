@@ -22,8 +22,7 @@ public class SeEnterpriseGoodServiceImpl extends BasicServiceImpl<SeEnterpriseGo
 	@Override
 	public PageInfo<SeEnterpriseGood> getPageList(Map<String, Object> params, SeEnterpriseGood entity, int pageNo,
 			int pageSize) {
-		// TODO Auto-generated method stub
-		return null;
+		 return seEnterpriseGoodDao.getPageList(params, entity, pageNo, pageSize);
 	}
 
 	@Override

@@ -39,4 +39,12 @@ public interface MemberDao extends BasicDao<SeMember>{
 	 */
 	public SeMember findByEmail(String email);
 
+	/**
+	 * 查询检查其它用户是否使用过该手机号
+	 * @param mobilephone
+	 * @param userid
+	 * @return
+	 */
+	public SeMember findByOtherPhone(String mobilephone, String userid);
+
 }

@@ -39,7 +39,18 @@ public class MemberDaoImpl extends BasicDaoImpl<SeMember>  implements  MemberDao
 			values.add("%" + key + "%");
 			values.add("%" + key + "%");
 			values.add("%" + key + "%");
-		}	 
+		}
+		if(StringTools.mapGetKeyIsEmpty(params, "sellerId"))  {
+			sql.append(" AND ( ep_no = ?)");
+			values.add(params.get("sellerId").toString().trim());
+			 
+		}
+		if(StringTools.mapGetKeyIsEmpty(params, "shopId"))  {
+			sql.append(" AND ( shop_no = ?)");
+			values.add(params.get("shopId").toString().trim());
+			 
+		}
+		
 		sql.append(" ORDER BY create_time DESC");
 		return (PageInfo<SeMember>) this.findPageInfoByQueryJdbc(pageNo, pageSize, sql.toString(),
 				values.toArray(), SeMember.class);
@@ -112,6 +123,33 @@ public class MemberDaoImpl extends BasicDaoImpl<SeMember>  implements  MemberDao
 			sql.append(" AND ( mobilephone = ?)");
 			values.add(phone);
 		}
+		sql.append(" ORDER BY createTime DESC");
+
+		List<SeMember> list = this.findByHql(sql.toString(), values.toArray());
+		if (list.size() > 0) {
+			return (SeMember) list.get(0);
+		} else {
+			return null;
+		}
+	}
+
+	@Override
+	public SeMember findByOtherPhone(String mobilephone, String userid) {
+		StringBuffer sql = new StringBuffer();
+		List<Object> values = new ArrayList<Object>();
+		sql.append(" FROM SeMember   ");
+		sql.append(" WHERE 1=1 ");
+
+		if (mobilephone != "") {
+			sql.append(" AND ( mobilephone = ?)");
+			values.add(mobilephone);
+		}
+		
+		if (userid != "") {
+			sql.append(" AND ( userid != ?)");
+			values.add(userid);
+		}
+		
 		sql.append(" ORDER BY createTime DESC");
 
 		List<SeMember> list = this.findByHql(sql.toString(), values.toArray());

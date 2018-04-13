@@ -38,7 +38,7 @@ public class SeShopDaoImpl extends BasicDaoImpl<SeShop> implements SeShopDao{
 		if(StringTools.mapGetKeyIsEmpty(params, "ep_no"))  {
 			sql.append(" AND ( ep_no = ? )");
 			String key = params.get("ep_no").toString().trim();
-			values.add("%" + key + "%");
+			values.add( key );
 		}
 		
 		sql.append(" ORDER BY create_date DESC");
