@@ -16,10 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.hy.cb.entity.member.SeMember;
-import com.hy.cb.entity.seller.SeGood;
+import com.hy.cb.entity.seller.SeCustomer;
 import com.hy.cb.entity.seller.SeSeller;
 import com.hy.cb.entity.seller.SeShop;
 import com.hy.cb.service.member.MemberService;
+import com.hy.cb.service.seller.SeCustomerService;
 import com.hy.cb.service.seller.SeShopService;
 import com.hy.cb.service.seller.SellerService;
 import com.hy.cb.utils.api.WebServiceResult;
@@ -41,6 +42,10 @@ public class SellerApicontroller extends AbstractBasicController {
 	/*** 档口 ***/
 	@Autowired
 	private SeShopService seShopService;
+	
+	/***客户管理 ***/
+	@Autowired
+	private SeCustomerService seCustomerService;
 
 	@Override
 	protected void init(ModelMap mode, HttpServletRequest req) {
@@ -306,5 +311,110 @@ public class SellerApicontroller extends AbstractBasicController {
 
 		return json;
 	}
+	
+	
+	/******************************seCustomerService********商家客户管理***************************/
+	
+	/**
+	 *客户信息编辑
+	 * @param entity
+	 * @param userId
+	 * @param request
+	 * @return
+	 * @throws ParseException
+	 */
+	@ResponseBody
+	@RequestMapping(value = "editCustomer")
+	public WebServiceResult editCustomer(@ModelAttribute SeCustomer entity, HttpServletRequest request)
+			throws ParseException {
+		WebServiceResult json = new WebServiceResult();
+		if (StringTools.isBlank(entity.getEpName())) {
+			json.setSuccess(false);
+			json.setMessage("客户名称编号不能为空！");
+			return json;
+		}
+		if (StringTools.isBlank(entity.getPhone())) {
+			json.setSuccess(false);
+			json.setMessage("客户电话不能为空！");
+			return json;
+		}
+		
+		if (StringTools.isBlank(entity.getSellerId())) {
+			json.setSuccess(false);
+			json.setMessage("客户对应商家编号不能为空！");
+			return json;
+		}
+		
+		Date now = new Date();
+		if (StringTools.isEmpty(entity.getCustid())) { // 商家编号 为空则新增
+			try {
+				entity.setGroups("0");
+				seCustomerService.save(entity);
+				json.setMessage("操作成功！");
+				json.setSuccess(true);
+				json.setCode(200);
 
+			} catch (DataAccessException e) {
+				LogUtil.info(this, e);
+				json.setSuccess(false);
+				json.setMessage("系统错误！");
+			}
+		} else { // 商家编号 不为空则修改
+			try {
+				SeCustomer customer = seCustomerService.get(entity.getCustid());
+				customer.setEpName(entity.getEpName());
+				customer.setPhone(entity.getPhone());
+				customer.setEmail(entity.getEmail());
+				customer.setCommonUse(entity.getCommonUse());
+				customer.setSort(entity.getSort());
+				customer.setTel(entity.getTel());
+				customer.setRemarks(entity.getRemarks());
+				
+				json.setMessage("操作成功！");
+				json.setSuccess(true);
+				json.setCode(200);
+			} catch (DataAccessException e) {
+				LogUtil.info(this, e);
+				json.setMessage("操作失败:" + e.toString());
+				json.setSuccess(false);
+			}
+		}
+		return json;
+	}
+
+	
+	/**
+	 * 获取企业客户信息
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "getCustomerListBySellerId")
+	public WebServiceResult getCustomerListBySellerId(String sellerId, int pageNo, int pageSize, HttpServletRequest request) {
+		WebServiceResult json = new WebServiceResult();
+		pageNo = (pageNo == 0) ? PAGE_NO : pageNo;
+		pageSize = (pageSize == 0) ? PAGE_SIZE : pageSize;
+
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("ep_no", sellerId);
+
+		SeCustomer entity = new SeCustomer();
+
+		PageInfo<SeCustomer> pages = seCustomerService.getPageList(params, entity, pageNo, pageSize);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("total", pages.getTotalrecond());
+		map.put("rows", pages.getResultlist());
+		if (pages.getTotalrecond() > 0) {
+			json.setMessage("操作成功！");
+			json.setDatas(map);
+			json.setSuccess(true);
+			json.setCode(200);
+		} else {
+			json.setMessage("未获取到数据！");
+			json.setSuccess(false);
+		}
+		return json;
+	}
+	
 }
