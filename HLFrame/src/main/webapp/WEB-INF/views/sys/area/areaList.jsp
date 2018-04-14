@@ -12,6 +12,9 @@
 <link rel="stylesheet"
 	href="${basePath}/static/easyui/darkblue/icon.css">
 <link rel="stylesheet" href="${basePath}/static/css/providers.css">
+<script type="text/javascript">
+var basePath="${basePath}";
+</script>
 </head>
 <body>
 	<div class="container">

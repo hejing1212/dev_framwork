@@ -1,5 +1,7 @@
 package com.hy.sys.service;
 
+import java.util.List;
+
 import com.hy.sys.core.service.BasicService;
 import com.hy.sys.entity.SysDataDictItem;
 
@@ -13,4 +15,6 @@ public interface SysDictItemService extends BasicService<SysDataDictItem>{
 	public SysDataDictItem getDictItemName(String itemName);
 
 	public SysDataDictItem  getDictItemByDictId(String dictCode);
+	
+	public List<SysDataDictItem> getDictItemOption(String dictCode);
 }

@@ -104,4 +104,30 @@ public class SysDictItemDaoImpl extends BasicDaoImpl<SysDataDictItem> implements
 			return null;
 		}
 	}
+	
+	/****
+	 * 根据字典编码查询对应的建值
+	 * @param dictCode
+	 * @return
+	 */
+	@Override
+	public List<SysDataDictItem> getDictItemOption(String dictCode){
+		StringBuffer sql = new StringBuffer();
+		List<Object> values = new ArrayList<Object>();
+		sql.append(" FROM SysDataDictItem a,SysDataDict b ");
+		sql.append(" WHERE a.dictCode=b.id ");
+
+		if (dictCode != "") {
+			sql.append(" AND ( b.dictCode = ?)");
+			values.add(dictCode);
+		}
+		sql.append(" ORDER BY sort DESC");
+		List<SysDataDictItem> list = this.findByHql(sql.toString(), values.toArray());
+		if (list.size() > 0) {
+			return list;
+		} else {
+			return null;
+		}
+	}
+	
 }

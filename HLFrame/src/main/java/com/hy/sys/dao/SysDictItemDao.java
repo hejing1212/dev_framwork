@@ -1,5 +1,6 @@
 package com.hy.sys.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import com.hy.sys.core.dao.BasicDao;
@@ -31,5 +32,12 @@ public interface SysDictItemDao extends BasicDao<SysDataDictItem> {
 	 * @return
 	 */
 	public SysDataDictItem getDictItemByDictId(String dict_code);
+
+	/**
+	 * 根据字典编码查询对应的建值
+	 * @param dictCode
+	 * @return
+	 */
+	public List<SysDataDictItem> getDictItemOption(String dictCode);
 
 }

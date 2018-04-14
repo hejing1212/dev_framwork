@@ -1,5 +1,6 @@
 package com.hy.sys.service.impl;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,12 @@ public class SysDictItemServiceImpl extends BasicServiceImpl<SysDataDictItem> im
 	@Override
 	public SysDataDictItem getDictItemByDictId(String dictCode) {
 		return dataDictDaoItem.getDictItemByDictId(dictCode);
+	}
+
+	@Override
+	public List<SysDataDictItem> getDictItemOption(String dictCode) {
+		// TODO Auto-generated method stub
+		return dataDictDaoItem.getDictItemOption(dictCode);
 	}
 
 }
