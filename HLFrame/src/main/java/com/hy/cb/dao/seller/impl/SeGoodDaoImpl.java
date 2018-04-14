@@ -54,7 +54,10 @@ public class SeGoodDaoImpl extends  BasicDaoImpl<SeGood> implements SeGoodsDao{
 			String key = params.get("queryKey").toString().trim();
 			values.add("%" + key + "%");
 		}	 
-		 
+		if(StringTools.mapGetKeyIsEmpty(params, "categoryId"))  {
+			sql.append(" AND ( category_id = ? )");
+			values.add(params.get("categoryId").toString().trim());
+		}	
 		 
 		sql.append(" ORDER BY create_date DESC");
 		return (PageInfo<SeGood>) this.findPageInfoByQueryJdbc(pageNo, pageSize, sql.toString(),

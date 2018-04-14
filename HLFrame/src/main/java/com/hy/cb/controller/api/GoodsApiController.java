@@ -72,23 +72,15 @@ public class GoodsApiController extends AbstractBasicController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "getSysGoods")
-	public WebServiceResult getSysGoods(String sellerId,String shopId,int pageNo, int pageSize, HttpServletRequest request) {
+	public WebServiceResult getSysGoods(String categoryId, int pageNo, int pageSize, HttpServletRequest request) {
 		WebServiceResult json = new WebServiceResult();
-		if (StringTools.isEmpty(shopId)) {
-			json.setSuccess(false);
-			json.setMessage("档口编号不能为空！");
-			return json;
-		}
-		if (StringTools.isEmpty(sellerId)) {
-			json.setSuccess(false);
-			json.setMessage("商家编号不能为空！");
-			return json;
-		}
+
 		pageNo = (pageNo == 0) ? PAGE_NO : pageNo;
 		pageSize = (pageSize == 0) ? PAGE_SIZE : pageSize;
 		Map<String, Object> params = new HashMap<String, Object>();
-        params.put("sellerId", sellerId);
-        params.put("shopId", shopId);
+		if (StringTools.isNotEmpty(categoryId)) {
+			params.put("categoryId", categoryId);
+		}
 		SeGood entity = new SeGood();
 		PageInfo<SeGood> pages = seGoodService.getPageList(params, entity, pageNo, pageSize);
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -107,9 +99,10 @@ public class GoodsApiController extends AbstractBasicController {
 		return json;
 
 	}
-	
+
 	/**
 	 * 商家设置商品信息接口
+	 * 
 	 * @param entity
 	 * @param request
 	 * @return
@@ -153,7 +146,7 @@ public class GoodsApiController extends AbstractBasicController {
 		return json;
 
 	}
-	
+
 	/**
 	 * 获取商家设定的商品
 	 * 
@@ -164,7 +157,8 @@ public class GoodsApiController extends AbstractBasicController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "getSellerShopGoods")
-	public WebServiceResult getSellerShopGoods(String sellerId,String shopId,int pageNo, int pageSize, HttpServletRequest request) {
+	public WebServiceResult getSellerShopGoods(String sellerId, String shopId, int pageNo, int pageSize,
+			HttpServletRequest request) {
 		WebServiceResult json = new WebServiceResult();
 		if (StringTools.isEmpty(shopId)) {
 			json.setSuccess(false);
@@ -179,9 +173,9 @@ public class GoodsApiController extends AbstractBasicController {
 		pageNo = (pageNo == 0) ? PAGE_NO : pageNo;
 		pageSize = (pageSize == 0) ? PAGE_SIZE : pageSize;
 		Map<String, Object> params = new HashMap<String, Object>();
-        params.put("sellerId", sellerId);
-        params.put("shopId", shopId);
-        SeEnterpriseGood entity = new SeEnterpriseGood();
+		params.put("sellerId", sellerId);
+		params.put("shopId", shopId);
+		SeEnterpriseGood entity = new SeEnterpriseGood();
 		PageInfo<SeEnterpriseGood> pages = seEnterpriseGoodService.getPageList(params, entity, pageNo, pageSize);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("total", pages.getTotalrecond());
