@@ -3,6 +3,8 @@ package com.hy.sys.utils;
 import java.io.PrintWriter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -252,7 +254,15 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 		String dfdssd = "R&B";
 		System.out.print(dfdssd.replace("R&B", "R&amp;B"));
 	}
-
+    /**
+     * 生成毫秒及的日期随机数
+     * @return
+     */
+	public static String getYMDhmsRand(){
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmssS"+getRandNum(4));
+		  return formatter.format(new Date());
+	}
+	
 	/**
 	 * 生成数字随机数理
 	 * @param charCount 位数

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.hy.cb.dao.seller.SeEnterpriseGoodDao;
 import com.hy.cb.entity.seller.SeEnterpriseGood;
 import com.hy.cb.entity.seller.SeGood;
+import com.hy.cb.entity.seller.SeSeller;
 import com.hy.sys.core.dao.impl.BasicDaoImpl;
 import com.hy.sys.utils.PageInfo;
 import com.hy.sys.utils.StringTools;
@@ -46,5 +47,59 @@ public class SeEnterpriseGoodDaoImpl extends BasicDaoImpl<SeEnterpriseGood> impl
 		sql.append(" ORDER BY ep_create_date DESC");
 		return (PageInfo<SeEnterpriseGood>) this.findPageInfoByQueryJdbc(pageNo, pageSize, sql.toString(),
 				values.toArray(), SeEnterpriseGood.class);
+	}
+	
+	/**
+	 * 查询该分类下的商品
+	 * @param username
+	 * @return
+	 */
+	@Override
+	public SeEnterpriseGood findGoodsByClassId(String ClassId) {
+		StringBuffer sql = new StringBuffer();
+		List<Object> values = new ArrayList<Object>();
+		sql.append(" FROM SeEnterpriseGood ");
+		sql.append(" WHERE 1=1 ");
+
+		if (ClassId != "") {
+			sql.append(" AND ( classId = ?)");
+			values.add(ClassId);
+		}
+		
+		List<SeEnterpriseGood> list = this.findByHql(sql.toString(), values.toArray());
+		if (list.size() > 0) {
+			return (SeEnterpriseGood) list.get(0);
+		} else {
+			return null;
+		}
+	}
+	
+	/**
+	 * 查询商家商品中除当前商品外，是否还有其它 商品存在此分类Id,
+	 * @param username
+	 * @return
+	 */
+	@Override
+	public SeEnterpriseGood findGoodsByClassIdNotGoodsId(String ClassId,String goodsId) {
+		StringBuffer sql = new StringBuffer();
+		List<Object> values = new ArrayList<Object>();
+		sql.append(" FROM SeEnterpriseGood ");
+		sql.append(" WHERE 1=1 ");
+
+		if (ClassId != "") {
+			sql.append(" AND ( classId = ?)");
+			values.add(ClassId);
+		}
+		if (goodsId != "") {
+			sql.append(" AND ( ep_goods_id != ?)");
+			values.add(goodsId);
+		}
+		
+		List<SeEnterpriseGood> list = this.findByHql(sql.toString(), values.toArray());
+		if (list.size() > 0) {
+			return (SeEnterpriseGood) list.get(0);
+		} else {
+			return null;
+		}
 	}
 }

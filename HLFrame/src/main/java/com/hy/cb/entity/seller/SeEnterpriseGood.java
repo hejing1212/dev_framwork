@@ -65,7 +65,7 @@ public class SeEnterpriseGood extends SellerBasicEntity {
 	
 	/**商品分类编号**/
 	@Column(name="class_id")
-	private BigDecimal classId;
+	private String classId;
 	
 	@Column(name="wrapper_type")
 	private int wrapperType;
@@ -153,11 +153,11 @@ public class SeEnterpriseGood extends SellerBasicEntity {
 		this.activityPrice = activityPrice;
 	}
 
-	public BigDecimal getClassId() {
+	public String getClassId() {
 		return classId;
 	}
 
-	public void setClassId(BigDecimal classId) {
+	public void setClassId(String classId) {
 		this.classId = classId;
 	}
 	

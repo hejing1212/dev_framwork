@@ -18,6 +18,9 @@ public class SeGoodServiceImpl extends BasicServiceImpl<SeGood> implements SeGoo
 	@Autowired
 	private SeGoodsDao seGoodDao;
 	
+	/**
+	 * 查询系统商品列表
+	 */
 	@Override
 	public PageInfo<SeGood> getPageList(Map<String, Object> params, SeGood entity, int pageNo, int pageSize) {
 		return seGoodDao.getPageList(params, entity, pageNo, pageSize);

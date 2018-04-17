@@ -31,4 +31,23 @@ public class SeEnterpriseGoodServiceImpl extends BasicServiceImpl<SeEnterpriseGo
 		return this.seEnterpriseGoodDao;
 	}
 
+	/**
+	 * 查询该分类下的商品
+	 * @param ClassId
+	 * @return
+	 */
+	@Override
+	public SeEnterpriseGood findGoodsByClassId(String classId) {
+		return seEnterpriseGoodDao.findGoodsByClassId(classId);
+	}
+	/**
+	 * 查询商家商品中除当前商品外，是否还有其它 商品存在此分类Id,
+	 * @param ClassId
+	 * @param goodsId
+	 * @return
+	 */
+	@Override
+	public SeEnterpriseGood findGoodsByClassIdNotGoodsId(String ClassId,String goodsId) {
+		return seEnterpriseGoodDao.findGoodsByClassIdNotGoodsId(ClassId, goodsId);
+	}
 }

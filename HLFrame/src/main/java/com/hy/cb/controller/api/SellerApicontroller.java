@@ -417,4 +417,26 @@ public class SellerApicontroller extends AbstractBasicController {
 		return json;
 	}
 	
+	/**
+	 * 获取企业客户信息
+	 * 
+	 * @param userId
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping(value = "delCustomerInfo")
+	public WebServiceResult delCustomerInfo(String custid, HttpServletRequest request) {
+		WebServiceResult json = new WebServiceResult();
+		if(StringTools.isNotBlank(custid)) {
+			seCustomerService.delete(custid, true);
+			json.setMessage("操作成功！");
+			json.setSuccess(true);
+			json.setCode(200);
+		}else {
+			json.setMessage("操作失败！");
+			json.setSuccess(false);
+		}
+		return json;
+	}
+	
 }

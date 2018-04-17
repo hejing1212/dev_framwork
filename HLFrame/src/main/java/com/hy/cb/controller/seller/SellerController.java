@@ -18,16 +18,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.hy.cb.entity.seller.SeGoodsCategory;
 import com.hy.cb.entity.seller.SeSeller;
 import com.hy.cb.entity.seller.SeShop;
 import com.hy.cb.service.seller.SeShopService;
 import com.hy.cb.service.seller.SellerService;
 import com.hy.sys.core.controller.AbstractBasicController;
-import com.hy.sys.utils.FileUploads;
 import com.hy.sys.utils.IntegerTools;
 import com.hy.sys.utils.PageInfo;
 import com.hy.sys.utils.StringTools;
+import com.hy.sys.utils.FileUpload;
 
 @Controller
 @RequestMapping("/cb/seller")
@@ -300,7 +299,7 @@ public class SellerController extends AbstractBasicController {
 	@ResponseBody
 	@RequestMapping("/fileUpload")
 	public Map<String, Object> fileUpload(HttpServletResponse response, HttpServletRequest request) throws Exception {
-		Map<String, Object> map = FileUploads.upload(request);
+		Map<String, Object> map = FileUpload.upload(request);
 		return map;
 	}
 }

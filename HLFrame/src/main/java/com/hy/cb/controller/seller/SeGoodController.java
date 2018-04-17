@@ -24,10 +24,10 @@ import com.hy.cb.service.seller.SeGoodService;
 import com.hy.cb.service.seller.SeGoodsCategoryService;
 import com.hy.sys.core.controller.AbstractBasicController;
 import com.hy.sys.shiro.UserUtils;
-import com.hy.sys.utils.FileUploads;
 import com.hy.sys.utils.IntegerTools;
 import com.hy.sys.utils.PageInfo;
 import com.hy.sys.utils.StringTools;
+import com.hy.sys.utils.FileUpload;
 
 @Controller
 @RequestMapping("/cb/goods")
@@ -271,7 +271,7 @@ public class SeGoodController  extends AbstractBasicController {
 	@ResponseBody
 	@RequestMapping("/fileUpload")
 	public Map<String, Object> fileUpload(HttpServletResponse response, HttpServletRequest request) throws Exception {
-		Map<String, Object> map = FileUploads.upload(request);
+		Map<String, Object> map = FileUpload.upload(request);
 		return map;
 	}
 	

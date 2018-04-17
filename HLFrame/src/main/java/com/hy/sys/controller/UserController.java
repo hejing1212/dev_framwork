@@ -26,10 +26,10 @@ import com.hy.sys.service.SysUserService;
 import com.hy.sys.service.impl.PasswordServiceImpl;
 import com.hy.sys.shiro.UserUtils;
 import com.hy.sys.utils.ConvertJson;
-import com.hy.sys.utils.FileUploads;
 import com.hy.sys.utils.IntegerTools;
 import com.hy.sys.utils.PageInfo;
 import com.hy.sys.utils.StringTools;
+import com.hy.sys.utils.FileUpload;
 
 @Controller
 @RequestMapping("/sys/user")
@@ -260,7 +260,7 @@ public class UserController extends AbstractBasicController {
 	@ResponseBody
 	@RequestMapping("/fileUpload")
 	public Map<String,Object> fileUpload(@RequestParam(value="uploadFile") MultipartFile multipart,HttpServletResponse response, HttpServletRequest request) throws Exception{     
-       Map<String,Object> map= FileUploads.upload(request);
+       Map<String,Object> map= FileUpload.upload(request);
        return map;
 	}
 	

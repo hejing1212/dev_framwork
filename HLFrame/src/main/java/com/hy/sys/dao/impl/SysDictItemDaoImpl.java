@@ -114,6 +114,7 @@ public class SysDictItemDaoImpl extends BasicDaoImpl<SysDataDictItem> implements
 	public List<SysDataDictItem> getDictItemOption(String dictCode){
 		StringBuffer sql = new StringBuffer();
 		List<Object> values = new ArrayList<Object>();
+		sql.append(" SELECT a ");
 		sql.append(" FROM SysDataDictItem a,SysDataDict b ");
 		sql.append(" WHERE a.dictCode=b.id ");
 

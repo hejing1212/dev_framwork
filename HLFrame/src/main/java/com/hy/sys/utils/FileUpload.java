@@ -28,12 +28,10 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import com.hy.sys.core.utils.HlFramePropertiesUtil;
 
 /**
- * fileUpload文件上传处理类2018-03-20
- * @author hejing
- *
+ * UEditor文件上传辅助类
+ * 
  */
-public class FileUploads {
-
+public class FileUpload {
 	/**
 	 * 单个文件上传
 	 * @param request
@@ -49,6 +47,7 @@ public class FileUploads {
         WebApplicationContext webApplicationContext = ContextLoader.getCurrentWebApplicationContext();
         ServletContext servletContext = webApplicationContext.getServletContext();
         // 得到文件绝对路径
+       
         String rootDir=servletContext.getRealPath("/");
         String savePath = servletContext.getRealPath("/")+HlFramePropertiesUtil.getConfig("upload.address");  //获取设置的文件上传根目录
         File fdir=getChildDirectory(savePath);
@@ -67,7 +66,6 @@ public class FileUploads {
         result.put("msg", "文件上传成功");
         return result;
     }
-	
 	
 	public static List<String> uploadService(String path,HttpServletResponse response,
 			HttpServletRequest request)throws ServletException, IOException {
@@ -98,8 +96,7 @@ public class FileUploads {
             }else{
             	list.add(handleUploadField(item,path)) ;
             }
-        }
-        
+        }    
 		return list;
 	}
 	
@@ -148,8 +145,7 @@ public class FileUploads {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
-        }
-        
+        }        
     }
     
     /**

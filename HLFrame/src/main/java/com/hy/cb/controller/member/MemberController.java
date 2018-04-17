@@ -25,10 +25,10 @@ import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.hy.cb.entity.member.SeMember;
 import com.hy.cb.utils.api.Md5Tools;
 import com.hy.sys.core.controller.AbstractBasicController;
-import com.hy.sys.utils.FileUploads;
 import com.hy.sys.utils.IntegerTools;
 import com.hy.sys.utils.PageInfo;
 import com.hy.sys.utils.StringTools;
+import com.hy.sys.utils.FileUpload;
 
 @Controller
 @RequestMapping("/cb/member")
@@ -145,7 +145,7 @@ public class MemberController extends AbstractBasicController {
 	@ResponseBody
 	@RequestMapping("/fileUpload")
 	public Map<String, Object> fileUpload(@RequestParam(value="uploadFile") MultipartFile multipart,HttpServletResponse response, HttpServletRequest request) throws Exception {
-		Map<String, Object> map = FileUploads.upload(request);
+		Map<String, Object> map = FileUpload.upload(request);
 		return map;
 	}
 }

@@ -25,6 +25,7 @@
 		<class>com.hy.cb.entity.seller.SeShop</class>
 		<class>com.hy.cb.entity.seller.SeSellerGoodsCategory</class>
 		<class>com.hy.cb.entity.seller.SeCustomer</class>
+		<class>com.hy.cb.entity.order.OrderEntity</class>
 	
 	</persistence-unit>
 </persistence>
