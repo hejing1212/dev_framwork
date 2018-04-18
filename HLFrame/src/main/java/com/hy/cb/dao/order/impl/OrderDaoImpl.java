@@ -13,7 +13,7 @@ import com.hy.sys.utils.PageInfo;
 import com.hy.sys.utils.StringTools;
 
 @Repository("orderDao")
-public class OrderDaoImpl extends  BasicDaoImpl<OrderEntity> implements OrderDao{
+public class OrderDaoImpl extends BasicDaoImpl<OrderEntity> implements OrderDao {
 
 	@Override
 	public Class<OrderEntity> getEntityClass() {
@@ -21,7 +21,8 @@ public class OrderDaoImpl extends  BasicDaoImpl<OrderEntity> implements OrderDao
 	}
 
 	/**
-	 *查询订单列表
+	 * 查询订单列表
+	 * 
 	 * @param params
 	 * @param entity
 	 * @param pageNo
@@ -30,31 +31,59 @@ public class OrderDaoImpl extends  BasicDaoImpl<OrderEntity> implements OrderDao
 	 */
 	@Override
 	public PageInfo<OrderEntity> getPageList(Map<String, Object> params, OrderEntity entity, int pageNo, int pageSize) {
-		StringBuffer sql = new StringBuffer();
+
+		StringBuffer sqlwhere = new StringBuffer();
 		List<Object> values = new ArrayList<Object>();
-		sql.append(" SELECT  * ");
-		sql.append(" FROM or_order   ");
-		sql.append(" WHERE 1=1 ");
-         
-		if(StringTools.mapGetKeyIsEmpty(params, "supplier_no"))  {
-			sql.append(" AND ( supplier_no = ?)");
-			values.add(params.get("supplier_no").toString().trim());
-			 
+
+		String sql = " FROM OrderEntity WHERE 1=1 ";
+		String hqlCount = "SELECT count(*) FROM OrderEntity WHERE 1=1";
+		// 供应商
+		if (StringTools.mapGetKeyIsEmpty(params, "supplierNo")) {
+			sqlwhere.append(" AND ( supplier_no = ?)");
+			values.add(params.get("supplierNo").toString().trim());
 		}
-		if(StringTools.mapGetKeyIsEmpty(params, "purchase_no"))  {
-			sql.append(" AND ( purchase_no = ?)");
-			values.add(params.get("purchase_no").toString().trim());
-			 
+		// 采购商ID
+		if (StringTools.mapGetKeyIsEmpty(params, "purchaseNo")) {
+			sqlwhere.append(" AND ( purchase_no = ?)");
+			values.add(params.get("purchaseNo").toString().trim());
 		}
-		
-		if(StringTools.mapGetKeyIsEmpty(params, "shop_no"))  {
-			sql.append(" AND ( shop_no = ?)");
-			values.add(params.get("shop_no").toString().trim());
-			 
+		// 档口ID
+		if (StringTools.mapGetKeyIsEmpty(params, "shopNo")) {
+			sqlwhere.append(" AND ( shop_no = ?)");
+			values.add(params.get("shopNo").toString().trim());
 		}
-		
-		sql.append(" ORDER BY create_time DESC");
-		return (PageInfo<OrderEntity>) this.findPageInfoByQueryJdbc(pageNo, pageSize, sql.toString(),
-				values.toArray(), OrderEntity.class);
+		// 订单类型
+		if (StringTools.mapGetKeyIsEmpty(params, "orderType")) {
+			sqlwhere.append(" AND ( order_type = ?)");
+			values.add(params.get("orderType").toString().trim());
+		}
+		// 订单状态
+		if (StringTools.mapGetKeyIsEmpty(params, "stauts")) {
+			sqlwhere.append(" AND ( stauts = ?)");
+			values.add(params.get("stauts").toString().trim());
+		}
+		// 是否扎帐
+		if (StringTools.mapGetKeyIsEmpty(params, "balance")) {
+			sqlwhere.append(" AND ( balance = ?)");
+			values.add(params.get("balance").toString().trim());
+		}
+		// 支付状态
+		if (StringTools.mapGetKeyIsEmpty(params, "payStatus")) {
+			sqlwhere.append(" AND ( pay_status = ?)");
+			values.add(params.get("payStatus").toString().trim());
+		}
+		// 销售方式{1合伙,2代销}
+		if (StringTools.mapGetKeyIsEmpty(params, "consignment")) {
+			sqlwhere.append(" AND ( consignment = ?)");
+			values.add(params.get("consignment").toString().trim());
+		}
+
+		if (StringTools.isNotBlank(sqlwhere)) {
+			hqlCount = hqlCount + sqlwhere.toString();
+			sql = sql.toString() + sqlwhere.toString();
+		}
+		sql = sql + " ORDER BY create_time DESC";
+
+		return this.findPageInfoByQuery(pageNo, pageSize, sql, hqlCount, values.toArray());
 	}
 }
