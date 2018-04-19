@@ -102,6 +102,7 @@ public abstract class BasicDaoImpl<T extends AbstractBasicEntity> extends Abstra
 
 	@Override
 	public List<T> findByHql(String hql, Object[] params) {
+ 
 		Query query = this.getCurrentSession().createQuery(hql);
 		if (null != params && params.length > 0) {
 			for (int i = 0; i < params.length; i++) {

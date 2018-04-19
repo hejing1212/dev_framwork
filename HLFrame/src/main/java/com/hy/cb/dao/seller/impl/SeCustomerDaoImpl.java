@@ -39,6 +39,12 @@ public class SeCustomerDaoImpl extends BasicDaoImpl<SeCustomer> implements SeCus
 			sql.append(" AND ( seller_id = ? )");
 			values.add(params.get("sellerId").toString().trim());
 		}
+		
+		 //多个关键字查询
+		if(StringTools.mapGetKeyIsEmpty(params, "saleType"))  {
+			sql.append(" AND ( sale_type = ? )");
+			values.add(params.get("saleType").toString().trim());
+		}
 		sql.append(" ORDER BY sort DESC");
 		return (PageInfo<SeCustomer>) this.findPageInfoByQueryJdbc(pageNo, pageSize, sql.toString(),
 				values.toArray(), SeCustomer.class);

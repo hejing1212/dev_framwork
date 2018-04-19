@@ -83,6 +83,10 @@ public class OrderEntity extends SellerBasicEntity {
 	@Column(name="order_type")
 	private int orderType=0;
   
+	/**订单总额**/
+	@Column(name="total_price")
+	private BigDecimal totalPrice;
+
 	/**支付状态**/
 	@Column(name="pay_status")
 	private int payStatus=0;
@@ -268,6 +272,14 @@ public class OrderEntity extends SellerBasicEntity {
 	public void setOrderNo(String orderNo) {
 		this.orderNo = orderNo;
 	}
+	
+	public BigDecimal getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(BigDecimal totalPrice) {
+		this.totalPrice = totalPrice;
+	}
 
 	public int getOrderType() {
 		return this.orderType;
@@ -364,5 +376,9 @@ public class OrderEntity extends SellerBasicEntity {
 	public void setOrderDetailed(Set<OrderDetailed> orderDetailed) {
 		this.orderDetailed = orderDetailed;
 	}
+	
+	
 
 }
+
+ 

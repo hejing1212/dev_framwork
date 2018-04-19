@@ -1,5 +1,6 @@
 package com.hy.cb.service.order.impl;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -44,4 +45,14 @@ public class OrderServiceImpl extends BasicServiceImpl<OrderEntity> implements O
 		orderDetailedDao.saveBatch(entities);
 	}
 
+	/**
+	 * 查询各种状态下的订单数量
+	 * @param params
+	 * @param entity
+	 * @return
+	 */
+	@Override
+	public List<OrderEntity> getOrderListNum(Map<String, Object> params){
+		return orderDao.getOrderListNum(params);
+	}
 }

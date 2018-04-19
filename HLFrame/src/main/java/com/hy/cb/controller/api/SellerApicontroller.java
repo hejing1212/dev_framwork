@@ -42,8 +42,8 @@ public class SellerApicontroller extends AbstractBasicController {
 	/*** 档口 ***/
 	@Autowired
 	private SeShopService seShopService;
-	
-	/***客户管理 ***/
+
+	/*** 客户管理 ***/
 	@Autowired
 	private SeCustomerService seCustomerService;
 
@@ -311,12 +311,14 @@ public class SellerApicontroller extends AbstractBasicController {
 
 		return json;
 	}
-	
-	
-	/******************************seCustomerService********商家客户管理***************************/
-	
+
+	/******************************
+	 * seCustomerService********商家客户管理
+	 ***************************/
+
 	/**
-	 *客户信息编辑
+	 * 客户信息编辑
+	 * 
 	 * @param entity
 	 * @param userId
 	 * @param request
@@ -338,13 +340,13 @@ public class SellerApicontroller extends AbstractBasicController {
 			json.setMessage("客户电话不能为空！");
 			return json;
 		}
-		
+
 		if (StringTools.isBlank(entity.getSellerId())) {
 			json.setSuccess(false);
 			json.setMessage("客户对应商家编号不能为空！");
 			return json;
 		}
-		
+
 		Date now = new Date();
 		if (StringTools.isEmpty(entity.getCustid())) { // 商家编号 为空则新增
 			try {
@@ -369,7 +371,7 @@ public class SellerApicontroller extends AbstractBasicController {
 				customer.setSort(entity.getSort());
 				customer.setTel(entity.getTel());
 				customer.setRemarks(entity.getRemarks());
-				
+
 				json.setMessage("操作成功！");
 				json.setSuccess(true);
 				json.setCode(200);
@@ -382,7 +384,6 @@ public class SellerApicontroller extends AbstractBasicController {
 		return json;
 	}
 
-	
 	/**
 	 * 获取企业客户信息
 	 * 
@@ -391,14 +392,19 @@ public class SellerApicontroller extends AbstractBasicController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "getCustomerListBySellerId")
-	public WebServiceResult getCustomerListBySellerId(String sellerId, int pageNo, int pageSize, HttpServletRequest request) {
+	public WebServiceResult getCustomerListBySellerId(String sellerId, String saleType, int pageNo, int pageSize,
+			HttpServletRequest request) {
 		WebServiceResult json = new WebServiceResult();
 		pageNo = (pageNo == 0) ? PAGE_NO : pageNo;
 		pageSize = (pageSize == 0) ? PAGE_SIZE : pageSize;
 
 		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("ep_no", sellerId);
-
+		if (StringTools.isNotBlank(sellerId)) {
+			params.put("sellerId", sellerId);
+		}
+		if (StringTools.isNotBlank(saleType)) {
+			params.put("saleType", saleType);
+		}
 		SeCustomer entity = new SeCustomer();
 
 		PageInfo<SeCustomer> pages = seCustomerService.getPageList(params, entity, pageNo, pageSize);
@@ -416,7 +422,7 @@ public class SellerApicontroller extends AbstractBasicController {
 		}
 		return json;
 	}
-	
+
 	/**
 	 * 获取企业客户信息
 	 * 
@@ -427,16 +433,16 @@ public class SellerApicontroller extends AbstractBasicController {
 	@RequestMapping(value = "delCustomerInfo")
 	public WebServiceResult delCustomerInfo(String custid, HttpServletRequest request) {
 		WebServiceResult json = new WebServiceResult();
-		if(StringTools.isNotBlank(custid)) {
+		if (StringTools.isNotBlank(custid)) {
 			seCustomerService.delete(custid, true);
 			json.setMessage("操作成功！");
 			json.setSuccess(true);
 			json.setCode(200);
-		}else {
+		} else {
 			json.setMessage("操作失败！");
 			json.setSuccess(false);
 		}
 		return json;
 	}
-	
+
 }

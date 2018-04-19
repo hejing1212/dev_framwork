@@ -848,7 +848,7 @@ public class StringTools {
 		return false;
 	}
 	
-	
+	 
 	/**
 	 * 传入YMD日期格式字符串，返回YMDhhmmss日期格式的字符串(一天的开始和结束时间)
 	 *@param ymd YMD日期格式字符串

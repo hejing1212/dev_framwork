@@ -86,4 +86,41 @@ public class OrderDaoImpl extends BasicDaoImpl<OrderEntity> implements OrderDao 
 
 		return this.findPageInfoByQuery(pageNo, pageSize, sql, hqlCount, values.toArray());
 	}
+	 /**
+	  * 获取所有订单数量 
+	  * @param params
+	  * @param entity
+	  * @return
+	  */
+	@Override
+	public List<OrderEntity> getOrderListNum(Map<String, Object> params) {
+
+		StringBuffer sqlwhere = new StringBuffer();
+		List<Object> values = new ArrayList<Object>();
+		
+		String hql = "SELECT orderNo,stauts FROM OrderEntity WHERE 1=1";
+		// 供应商
+		if (StringTools.mapGetKeyIsEmpty(params, "supplierNo")) {
+			sqlwhere.append(" AND ( supplier_no = ?)");
+			values.add(params.get("supplierNo").toString().trim());
+		}
+		// 采购商ID
+		if (StringTools.mapGetKeyIsEmpty(params, "purchaseNo")) {
+			sqlwhere.append(" AND ( purchase_no = ?)");
+			values.add(params.get("purchaseNo").toString().trim());
+		}
+		// 档口ID
+		if (StringTools.mapGetKeyIsEmpty(params, "shopNo")) {
+			sqlwhere.append(" AND ( shop_no = ?)");
+			values.add(params.get("shopNo").toString().trim());
+		}
+		
+		if (StringTools.isNotBlank(sqlwhere)) {
+			hql = hql+ sqlwhere.toString();
+		}		
+	 
+		return this.findByHql(hql, values.toArray());
+
+
+	}
 }

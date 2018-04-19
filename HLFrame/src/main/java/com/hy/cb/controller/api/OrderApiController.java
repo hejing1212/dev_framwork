@@ -1,8 +1,13 @@
 package com.hy.cb.controller.api;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
+
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -16,14 +21,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.hy.cb.entity.order.OrderDetailed;
 import com.hy.cb.entity.order.OrderEntity;
-import com.hy.cb.entity.seller.SeGoodsCategory;
-import com.hy.cb.entity.seller.SeSellerGoodsCategory;
+import com.hy.cb.entity.order.OrderStautsEntity;
 import com.hy.cb.service.order.OrderService;
 import com.hy.cb.utils.api.WebServiceResult;
 import com.hy.sys.core.controller.AbstractBasicController;
+import com.hy.sys.entity.SysDataDictItem;
+import com.hy.sys.service.SysDictItemService;
 import com.hy.sys.utils.PageInfo;
 import com.hy.sys.utils.StringTools;
 import com.hy.sys.utils.StringUtils;
@@ -35,6 +40,10 @@ public class OrderApiController extends AbstractBasicController {
 
 	@Autowired
 	protected OrderService orderService;
+
+	/*** 系统数据字典 *********/
+	@Autowired
+	protected SysDictItemService sysDictItemService;
 
 	@Override
 	protected void init(ModelMap mode, HttpServletRequest req) {
@@ -107,7 +116,7 @@ public class OrderApiController extends AbstractBasicController {
 			Set<OrderDetailed> list = entity.getOrderDetailed();
 			entity.setOrderNo(orderTypeStr + StringUtils.getYMDhmsRand());
 			entity.setCreateTime(now);
-			entity.setStauts(2); //开单
+			entity.setStauts(2); // 开单
 			orderService.save(entity);
 
 			for (OrderDetailed orderDetailed : list) {
@@ -130,14 +139,24 @@ public class OrderApiController extends AbstractBasicController {
 
 	/**
 	 * 获取各种状态下的订单
-	 * @param supplierNo 供应商编号
-	 * @param purchaseNo 采购商编号
-	 * @param shopNo  档口编号
-	 * @param orderType 订单类型
-	 * @param stauts  订单状态 （完成支付:18,支付信息已确证:16,支付确证:14,扎帐已确定:12,已扎账:10,销售中:8,已收货:6,运输中:4,已开单:2）
-	 * @param balance 是否扎帐
-	 * @param payStatus 支付状态
-	 * @param consignment 销售方式{1合伙,2代销}
+	 * 
+	 * @param supplierNo
+	 *            供应商编号
+	 * @param purchaseNo
+	 *            采购商编号
+	 * @param shopNo
+	 *            档口编号
+	 * @param orderType
+	 *            订单类型
+	 * @param stauts
+	 *            订单状态
+	 *            （完成支付:18,支付信息已确证:16,支付确证:14,扎帐已确定:12,已扎账:10,销售中:8,已收货:6,运输中:4,已开单:2）
+	 * @param balance
+	 *            是否扎帐
+	 * @param payStatus
+	 *            支付状态
+	 * @param consignment
+	 *            销售方式{1合伙,2代销}
 	 * @param pageNo
 	 * @param pageSize
 	 * @param request
@@ -180,7 +199,7 @@ public class OrderApiController extends AbstractBasicController {
 			params.put("consignment", consignment);
 		}
 		OrderEntity entity = new OrderEntity();
-		
+
 		PageInfo<OrderEntity> pages = orderService.getPageList(params, entity, pageNo, pageSize);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("total", pages.getTotalrecond());
@@ -197,13 +216,96 @@ public class OrderApiController extends AbstractBasicController {
 		return json;
 	}
 
+	/**
+	 * 查询各种状态下的订单数量
+	 * 
+	 * @param supplierNo
+	 * @param purchaseNo
+	 * @param shopNo
+	 * @param request
+	 * @return
+	 */
 	@ResponseBody
-	@RequestMapping(value = "test")
-	public WebServiceResult test() {
+	@RequestMapping(value = "getOrderStatusNum")
+	public WebServiceResult getOrderStatusNum(String supplierNo, String purchaseNo, String shopNo,
+			HttpServletRequest request) {
 		WebServiceResult json = new WebServiceResult();
-		OrderEntity entity = new OrderEntity();
-		String josnStr = JSON.toJSONString(entity, SerializerFeature.WriteMapNullValue);
-		json.setDatas(josnStr);
+		Map<String, Object> params = new HashMap<String, Object>();
+		if (StringTools.isNotEmpty(supplierNo)) {
+			params.put("supplierNo", supplierNo);
+		}
+
+		if (StringTools.isNotEmpty(purchaseNo)) {
+			params.put("purchaseNo", purchaseNo);
+		}
+		if (StringTools.isNotEmpty(shopNo)) {
+			params.put("shopNo", shopNo);
+		}
+		try {
+			List<OrderEntity> orderList = orderService.getOrderListNum(params);
+			List<SysDataDictItem> dictItem = sysDictItemService.getDictItemOption("orderStauts"); // 查询订单状态下的数据字典项
+			List<OrderStautsEntity> list = new ArrayList<OrderStautsEntity>();
+			Map<String, Object> map = new HashMap<String, Object>();
+			Object[] arr = orderList.toArray();
+			orderList.clear();
+			for (Object obj : arr) {
+				Object[] linArr = (Object[]) obj;
+				if (StringTools.mapGetKeyIsEmpty(map, linArr[1].toString())) {
+					int num = (int) map.get(linArr[1]) + 1;
+					map.put(linArr[1].toString(), num);
+				} else {
+					map.put(linArr[1].toString(), 1);
+				}
+			}
+
+			for (SysDataDictItem dic : dictItem) {
+				OrderStautsEntity stauts = new OrderStautsEntity();
+				stauts.setStautsName(dic.getItemName());
+				stauts.setStatus(dic.getItemValue());
+				if (StringTools.mapGetKeyIsEmpty(map, dic.getItemValue())) {
+					stauts.setNum((Integer) map.get(dic.getItemValue()));
+				} else {
+					stauts.setNum(0);
+				}
+
+				list.add(stauts);
+			}
+			json.setMessage("操作成功！");
+			json.setCode(200);
+			json.setDatas(list);
+			json.setSuccess(true);
+		} catch (Exception e) {
+			json.setMessage("未获取到数据！");
+			json.setSuccess(false);
+		}
+		return json;
+	}
+    /**
+     * 使用订单编号获取订单详情
+     * @param orderNo
+     * @param request
+     * @return
+     */
+	@ResponseBody
+	@RequestMapping(value = "getOrderDetailed")
+	public WebServiceResult getOrderDetailed(String orderNo,HttpServletRequest request) {
+		WebServiceResult json = new WebServiceResult();
+		if (StringTools.isBlank(orderNo)) {
+			json.setSuccess(false);
+			json.setMessage("订单编号 不能为空！");
+			return json;
+		}
+		OrderEntity order=orderService.get(orderNo);
+		if(order!=null) {
+			json.setMessage("操作成功！");
+			json.setCode(200);
+			json.setDatas(order);
+			json.setSuccess(true);
+		}else {
+			json.setMessage("未获取到数据！");
+			json.setSuccess(false);
+		}
+		
 		return json;
 	}
 
